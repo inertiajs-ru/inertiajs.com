@@ -40,18 +40,18 @@ export default function Layout({ meta, children }) {
 
   useEffect(() => {
     // Algolia DocSearch
-    docsearch({
-      apiKey: 'ea9f3351550104420cd3c7b4e2b9b7b1',
-      indexName: 'inertiajs',
-      inputSelector: '#docsearch',
-      debug: false,
-    })
+    // docsearch({
+    //   apiKey: 'ea9f3351550104420cd3c7b4e2b9b7b1',
+    //   indexName: 'inertiajs',
+    //   inputSelector: '#docsearch',
+    //   debug: false,
+    // })
 
     // Add shortcut to search input when pressing the "/" key
-    Mousetrap.bind('/', function (e) {
-      e.preventDefault()
-      document.getElementById('docsearch').focus()
-    })
+    // Mousetrap.bind('/', function (e) {
+    //   e.preventDefault()
+    //   document.getElementById('docsearch').focus()
+    // })
 
     if (process.env.NODE_ENV === 'production') {
       // Carbon Ads
@@ -64,16 +64,16 @@ export default function Layout({ meta, children }) {
       adElement.appendChild(s)
 
       // Google Analytics
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag('js', new Date())
-      gtag('config', 'UA-140425344-1', {
-        page_location: window.location.href,
-        page_path: window.location.pathname,
-        page_title: window.document.title,
-      })
+      // window.dataLayer = window.dataLayer || []
+      // function gtag() {
+      //   dataLayer.push(arguments)
+      // }
+      // gtag('js', new Date())
+      // gtag('config', 'UA-140425344-1', {
+      //   page_location: window.location.href,
+      //   page_path: window.location.pathname,
+      //   page_title: window.document.title,
+      // })
     }
   }, [])
 
@@ -83,7 +83,7 @@ export default function Layout({ meta, children }) {
       className="leading-none font-sans text-gray-800 antialiased"
     >
       <Head>
-        <title>{meta.title ? `${meta.title} - Inertia.js` : `Inertia.js - The Modern Monolith`}</title>
+        <title>{meta.title ? `${meta.title} - Inertia.js` : `Inertia.js - Современный монолит`}</title>
         {meta.description && <meta type="description" content={meta.description} />}
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         {meta.twitterCardImage && (
@@ -91,7 +91,7 @@ export default function Layout({ meta, children }) {
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@reinink" />
             <meta name="twitter:creator" content="@reinink" />
-            <meta name="twitter:title" content={`Inertia.js - ${meta.title ? meta.title : 'The Modern Monolith'}`} />
+            <meta name="twitter:title" content={`Inertia.js - ${meta.title ? meta.title : 'Современный монолит'}`} />
             <meta name="twitter:description" content={meta.description} />
             <meta name="twitter:image" content={meta.twitterCardImage} />
           </React.Fragment>
@@ -108,10 +108,10 @@ export default function Layout({ meta, children }) {
           <svg className="w-5 h-5 fill-current text-purple-500 flex-shrink-0" viewBox="0 0 20 20">
             <path d="M10 3.22l-.61-.6a5.5 5.5 0 0 0-7.78 7.77L10 18.78l8.39-8.4a5.5 5.5 0 0 0-7.78-7.77l-.61.61z" />
           </svg>
-          <div className="mx-2">Support the ongoing development of Inertia.js.</div>
+          <div className="mx-2">Поддержите постоянную разработку Inertia.js.</div>
           <Link href="/sponsors">
             <a className="px-3 py-1 bg-purple-500 hover:bg-purple-600 rounded-full text-xs text-white leading-tight whitespace-no-wrap">
-              Learn more
+              Узнать больше
             </a>
           </Link>
         </div>
@@ -152,10 +152,10 @@ export default function Layout({ meta, children }) {
               )}
             </div>
             <div className="hidden md:flex items-center text-white">
-              <div className="mr-5 relative">
+              {/* <div className="mr-5 relative">
                 <input
                   id="docsearch"
-                  placeholder="Search…"
+                  placeholder="Поиск…"
                   className="py-1 pl-8 w-40 lg:w-56 focus:outline-none block appearance-none bg-white rounded-full text-sm leading-normal font-medium text-gray-700"
                 />
                 <div className="pointer-events-none absolute inset-y-0 left-0 pl-2 flex items-center">
@@ -163,7 +163,7 @@ export default function Layout({ meta, children }) {
                     <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
                   </svg>
                 </div>
-              </div>
+              </div> */}
               <a className="block flex items-center hover:text-purple-900 mr-5" href="https://github.com/inertiajs">
                 <svg className="fill-current w-6 h-6" viewBox="0 0 20 20">
                   <title>GitHub</title>
@@ -191,14 +191,14 @@ export default function Layout({ meta, children }) {
             <div className="lg:mt-16 relative flex flex-wrap items-start">
               <div className="w-full lg:w-1/2 mt-4">
                 <h1 className="text-4xl lg:text-5xl leading-tight font-light">
-                  Build single-page apps, <strong className="font-bold">without building an API.</strong>
+                Создавайте одностраничные приложения, <strong className="font-bold">без создания API.</strong>
                 </h1>
                 <p className="mt-8 text-lg lg:text-xl leading-relaxed max-w-md pr-2">
-                  Inertia.js lets you{' '}
+                  Inertia.js позволяет{' '}
                   <strong className="font-bold" css={{ color: '#92eee2' }}>
-                    quickly build modern single-page React, Vue and Svelte apps
+                    быстро создавать современные одностраничные приложения React, Vue и Svelte
                   </strong>{' '}
-                  using classic server-side routing and controllers.
+                  использованием классической маршрутизации на стороне сервера и контроллеров.
                 </p>
               </div>
               <div className="w-full lg:w-1/2 lg:pl-24 mt-8 lg:mt-0">
@@ -267,8 +267,8 @@ export default function Layout({ meta, children }) {
         <div className="bg-gray-200">
           <div className="max-w-6xl mx-auto px-6 md:px-12 xl:px-0 py-4 flex items-center justify-start overflow-x-scroll">
             <div className="mr-6 text-md font-medium text-gray-600">
-              <div className="md:hidden">Sponsors:</div>
-              <div className="hidden md:block">Our gold sponsors:</div>
+              <div className="md:hidden">Спонсоры:</div>
+              <div className="hidden md:block">Наши золотые спонсоры:</div>
             </div>
             <a className="text-gray-600 hover:text-gray-800 mr-8" href="https://ploi.io" title="Ploi">
               <svg className="w-auto h-6 fill-current" viewBox="0 0 253 93.3">
@@ -335,7 +335,7 @@ export default function Layout({ meta, children }) {
           <div className="pt-8 sticky top-0">
             {meta.links && (
               <div className="mb-12">
-                <div className="text-xs font-bold uppercase text-gray-500 tracking-widest">On this page</div>
+                <div className="text-xs font-bold uppercase text-gray-500 tracking-widest">На этой странице</div>
                 <ul>
                   {meta.links.map((link, index) => (
                     <li className="mt-4" key={index}>

@@ -4,7 +4,7 @@ import TabbedCodeExamples from './TabbedCodeExamples'
 
 function kebabCase(str) {
   return str
-    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+    .match(/[A-Z,А-Я]{2,}(?=[A-Z,А-Я][a-z,а-я]+[0-9]*|\b)|[A-Z,А-Я]?[a-z,а-я]+[0-9]*|[A-Z,А-Я]|[0-9]+/g)
     .join('-')
     .toLowerCase()
 }
