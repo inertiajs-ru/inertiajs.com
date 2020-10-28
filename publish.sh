@@ -20,6 +20,9 @@ rm -rf .git/worktrees/$docs/
 echo "Checking out gh-pages branch into _gh_pages"
 git worktree add -B $ghPagesBranch $docs origin/$ghPagesBranch
 
+echo "Removing existing files"
+rm -rf $docs/*
+
 echo "Generating site"
 npm run prod
 cp $out/* $docs/ -r
