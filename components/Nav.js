@@ -44,17 +44,17 @@ const Nav = ({ className }) => {
       <ul>
         <li className="md:pr-3">
           <Link href="/">
-            <a className={linkClass('/')}>Introduction</a>
+            <a className={linkClass('/')}>Вступление</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/demo-application">
-            <a className={linkClass('/demo-application')}>Demo app</a>
+            <a className={linkClass('/demo-application')}>Демо-приложение</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/sponsors">
-            <a className={linkClass('/sponsors')}>Sponsors</a>
+            <a className={linkClass('/sponsors')}>Спонсоры</a>
           </Link>
         </li>
       </ul>
