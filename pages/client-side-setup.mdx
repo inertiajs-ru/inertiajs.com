@@ -5,22 +5,22 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Client-side setup',
+  title: 'Установка клиентской части',
   links: [
-    { url: '#install-dependencies', name: 'Install dependencies' },
-    { url: '#initialize-app', name: 'Initialize app' },
-    { url: '#loading-indicator', name: 'Loading indicator' },
-    { url: '#code-splitting', name: 'Code splitting' },
+    { url: '#установка-зависимостей', name: 'Установка зависимостей' },
+    { url: '#инициализация-приложения', name: 'Инициализация приложения' },
+    { url: '#индикатор-загрузки', name: 'Индикатор загрузки' },
+    { url: '#разделение-кода', name: 'Разделение кода' },
   ],
 }
 
-# Client-side setup
+# Установка клиентской части
 
-Once you have your [server-side framework configured](/server-side-setup), you then need to setup your client-side framework. Inertia currently provides support for React, Vue.js, and Svelte.
+После того, как Вы настроили [конфигурацию платформы на стороне сервера](/server-side-setup), Вам необходимо настроить клиентскую среду. Inertia в настоящее время поддерживает React, Vue.js и Svelte.
 
-## Install dependencies
+## Установка зависимостей
 
-Install the Inertia client-side adapters using NPM or Yarn.
+Установите клиентские адаптеры Inertia с помощью NPM или Yarn.
 
 <TabbedCodeExamples
   examples={[
@@ -51,9 +51,9 @@ Install the Inertia client-side adapters using NPM or Yarn.
   ]}
 />
 
-## Initialize app
+## Инициализация приложения
 
-Next, update your main JavaScript file to boot your Inertia app. All we're doing here is initializing the client-side framework with the base Inertia page component.
+Затем обновите свой основной файл JavaScript, чтобы загрузить приложение Inertia. Все, что мы здесь делаем, это инициализируем клиентскую структуру с помощью базового компонента страницы Inertia.
 
 <TabbedCodeExamples
   examples={[
@@ -129,20 +129,20 @@ Next, update your main JavaScript file to boot your Inertia app. All we're doing
   ]}
 />
 
-The `resolveComponent` is a callback that tells Inertia how to load a page component. It receives a page name (string), and should return a page component instance.
+`resolveComponent` - это обратный вызов, который сообщает Inertia, как загрузить компонент страницы. Он получает имя страницы (строку) и должен возвращать экземпляр компонента страницы.
 
-## Loading indicator
+## Индикатор загрузки
 
-Since Inertia requests are made via XHR, there's no default browser loading indicator. To solve this, Inertia provides an optional [progress package](https://github.com/inertiajs/progress) that integrates with [NProgress.js](https://ricostacruz.com/nprogress/), a nice little progress bar library.
+Поскольку запросы Inertia выполняются через XHR, индикатор загрузки браузера по умолчанию отсутствует. Чтобы решить эту проблему, Inertia предоставляет дополнительный [пакет прогресса](https://github.com/inertiajs/progress), который интегрируется с [NProgress.js](https://ricostacruz.com/nprogress/), хорошей небольшой библиотекой индикатора выполнения.
 
-Start by installing it:
+Начните с его установки:
 
 ```bash
 npm install @inertiajs/progress
 yarn add @inertiajs/progress
 ```
 
-Once it's been installed, initialize it in your app.
+После установки инициализируйте его в своем приложении.
 
 ```js
 import { InertiaProgress } from '@inertiajs/progress'
@@ -150,34 +150,34 @@ import { InertiaProgress } from '@inertiajs/progress'
 InertiaProgress.init()
 ```
 
-It also comes with a number of customization options, which you can pass to the `init()` method.
+Он также имеет ряд параметров настройки, которые Вы можете передать методу `init()`.
 
 ```js
 InertiaProgress.init({
-  // The delay after which the progress bar will
-  // appear during navigation, in milliseconds.
+  // Задержка в миллисекундах, после которой
+  // во время навигации появится индикатор выполнения.
   delay: 250,
 
-  // The color of the progress bar.
+  // Цвет индикатора выполнения.
   color: '#29d',
 
-  // Whether to include the default NProgress styles.
+  // Следует ли включать стили NProgress по умолчанию.
   includeCSS: true,
 
-  // Whether the NProgress spinner will be shown.
+  // Будет ли отображаться счетчик NProgress.
   showSpinner: false,
 })
 ```
 
-## Code splitting
+## Разделение кода
 
-To use code splitting with Inertia you'll need to enable [dynamic imports](https://github.com/tc39/proposal-dynamic-import). You'll need a Babel plugin to make this work. First, install the plugin:
+Чтобы использовать разделение кода с помощью Inertia, Вам необходимо включить [динамический импорт](https://github.com/tc39/proposal-dynamic-import). Для этого вам понадобится плагин Babel. Сначала установите плагин:
 
 ```bash
 npm install @babel/plugin-syntax-dynamic-import
 ```
 
-Next, create a `.babelrc` file in your project with the following:
+Затем создайте в своем проекте файл `.babelrc` со следующим:
 
 ```json
 {
@@ -186,13 +186,10 @@ Next, create a `.babelrc` file in your project with the following:
 ```
 
 <Notice>
-  If you're using Laravel Mix v4, the dynamic imports Babel plugin is already configured. However, there is a known
-  issue with Laravel Mix v4 when using dynamic imports where you cannot use styles within Vue files due to a Webpack{' '}
-  <a href="https://github.com/JeffreyWay/laravel-mix/issues/1856#issuecomment-448082909">limitation</a>. As a
-  workaround, you need to drop Mix entirely or downgrade to Laravel Mix v3.
+  Если Вы используете Laravel Mix v4, плагин динамического импорта Babel уже настроен. Однако существует известная проблема с Laravel Mix v4 при использовании динамического импорта, когда Вы не можете использовать стили в файлах Vue из-за {' '}<a href="https://github.com/JeffreyWay/laravel-mix/issues/1856#issuecomment-448082909">ограничения</a> Webpack. В качестве обходного пути Вам нужно полностью отказаться от Mix или перейти на Laravel Mix v3.
 </Notice>
 
-Finally, update the `resolveComponent` callback in your app initialization to use `import` instead of `require`.
+Наконец, обновите обратный вызов `resolveComponent` в инициализации вашего приложения, чтобы использовать `import` вместо `require`.
 
 <TabbedCodeExamples
   examples={[
@@ -220,7 +217,7 @@ Finally, update the `resolveComponent` callback in your app initialization to us
   ]}
 />
 
-Consider using cache busting to force browsers to load the latest version of your assets. To do this, add the following to your webpack config:
+Подумайте об использовании очистки кеша, чтобы заставить браузеры загружать последнюю версию Ваших ресурсов. Для этого добавьте в конфигурацию Вашего веб-пакета следующее:
 
 ```js
 output: {

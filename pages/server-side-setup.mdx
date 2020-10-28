@@ -4,22 +4,22 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Server-side setup',
+  title: 'Установка серверной части',
   links: [
-    { url: '#install-dependencies', name: 'Install dependencies' },
-    { url: '#root-template', name: 'Root template' },
-    { url: '#middleware', name: 'Middleware' },
-    { url: '#creating-responses', name: 'Creating responses' },
+    { url: '#установка-зависимостей', name: 'Установка зависимостей' },
+    { url: '#корневой-шаблон', name: 'Корневой шаблон' },
+    { url: '#посредник', name: 'Посредник' },
+    { url: '#создание-ответов', name: 'Создание ответов' },
   ],
 }
 
-# Server-side setup
+# Установка серверной части
 
-The first step when installing Inertia is to configure your server-side framework. Inertia ships with official server-side adapters for [Laravel](https://laravel.com/) and [Rails](https://rubyonrails.org/). For other frameworks, please see the [community adapters](/community-adapters).
+Первым шагом при установке Inertia является настройка Вашей серверной инфраструктуры. Inertia поставляется с официальными серверными адаптерами для [Laravel](https://laravel.com/) и [Rails](https://rubyonrails.org/). Для других фреймворков смотрите [адаптеры сообщества](/community-adapters).
 
-## Install dependencies
+## Установка зависимостей
 
-Install the Inertia server-side adapters using the preferred package manager for that language or framework.
+Установите серверные адаптеры Inertia, используя предпочтительный менеджер пакетов для этого языка или платформы.
 
 <TabbedCodeExamples
   examples={[
@@ -29,12 +29,12 @@ Install the Inertia server-side adapters using the preferred package manager for
       code: dedent`
         composer require inertiajs/inertia-laravel
       `,
-      description: 'Install via Composer',
+      description: 'Установить через Composer',
     },
     {
       name: 'Rails',
       language: 'ruby',
-      description: 'Add this to your Gemfile',
+      description: 'Добавьте это в свой Gemfile',
       code: dedent`
         gem 'inertia_rails'
       `,
@@ -42,9 +42,9 @@ Install the Inertia server-side adapters using the preferred package manager for
   ]}
 />
 
-## Root template
+## Корневой шаблон
 
-Next, setup the root template that will be loaded on the first page visit. This will be used to load your site assets (CSS and JavaScript), and will also contain a root `<div>` to boot your JavaScript application in.
+Затем настройте корневой шаблон, который будет загружаться при первом посещении страницы. Он будет использоваться для загрузки ресурсов Вашего сайта (CSS и JavaScript), а также будет содержать корневой элемент `<div>` для загрузки Вашего приложения JavaScript.
 
 <TabbedCodeExamples
   examples={[
@@ -65,7 +65,7 @@ Next, setup the root template that will be loaded on the first page visit. This 
           </body>
         </html>
       `,
-      description: `By default the Laravel adapter will use the app.blade.php view. This template should include your assets, as well as the @inertia directive. If you'd like to use a different root view, you can change it using Inertia::setRootView().`,
+      description: `По умолчанию адаптер Laravel будет использовать представление app.blade.php. Этот шаблон должен включать Ваши активы, а также директиву @inertia. Если Вы хотите использовать другое корневое представление, Вы можете изменить его с помощью Inertia::setRootView().`,
     },
     {
       name: 'Rails',
@@ -84,20 +84,20 @@ Next, setup the root template that will be loaded on the first page visit. This 
           </body>
         </html>
       `,
-      description: `By default the Rails adapter will use the application.html.erb view. This template should include your assets, as well as the yield command. If you'd like to use a different root view, you can change it using InertiaRails.configure.`,
+      description: `По умолчанию адаптер Rails будет использовать представление application.html.erb. Этот шаблон должен включать Ваши активы, а также команду yield. Если Вы хотите использовать другое корневое представление, Вы можете изменить его с помощью InertiaRails.configure.`,
     },
   ]}
 />
 
-## Middleware
+## Посредник
 
-Next, setup the Inertia middleware. In the Rails adapter, this is configured automatically for you. However, in Laravel you need to publish the `HandleInertiaRequests` middleware to your application, which can be done using this artisan command:
+Затем установите промежуточное программное обеспечение Inertia. В адаптере Rails этот параметр настраивается автоматически. Однако в Laravel Вам нужно опубликовать посредника `HandleInertiaRequests` в Вашем приложении, что можно сделать с помощью этой команды:
 
 ```sh
 php artisan inertia:middleware
 ```
 
-Once generated, register the `HandleInertiaRequests` middleware in your `App\Http\Kernel`, as the <u>last item</u> in your `web` middleware group.
+После создания зарегистрируйте посредника `HandleInertiaRequests` в Вашем `App\Http\Kernel`, как <u>последний элемент</u> в Вашей группе посредников `web`.
 
 ```php
 'web' => [
@@ -106,11 +106,11 @@ Once generated, register the `HandleInertiaRequests` middleware in your `App\Htt
 ],
 ```
 
-This middleware provides a `version()` method for setting your [asset version](/asset-versioning), and a `share()` method for setting [shared data](/shared-data). Please see those pages for more information.
+Этот посредник предоставляет метод `version()` для установки [версии ресурса](/asset-versioning) и метод `share()` для установки [общих данных](/shared-data). Пожалуйста, посетите эти страницы для получения дополнительной информации.
 
-## Creating responses
+## Создание ответов
 
-That's it, you're all ready to go server-side! From here you can start creating Inertia responses. See the [responses](/responses) page for more information.
+Вот и все, вы готовы перейти на сервер! Отсюда вы можете начать создавать ответы Inertia. Смотрите страницу [ответы](/responses) для получения дополнительной информации.
 
 <TabbedCodeExamples
   examples={[
