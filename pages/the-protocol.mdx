@@ -5,25 +5,25 @@ import Code from '../components/Code'
 
 export default Layout
 export const meta = {
-  title: 'The protocol',
+  title: 'Протокол',
   links: [
-    { url: '#html-responses', name: 'HTML responses' },
-    { url: '#inertia-responses', name: 'Inertia responses' },
-    { url: '#the-page-object', name: 'The page object' },
-    { url: '#asset-versioning', name: 'Asset versioning' },
-    { url: '#partial-reloads', name: 'Partial reloads' },
+    { url: '#html-ответы', name: 'HTML-ответы' },
+    { url: '#inertia-ответы', name: 'Inertia-ответы' },
+    { url: '#объект-страницы', name: 'Объект страницы' },
+    { url: '#версионность-актива', name: 'Версионность актива' },
+    { url: '#частичные-перезагрузки', name: 'Частичные перезагрузки' },
   ],
 }
 
-# The protocol
+# Протокол
 
-The following is a detailed spec of the Inertia protocol. Be sure to read the [how it works](/how-it-works) page first for a high-level overview.
+Ниже приведена подробная спецификация протокола Inertia. Сначала ознакомьтесь со страницей [как это работает](/how-it-works) для получения общего представление.
 
-## HTML responses
+## HTML-ответы
 
-The very first request to an Inertia app is just a regular full-page browser request, with no special Inertia headers or data. For these requests, the server returns a full HTML document.
+Самый первый запрос к приложению Inertia - это обычный полнофункциональный запрос браузера без специальных заголовков или данных Inertia. Для этих запросов сервер возвращает полный HTML-документ.
 
-This HTML response includes the site assets (CSS, JavaScript) as well as a root `<div>` in the body. The root `<div>` serves as a mounting point for the client-side app, and includes a `data-page` attribute with a JSON encoded [page object](#the-page-object) for the initial page. Inertia uses this information to boot your client-side framework, and display the initial page component.
+Этот HTML-ответ включает ресурсы сайта (CSS, JavaScript), а также корневой элемент `<div>` в теле. Корневой элемент `<div>` служит точкой монтирования для клиентского приложения и включает атрибут `data-page` с закодированным в JSON [объект страницы](#объект-страницы) для начальной страницы. Inertia использует эту информацию для загрузки Вашей клиентской среды и отображения компонента начальной страницы.
 
 <div className="rounded overflow-hidden" style={{ background: '#202e59' }}>
   <div className="pt-6 px-6 text-white font-mono text-sm">
@@ -44,7 +44,7 @@ This HTML response includes the site assets (CSS, JavaScript) as well as a root 
     {dedent`
       <html>
       <head>
-          <title>My app</title>
+          <title>Мое приложение</title>
           <link href="/css/app.css" rel="stylesheet">
           <script src="/js/app.js" defer></script>
       </head>
@@ -56,13 +56,13 @@ This HTML response includes the site assets (CSS, JavaScript) as well as a root 
   </Code>
 </div>
 
-<Notice>While the initial response is HTML, Inertia does not server-side render the JavaScript page components.</Notice>
+<Notice>Хотя первоначальным ответом является HTML, Inertia не отображает компоненты страницы JavaScript на стороне сервера.</Notice>
 
-## Inertia responses
+## Inertia-ответы
 
-Once an Inertia app has been booted, all subsequent requests to the site are made via XHR with a special `X-Inertia` header set to `true`. This header indicates that the request is being made by Inertia, and isn't a standard full-page visit.
+После загрузки приложения Inertia все последующие запросы к сайту выполняются через XHR со специальным заголовком `X-Inertia`, установленным в значение `true`. Этот заголовок указывает, что запрос выполняет Inertia, а не стандартным посещением полной страницы.
 
-When the server detects the `X-Inertia` header, instead of responding with a full HTML document, it returns a JSON response with an encoded [page object](#the-page-object).
+Когда сервер обнаруживает заголовок `X-Inertia`, вместо ответа полным HTML-документом он возвращает ответ JSON с закодированным [объектом страницы](#объект-страницы).
 
 <div className="rounded overflow-hidden" style={{ background: '#202e59' }}>
   <div className="pt-6 px-6 text-white font-mono text-sm">
@@ -113,30 +113,30 @@ When the server detects the `X-Inertia` header, instead of responding with a ful
   </Code>
 </div>
 
-## The page object
+## Объект страницы
 
-Inertia shares data between the server and client via a page object. This object includes the necessary information required to render the page component, update the history state, and track the site's asset version. The page object includes the following four properties:
+Inertia обменивается данными между сервером и клиентом через объект страницы. Этот объект включает в себя необходимую информацию, необходимую для визуализации компонента страницы, обновления состояния истории и отслеживания версии ресурса сайта. Объект страницы включает следующие четыре свойства:
 
-1. **component**: The name of the JavaScript page component.
-2. **props**: The page props (data).
-3. **url**: The page url.
-4. **version**: The current asset version.
+1. **component**: Имя компонента страницы JavaScript.
+2. **props**: Реквизиты страницы (данные).
+3. **url**: URL-адрес страницы.
+4. **version**: Текущая версия актива.
 
-On standard full page visits, the page object is JSON encoded into the `data-page` attribute in the root `<div>`. On Inertia visits, the page object is returned as the JSON payload.
+При стандартных посещениях полной страницы объект страницы кодируется в формате JSON в атрибуте `data-page` в корневом каталоге `<div>`. При посещении Inertia объект страницы возвращается в качестве полезной нагрузки JSON.
 
-## Asset versioning
+## Версионность актива
 
-One common challenge with single-page apps is refreshing site assets when they've been changed. Inertia makes this easy by optionally tracking the current version of the site's assets. In the event that an asset changes, Inertia will automatically make a hard (full) page visit instead of an XHR visit.
+Одна из распространенных проблем с одностраничными приложениями - обновление ресурсов сайта, когда они были изменены. Inertia упрощает это за счет необязательного отслеживания текущей версии актива сайта. В случае изменения актива Inertia автоматически выполнит жесткое (полное) посещение страницы вместо посещения XHR.
 
-Included in the [page object](#the-page-object) is a `version` identifier. This version identifier is set server-side, and can be a number, string, file hash, whatever. It doesn't matter, as long as it changes when the site's assets have been updated.
+В [объект страницы](#объект-страницы) включен идентификатор версии `version`. Этот идентификатор версии устанавливается на стороне сервера и может быть числом, строкой, хешем файла и т. д. Это не имеет значения, если оно изменится при обновлении ресурсов сайта.
 
-Whenever an Inertia request is made, Inertia will include the current asset version in the `X-Inertia-Version` header. When the server receives the request, it compares the asset version provided in the `X-Inertia-Version` header with the current asset version. This is typically handled in a middleware layer.
+Всякий раз, когда делается запрос Inertia, она включает текущую версию актива в заголовок `X-Inertia-Version`. Когда сервер получает запрос, он сравнивает версию актива, представленную в заголовке `X-Inertia-Version`, с текущей версией актива. Обычно это обрабатывается в промежуточном программном обеспечении.
 
-If the asset versions are the same, the request simply continues as expected. However, if they are different, the server immediately returns a `409 Conflict` response, and includes the URL in a `X-Inertia-Location` header. This header is necessary, since server-side redirects may have occurred. This tells Inertia what the final intended destination URL is.
+Если версии ресурсов совпадают, запрос просто продолжается, как и ожидалось. Однако, если они отличаются, сервер немедленно возвращает ответ `409 Conflict` и включает URL-адрес в заголовок `X-Inertia-Location`. Этот заголовок необходим, поскольку могло произойти перенаправление на стороне сервера. Это сообщает Inertia окончательный целевой URL-адрес.
 
-Note, `409 Conflict` responses are only sent for `GET` requests, and not for `POST/PUT/PATCH/DELETE` requests. That said, they will be sent in the event that a `GET` redirect occurs after one of these requests.
+Обратите внимание, что ответы `409 Conflict` отправляются только для запросов `GET`, но не для запросов `POST/PUT/PATCH/DELETE`. Тем не менее, они будут отправлены в том случае, если после одного из этих запросов произойдет `GET` перенаправление.
 
-Finally, in the event that flash session data exists when a `409 Conflict` response occurs, the server will automatically reflash this data.
+Наконец, если данные мгновенного сеанса существуют, когда возникает ответ `409 Conflict`, сервер автоматически переформатирует эти данные.
 
 <div className="rounded overflow-hidden" style={{ background: '#202e59' }}>
   <div className="p-6 text-white font-mono text-sm">
@@ -164,15 +164,15 @@ Finally, in the event that flash session data exists when a `409 Conflict` respo
   </div>
 </div>
 
-## Partial reloads
+## Частичные перезагрузки
 
-When making Inertia requests, the partial reloads option allows you to request a subset of the props (data) from the server on subsequent visits to the _same_ page component. This can be a helpful performance optimization if it's acceptable that some page data becomes stale.
+При выполнении запросов Inertia опция частичной перезагрузки позволяет запрашивать подмножество свойств (данных) с сервера при последующих посещениях _того же_ компонента страницы. Это может быть полезным для оптимизации производительности, если допустимо, чтобы некоторые данные страницы устарели.
 
-When a partial reload request is made, Inertia includes two additional headers with the request: `X-Inertia-Partial-Data` and `X-Inertia-Partial-Component`.
+Когда делается запрос частичной перезагрузки, Inertia включает два дополнительных заголовка с запросом: `X-Inertia-Partial-Data` и `X-Inertia-Partial-Component`.
 
-The `X-Inertia-Partial-Data` header is a comma separated list of the desired props (data) keys that should be returned.
+Заголовок `X-Inertia-Partial-Data` представляет собой разделенный запятыми список желаемых ключей свйоств (данных), которые должны быть возвращены.
 
-The `X-Inertia-Partial-Component` header includes the name of the component that is being partially reloaded. This is necessary, since partial reloads only work for requests made to the same page component. If the final destination is different for whatever reason (eg. the user was logged out and is now on the login page), then no partial reloading will occur.
+Заголовок `X-Inertia-Partial-Component` включает имя компонента, который частично перезагружается. Это необходимо, поскольку частичная перезагрузка работает только для запросов, сделанных к тому же компоненту страницы. Если конечный пункт назначения отличается по какой-либо причине (например, пользователь вышел из системы и теперь находится на странице входа), то частичной перезагрузки не произойдет.
 
 <div className="rounded overflow-hidden" style={{ background: '#202e59' }}>
   <div className="pt-6 px-6 text-white font-mono text-sm">

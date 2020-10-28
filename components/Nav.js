@@ -58,21 +58,21 @@ const Nav = ({ className }) => {
           </Link>
         </li>
       </ul>
-      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Core concepts</div>
+      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Основные концепции</div>
       <ul>
         <li className="md:pr-3">
           <Link href="/who-is-it-for">
-            <a className={linkClass('/who-is-it-for')}>Who is it for</a>
+            <a className={linkClass('/who-is-it-for')}>Кто это для</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/how-it-works">
-            <a className={linkClass('/how-it-works')}>How it works</a>
+            <a className={linkClass('/how-it-works')}>Как это работает</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/the-protocol">
-            <a className={linkClass('/the-protocol')}>The protocol</a>
+            <a className={linkClass('/the-protocol')}>Протокол</a>
           </Link>
         </li>
       </ul>

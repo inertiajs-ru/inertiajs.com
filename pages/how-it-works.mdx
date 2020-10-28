@@ -3,21 +3,21 @@ import Layout from '../components/Layout'
 
 export default Layout
 export const meta = {
-  title: 'How it works',
+  title: 'Как это устроено',
 }
 
-# How it works
+# Как это устроено
 
-With Inertia you build apps just like you've always done with your server-side web framework of choice. You use your framework's existing functionality for routing, controllers, middleware, authentication, authorization, data fetching, and more.
+С Inertia Вы создаете приложения точно так же, как Вы всегда это делали с выбранным Вами серверным веб-фреймворком. Вы используете существующие функции своей платформы для маршрутизации, контроллеров, промежуточного программного обеспечения, аутентификации, авторизации, выборки данных и многого другого.
 
-The only thing that's different is your view layer. Instead of using server-side rendering (eg. Blade or ERB templates), the views are JavaScript page components. This allows you to build your entire front-end using React, Vue or Svelte.
+Единственное, что отличается, - это Ваша прослойка просмотра. Вместо использования рендеринга на стороне сервера (например, Blade или шаблонов ERB) представления являются компонентами страницы JavaScript. Это позволяет Вам создавать весь интерфейс с помощью React, Vue или Svelte.
 
-But simply creating your front-end in JavaScript doesn't give you a single-page app experience. If you were to click a link, your browser would make a full page visit, which would then cause your client-side framework to reboot on the subsequent page load. This is where Inertia comes in.
+Но простое создание интерфейса на JavaScript не дает Вам возможности работать с одностраничным приложением. Если бы Вы щелкнули ссылку, Ваш браузер совершил бы полное посещение страницы, что привело бы к перезагрузке клиентской среды при последующей загрузке страницы. Вот тут и появляется Inertia.
 
-At its core Inertia is essentially a client-side routing library. It allows you to make page visits without forcing a full page reload. This is done using the `<inertia-link>` component, a light wrapper around a normal anchor link. When you click an Inertia link, Inertia intercepts the click and makes the visit via XHR instead. Worth noting, you can also make these visits programmatically in JavaScript using `Inertia.visit()`.
+В своей основе Inertia по существу является клиентской библиотекой маршрутизации. Это позволяет Вам посещать страницу без принудительной перезагрузки страницы. Это делается с помощью компонента `<inertia-link>`, легкой оболочки вокруг обычной якорной ссылки. Когда Вы нажимаете ссылку Inertia, она перехватывает клик и вместо этого совершает визит через XHR. Стоит отметить, что Вы также можете выполнять эти посещения программно в JavaScript, используя `Inertia.visit()`.
 
-When Inertia makes an XHR visit, the server detects that it's an Inertia visit, and instead of returning a full HTML response, it returns a JSON response with the JavaScript page component name and data (props). Inertia then dynamically swaps out the previous page component with the new page component, and updates the history state.
+Когда Inertia совершает посещение XHR, сервер обнаруживает, что это посещение Inertia, и вместо того, чтобы возвращать полный HTML-ответ, он возвращает JSON-ответ с именем и данными (реквизитами) компонента страницы JavaScript. Затем Inertia динамически заменяет предыдущий компонент страницы новым компонентом страницы и обновляет состояние истории.
 
-**The end result is a silky smooth single-page experience.** 🎉
+**Конечный результат - гладкий одностраничный опыт.** 🎉
 
-To learn more about how this is technically done, see [the protocol](/the-protocol) page.
+Дополнительные сведения о том, как это делается технически, см. на странице [Протокол](/the-protocol).

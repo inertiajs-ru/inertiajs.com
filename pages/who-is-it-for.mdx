@@ -5,19 +5,19 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Who is Inertia.js for?',
+  title: 'Для кого предназначен Inertia.js?',
 }
 
-# Who is Inertia.js for?
+# Для кого предназначен Inertia.js?
 
-Inertia was designed for development teams who typically build server-side rendered applications using frameworks like Laravel, Ruby on Rails or Django. They create controllers, get data from the database (via an ORM), and render views.
+Inertia была разработана для групп разработчиков, которые обычно создают приложения с серверной отрисовкой с использованием таких фреймворков, как Laravel, Ruby on Rails или Django. Они создают контроллеры, получают данные из базы данных (через ORM) и визуализируют представления.
 
-But what happens when these developers want to replace their server-side rendered views with a modern JavaScript-based single-page app front-end? The answer is always "you need to build an API". Because that's how modern SPAs are built.
+Но что произойдет, если эти разработчики захотят заменить свои отображаемые на стороне сервера представления на современный интерфейс одностраничного приложения на основе JavaScript? Ответ всегда "Вам нужно создать API". Потому что так устроены современные SPA.
 
-This means building a REST or GraphQL API. It means figuring out auth for that API. It means client-side state management. It means setting up a new Git repo. It means setting up another hosting account for the API. And this list goes on. It's a complete paradigm shift.
+Это означает создание REST или GraphQL API. Это означает определение аутентификации для этого API. Это означает управление состоянием на стороне клиента. Это означает создание нового репозитория Git. Это означает создание другой учетной записи хостинга для API. И этот список можно продолжать. Это полная смена парадигмы.
 
-**Inertia allows you to build a fully JavaScript-based single-page app without all this added complexity.**
+**Inertia позволяет создавать одностраничное приложение на основе JavaScript без всей этой дополнительной сложности.**
 
-Inertia works much more like a classic server-side rendered app. You create controllers, you get data from the database (via your ORM), and you render views. Except the views here are JavaScript page components. Meaning you get all the power of a client-side app, and the SPA experience, but you don't need to build an API. (Be sure to see the [how it works](/how-it-works) page for a more complete explanation.)
+Инерция больше похожа на классическое приложение, отрисовываемое на стороне сервера. Вы создаете контроллеры, получаете данные из базы данных (через ORM) и визуализируете представления. Кроме представлений, здесь представлены компоненты страницы JavaScript. Это означает, что Вы получаете всю мощь клиентского приложения и возможности SPA, но Вам не нужно создавать API. (Обязательно посетите страницу [как это работает](/how-it-works) для более полного объяснения.)
 
-This simplicity does create a tight coupling between the back-end and the front-end, but that's already an accepted practice (and arguably a benefit) when building classic server-side rendered apps.
+Эта простота действительно создает тесную связь между серверной частью и клиентской частью, но это уже общепринятая практика (и, возможно, преимущество) при создании классических приложений с рендерингом на стороне сервера.
