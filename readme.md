@@ -1,3 +1,3 @@
-# Official Inertia.js website.
+# Перевод официальной документации Inertia.js.
 
-Visit [inertiajs.com](https://inertiajs.com/) to learn more.
+Посетите [inertiajs.com](https://inertiajs.com/) | [inertiajs.ru](https://inertiajs.ru/), чтобы узнать больше.
