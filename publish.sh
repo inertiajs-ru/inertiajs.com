@@ -37,7 +37,7 @@ else
 message="Update docs"
 fi
 
-cd $docs && git add --all && git commit -m $message && git push origin $ghPagesBranch && cd ..
+cd $docs && git add --all && git commit -m "$message" && git push origin $ghPagesBranch && cd ..
 
 #echo "Pushing to github"
 #git push --all
