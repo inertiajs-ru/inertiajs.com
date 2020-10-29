@@ -5,40 +5,43 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Error handling',
-  links: [{ url: '#development', name: 'Development' }, { url: '#production', name: 'Production' }],
+  title: 'Обработка ошибок',
+  links: [
+    { url: '#development', name: 'Development' },
+    { url: '#production', name: 'Production' }
+  ],
 }
 
-# Error handling
+# Обработка ошибок
 
 ## Development
 
-One of the nice things about working with a server-side framework is the built-in exception handling you get for free. For example, Laravel ships with [Ignition](https://github.com/facade/ignition), a beautiful error reporting tool which displays a nicely formatted stack trace in local development.
+Одна из приятных сторон работы с серверной средой - это встроенная обработка исключений, которую Вы получаете бесплатно. Например, Laravel поставляется с [Ignition](https://github.com/facade/ignition), красивым инструментом сообщения об ошибках, который отображает хорошо отформатированную трассировку стека при локальной разработке.
 
-The challenge is, if you're making an XHR request (which Inertia does), and you hit a server-side error, you're typically left digging through the network tab in your browser's devtools.
+Проблема в том, что если Вы делаете запрос XHR (что делает Inertia) и сталкиваетесь с ошибкой на стороне сервера, Вам обычно остается копаться во вкладке сети в инструментах разработки Вашего браузера.
 
-Inertia solves this by showing all non-Inertia responses in a modal. Meaning you get the same beautiful error-reporting, even though you've made that request over XHR!
+Inertia решает эту проблему, показывая все ответы не Inertia в модальном режиме. Это означает, что Вы получите такой же красивый отчет об ошибках, даже если Вы сделали этот запрос через XHR!
 
 <div className="my-6 relative rounded overflow-hidden bg-gray-500" style={{ paddingTop: '80.5%' }}>
-  <div className="absolute inset-0 w-full h-full flex items-center justify-center text-sm">Loading&hellip;</div>
+  <div className="absolute inset-0 w-full h-full flex items-center justify-center text-sm">Загрузка&hellip;</div>
   <iframe
     className="absolute inset-0 w-full h-full"
     src="https://player.vimeo.com/video/363562630?autoplay=1&loop=1&muted=1&background=1"
   ></iframe>
 </div>
 
-<Notice>Note, the modal behaviour is only intended for development purposes.</Notice>
+<Notice>Обратите внимание, модальное поведение предназначено только для целей разработки.</Notice>
 
 ## Production
 
-In production you'll want to return a proper Inertia error response instead of relying on the modal behaviour. To do this you'll need to update your framework's default exception handler to return a custom error page.
+В production Вы захотите вернуть правильный ответ об ошибке инерции вместо того, чтобы полагаться на модальное поведение. Для этого Вам необходимо обновить обработчик исключений по умолчанию Вашей платформы, чтобы он возвращал настраиваемую страницу ошибки.
 
 <TabbedCodeExamples
   examples={[
     {
       name: 'Laravel',
       language: 'php',
-      description: 'Extend the render() method in your App\\Exceptions\\Handler.php.',
+      description: 'Расширить метод render() в Вашем приложении App\\Exceptions\\Handler.php.',
       code: dedent`
         use Throwable;
         use Inertia\\Inertia;\n
@@ -74,7 +77,7 @@ In production you'll want to return a proper Inertia error response instead of r
   ]}
 />
 
-Notice how we're returning an `Error` page component in the example above. You'll need to actually create this. Here's an example error page component you can use as a starting point.
+Обратите внимание, как в приведенном выше примере мы возвращаем компонент страницы `Error`. Вам нужно будет это создать. Вот пример компонента страницы ошибки, который Вы можете использовать в качестве отправной точки.
 
 <TabbedCodeExamples
   examples={[
@@ -96,18 +99,18 @@ Notice how we're returning an `Error` page component in the example above. You'l
           computed: {
             title() {
               return {
-                503: '503: Service Unavailable',
-                500: '500: Server Error',
-                404: '404: Page Not Found',
-                403: '403: Forbidden',
+                503: '503: Сервис недоступен',
+                500: '500: Ошибка сервера',
+                404: '404: Страница не найдена',
+                403: '403: Запрещено',
               }[this.status]
             },
             description() {
               return {
-                503: 'Sorry, we are doing some maintenance. Please check back soon.',
-                500: 'Whoops, something went wrong on our servers.',
-                404: 'Sorry, the page you are looking for could not be found.',
-                403: 'Sorry, you are forbidden from accessing this page.',
+                503: 'Извините, мы проводим техническое обслуживание. Пожалуйста, попробуйте позже.',
+                500: 'Упс, что-то пошло не так на наших серверах.',
+                404: 'К сожалению, не удалось найти страницу, которую Вы ищете.',
+                403: 'К сожалению, доступ к этой странице запрещен.',
               }[this.status]
             },
           },
@@ -122,16 +125,16 @@ Notice how we're returning an `Error` page component in the example above. You'l
         import React from 'react'\n
         export default function ErrorPage({ status }) {
           const title = {
-            503: '503: Service Unavailable',
-            500: '500: Server Error',
-            404: '404: Page Not Found',
-            403: '403: Forbidden',
+            503: '503: Сервис недоступен',
+            500: '500: Ошибка сервера',
+            404: '404: Страница не найдена',
+            403: '403: Запрещено',
           }[status]\n
           const description = {
-            503: 'Sorry, we are doing some maintenance. Please check back soon.',
-            500: 'Whoops, something went wrong on our servers.',
-            404: 'Sorry, the page you are looking for could not be found.',
-            403: 'Sorry, you are forbidden from accessing this page.',
+            503: 'Извините, мы проводим техническое обслуживание. Пожалуйста, попробуйте позже.',
+            500: 'Упс, что-то пошло не так на наших серверах.',
+            404: 'К сожалению, не удалось найти страницу, которую Вы ищете.',
+            403: 'К сожалению, доступ к этой странице запрещен.',
           }[status]\n
           return (
             <div>
@@ -149,16 +152,16 @@ Notice how we're returning an `Error` page component in the example above. You'l
         <script>
           export let status\n
           $: title = {
-            503: '503: Service Unavailable',
-            500: '500: Server Error',
-            404: '404: Page Not Found',
-            403: '403: Forbidden',
+            503: '503: Сервис недоступен',
+            500: '500: Ошибка сервера',
+            404: '404: Страница не найдена',
+            403: '403: Запрещено',
           }[status]\n
           $: description = {
-            503: 'Sorry, we are doing some maintenance. Please check back soon.',
-            500: 'Whoops, something went wrong on our servers.',
-            404: 'Sorry, the page you are looking for could not be found.',
-            403: 'Sorry, you are forbidden from accessing this page.',
+            503: 'Извините, мы проводим техническое обслуживание. Пожалуйста, попробуйте позже.',
+            500: 'Упс, что-то пошло не так на наших серверах.',
+            404: 'К сожалению, не удалось найти страницу, которую Вы ищете.',
+            403: 'К сожалению, доступ к этой странице запрещен.',
           }[status]
         </script>\n
         <div>

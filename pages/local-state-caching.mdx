@@ -4,29 +4,29 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Local state caching',
+  title: 'Кэширование локального состояния',
   links: [
-    { url: '#top', name: 'Introduction' },
-    { url: '#remembering-local-state', name: 'Remembering local state' },
-    { url: '#multiple-components', name: 'Multiple components' },
+    { url: '#top', name: 'Вступление' },
+    { url: '#запоминание-локального-состояния', name: 'Запоминание локального состояния' },
+    { url: '#несколько-компонентов', name: 'Несколько компонентов' },
   ],
 }
 
-# Local state caching
+# Кэширование локального состояния
 
-When navigating browser history, Inertia reloads pages using prop data cached in history state. Inertia does not, however, cache local component state, since this is beyond its reach. This can lead to outdated pages in your browser history.
+При навигации по истории браузера Inertia перезагружает страницы, используя данные, кэшированные в истории. Однако инерция не кэширует состояние локального компонента, поскольку оно недоступно. Это может привести к появлению устаревших страниц в истории Вашего браузера.
 
-For example, if a user partially completes a form, then navigates away, and then returns back, the form will be reset and their work will have been lost.
+Например, если пользователь частично заполняет форму, затем уходит, а затем возвращается обратно, форма будет сброшена, и его работа будет потеряна.
 
-## Remembering local state
+## Запоминание локального состояния
 
-To mitigate this issue, you can tell Inertia which local component state to cache in the browser history.
+Чтобы смягчить эту проблему, Вы можете указать Inertia, какое состояние локального компонента следует кэшировать в истории браузера.
 
 <TabbedCodeExamples
   examples={[
     {
       name: 'Vue.js',
-      description: 'Use the "remember" property to cache local state.',
+      description: 'Используйте свойство "remember" для кеширования локального состояния.',
       language: 'js',
       code: dedent`
         {
@@ -52,7 +52,7 @@ To mitigate this issue, you can tell Inertia which local component state to cach
     },
     {
       name: 'React',
-      description: 'Use the "useRememberedState" hook to cache local state.',
+      description: 'Используйте хук "useRememberedState" для кеширования локального состояния.',
       language: 'jsx',
       code: dedent`
         import { useRememberedState } from '@inertiajs/inertia-react'
@@ -69,7 +69,7 @@ To mitigate this issue, you can tell Inertia which local component state to cach
     },
     {
       name: 'Svelte',
-      description: 'Use the "remember" store to cache local state.',
+      description: 'Используйте "remember" для кеширования локального состояния.',
       language: 'js',
       code: dedent`
         import { remember } from '@inertiajs/inertia-svelte'\n
@@ -83,11 +83,11 @@ To mitigate this issue, you can tell Inertia which local component state to cach
   ]}
 />
 
-## Multiple components
+## Несколько компонентов
 
-If your page contains multiple components using the remember functionality, you'll need to provide a unique key for each component. For example, `Users/Create`.
+Если Ваша страница содержит несколько компонентов, использующих функцию запоминания, Вам необходимо предоставить уникальный ключ для каждого компонента. Например, `Users/Create`.
 
-If you have multiple instances of the same component on the page, be sure to include a unique identifier for each of those instances. For example, `Users/Edit:{id}`.
+Если у Вас есть несколько экземпляров одного и того же компонента на странице, обязательно укажите уникальный идентификатор для каждого из этих экземпляров. Например, `Users/Edit:{id}`.
 
 <TabbedCodeExamples
   examples={[

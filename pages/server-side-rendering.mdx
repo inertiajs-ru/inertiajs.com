@@ -2,27 +2,27 @@ import Layout from '../components/Layout'
 
 export default Layout
 export const meta = {
-  title: 'Server-side rendering',
+  title: 'Серверный рендеринг',
   links: [
-    { url: '#not-supported', name: 'Not supported' },
-    { url: '#prerendering-services', name: 'Prerendering services' },
+    { url: '#не-поддерживается', name: 'Не поддерживается' },
+    { url: '#сервисы-предварительного-рендеринга', name: 'Сервисы предварительного рендеринга' },
     { url: '#prerendering-services-laravel', name: 'Laravel' },
-    { url: '#prerendering-services-javascript-nodejs-based-services', name: 'Javascript/Node.js-based services' },
+    { url: '#prerendering-services-javascript-nodejs', name: 'Javascript/Node.js' },
   ],
 }
 
-# Server-side rendering
+# Серверный рендеринг
 
-## Not supported
+## Не поддерживается
 
-Inertia does not currently support server-side rendering. If that's a priority for your application, Inertia may not be the right choice for you. That said, we believe server-side rendering to be technically possible with Inertia, and are likely to revisit this in the future.
+Inertia в настоящее время не поддерживает рендеринг на стороне сервера. Если это приоритет для Вашего приложения, Inertia может быть неправильным выбором для Вас. Тем не менее, мы считаем, что рендеринг на стороне сервера технически возможен с помощью Inertia, и, вероятно, вернемся к этому в будущем.
 
-## Prerendering services
+## Сервисы предварительного рендеринга
 
 ## Laravel
 
-**[Depictr](https://github.com/juhlinus/depictr)** - A package developed by [Linus Juhlin](https://twitter.com/juhlinus), which renders static pages for search engine crawlers.
+**[Depictr](https://github.com/juhlinus/depictr)** - пакет, разработанный [Linus Juhlin](https://twitter.com/juhlinus), который отображает статические страницы для поисковых роботов.
 
-## Javascript/Node.js-based services
+## Javascript/Node.js
 
-Some Inertia users are successfully using services like [Prerender.io](https://prerender.io), [Prerender.cloud](https://www.prerender.cloud) and [Rendertron](https://github.com/GoogleChrome/rendertron) to generate and cache HTML versions of their Inertia websites, and then serve that content to bots for SEO purposes.
+Некоторые пользователи Inertia успешно используют такие службы, как [Prerender.io](https://prerender.io), [Prerender.cloud](https://www.prerender.cloud) и [Rendertron](https://github.com/GoogleChrome/rendertron) для создания и кеширования HTML-версий своих веб-сайтов Inertia, а затем для передачи этого контента ботам в целях SEO.

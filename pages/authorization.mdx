@@ -5,12 +5,12 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Authorization',
+  title: 'Авторизация',
 }
 
-# Authorization
+# Авторизация
 
-With Inertia, authorization is best handled server-side in your policies. However, you may be wondering how to check against your policies from within your JavaScript page components, since you won't have access to your server-side helpers. The simplest approach here is to pass your authorization checks as props to your page components.
+С помощью Inertia авторизация лучше всего выполняется на стороне сервера в Ваших политиках. Однако Вам может быть интересно, как проверить соответствие Вашим политикам из компонентов страницы JavaScript, поскольку у Вас не будет доступа к Вашим помощникам на стороне сервера. Самый простой подход здесь - передать Ваши проверки авторизации в качестве свойства для компонентов Вашей страницы.
 
 <TabbedCodeExamples
   examples={[

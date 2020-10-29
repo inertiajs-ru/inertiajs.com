@@ -4,11 +4,11 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Events',
+  title: 'События',
   links: [
-    { url: '#registering-listeners', name: 'Registering listeners' },
-    { url: '#removing-listeners', name: 'Removing listeners' },
-    { url: '#cancelling-events', name: 'Cancelling events' },
+    { url: '#регистрация-слушателей', name: 'Регистрация слушателей' },
+    { url: '#удаление-слушателей', name: 'Удаление слушателей' },
+    { url: '#отмена-событий', name: 'Отмена событий' },
     { url: '#start', name: 'Start' },
     { url: '#progress', name: 'Progress' },
     { url: '#success', name: 'Success' },
@@ -16,17 +16,17 @@ export const meta = {
     { url: '#error', name: 'Error' },
     { url: '#finish', name: 'Finish' },
     { url: '#navigate', name: 'Navigate' },
-    { url: '#event-callbacks', name: 'Event callbacks' },
+    { url: '#обратные-вызовы-событий', name: 'Обратные вызовы событий' },
   ],
 }
 
-# Events
+# События
 
-Inertia provides an event system that allows you to "hook into" the various lifecycle events of the library.
+Inertia предоставляет систему событий, которая позволяет Вам «подключаться» к различным событиям жизненного цикла библиотеки.
 
-## Registering listeners
+## Регистрация слушателей
 
-To register an event listener, use the `Inertia.on()` method.
+Чтобы зарегистрировать прослушиватель событий, используйте метод `Inertia.on()`.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -36,7 +36,7 @@ Inertia.on('start', event => {
 })
 ```
 
-Under the hood Inertia uses native browser events, so you can also work with them that way as well. Just be sure to append `inertia:` to the event name.
+Inertia использует собственные события браузера, так что Вы также можете работать с ними таким же образом. Просто не забудьте добавить `inertia:` к имени события.
 
 ```js
 document.addEventListener('inertia:start', event => {
@@ -44,9 +44,9 @@ document.addEventListener('inertia:start', event => {
 })
 ```
 
-## Removing listeners
+## Удаление слушателей
 
-When you register an event listener, Inertia automatically returns you a callback to remove the event listener.
+Когда Вы регистрируете прослушиватель событий, Inertia автоматически возвращает Вам обратный вызов для удаления прослушивателя событий.
 
 ```js
 let removeStartEventListener = Inertia.on('start', event => {
@@ -57,7 +57,7 @@ let removeStartEventListener = Inertia.on('start', event => {
 removeStartEventListener()
 ```
 
-Combined with a destroyed hook, you can automatically remove the event listener when you navigate to a different page.
+В сочетании с обработанной ловушкой Вы можете автоматически удалить прослушиватель событий при переходе на другую страницу.
 
 ```js
 export default {
@@ -72,7 +72,7 @@ export default {
 }
 ```
 
-Alternatively, if you're using native browser events, you can remove the event listener using `removeEventListener()`.
+В качестве альтернативы, если Вы используете собственные события браузера, Вы можете удалить прослушиватель событий, используя `removeEventListener()`.
 
 ```js
 let startEventListener = event => {
@@ -85,9 +85,9 @@ document.addEventListener('inertia:start', startEventListener)
 document.removeEventListener('inertia:start', startEventListener)
 ```
 
-## Cancelling events
+## Отмена событий
 
-Some events (`start`, `invalid`, `error`) support cancellation, allowing you to prevent Inertia's default behaviour. Just like native events, if only one event listener calls `event.preventDefault()`, the event will be cancelled.
+Некоторые события (`start`, `invalid`, `error`) поддерживают отмену, что позволяет предотвратить поведение Inertia по умолчанию. Как и в случае с собственными событиями, если только один прослушиватель событий вызывает `event.preventDefault()`, событие будет отменено.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -99,7 +99,7 @@ Inertia.on('start', event => {
 })
 ```
 
-As a convenience, if you register your event listener using `Inertia.on()`, you can also cancel the event by returning `false` from the listener.
+Для удобства, если Вы зарегистрируете свой слушатель событий с помощью `Inertia.on()`, Вы также можете отменить событие, вернув из слушателя `false`.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -111,7 +111,7 @@ Inertia.on('start', event => {
 
 ## Start
 
-The `start` event fires before a request is made to the server. This is useful for displaying loading indicators and for intercepting visits.
+Событие `start` срабатывает перед отправкой запроса на сервер. Это полезно для отображения индикаторов загрузки и отслеживания посещений.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -121,7 +121,7 @@ Inertia.on('start', event => {
 })
 ```
 
-Cancel the `start` event to prevent the visit from happening.
+Отмените событие `start`, чтобы посещение не произошло.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -133,7 +133,7 @@ Inertia.on('start', event => {
 
 ## Progress
 
-The `progress` event fires as progress increments during file uploads.
+Событие `progress` запускается по мере увеличения прогресса во время загрузки файлов.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -143,11 +143,11 @@ Inertia.on('progress', event => {
 })
 ```
 
-The `progress` event is not cancelable.
+Событие `progress` не может быть отменено.
 
 ## Success
 
-The `success` event fires on successful page visits. Note, this does _not_ include history visits.
+Событие `success` запускается при успешном посещении страницы. Обратите внимание, что это _не_ включает посещение истории.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -157,13 +157,13 @@ Inertia.on('success', event => {
 })
 ```
 
-The `success` event is not cancelable.
+Событие `success` не может быть отменено.
 
 ## Invalid
 
-The `invalid` event fires when a non-Inertia response is received from the server, such as an `html` or `json` response. A valid Inertia response is one that has the `X-Inertia` header set to `true` with a `json` payload containing [the page object](/the-protocol#the-page-object).
+Событие `invalid` запускается, когда от сервера получен не-Inertia ответ, такой как `html` или `json` ответ. Допустимый ответ Inertia - это ответ, у которого заголовок `X-Inertia` установлен в значение `true` с полезной нагрузкой `json`, содержащей [объект страницы](/the-protocol#объект-страницы).
 
-This event is fired for all response types, including `200`, `400`, and `500` response codes.
+Это событие запускается для всех типов ответов, включая коды ответов `200`, `400` и `500`.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -174,7 +174,7 @@ Inertia.on('invalid', event => {
 })
 ```
 
-Cancel the `invalid` event to prevent Inertia from showing the non-Inertia response modal.
+Отмените событие `invalid`, чтобы Inertia не отображала режим ответа, отличного от Inertia.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -187,7 +187,7 @@ Inertia.on('invalid', event => {
 
 ## Error
 
-The `error` event fires on unexpected XHR errors, such as network interruptions, and for errors generated in the `resolveComponent()` callback.
+Событие `error` запускается при непредвиденных ошибкам XHR, таких как перебои в работе сети, а также к ошибкам, генерируемым при обратном вызове `resolveComponent()`.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -198,7 +198,7 @@ Inertia.on('error', event => {
 })
 ```
 
-Cancel the `error` event to prevent the error from being thrown.
+Отмените событие `error`, чтобы предотвратить возникновение ошибки.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -209,11 +209,11 @@ Inertia.on('error', event => {
 })
 ```
 
-Note, this event will _not_ fire for XHR requests that receive `400` and `500` level responses, or for non-Inertia responses, as these situations are handled in other ways by Inertia. See the [error handling](/error-handling) page for more information.
+Обратите внимание, что это событие _не_ срабатывает для запросов XHR, которые получают ответы уровня `400` и `500`, или для неинерционных ответов, поскольку эти ситуации обрабатываются другими способами с помощью Inertia. См. страницу [обработка ошибок](/error-handling) для получения дополнительной информации.
 
 ## Finish
 
-The `finish` event fires after an XHR request has completed for both successful and unsuccessful responses. This event is useful for hiding loading indicators.
+Событие `finish` запускается после завершения запроса XHR как для успешных, так и для неуспешных ответов. Это событие полезно для скрытия индикаторов загрузки.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -223,11 +223,11 @@ Inertia.on('finish', event => {
 })
 ```
 
-The `finish` event is not cancelable.
+Событие `finish` не может быть отменено.
 
 ## Navigate
 
-The `navigate` event fires on successful page visits, as well as when navigating through history. This event is useful for tracking analytics and things of that nature.
+Событие `navigate` запускается при успешных посещениях страницы, а также при навигации по истории. Это событие полезно для отслеживания аналитики и тому подобного.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -237,11 +237,11 @@ Inertia.on('navigate', event => {
 })
 ```
 
-The `navigate` event is not cancelable.
+Событие `navigate` не может быть отменено.
 
 ## Event callbacks
 
-In addition to the global events, Inertia also provides a number of event callbacks when manually making Inertia visits.
+В дополнение к глобальным событиям Inertia также предоставляет ряд обратных вызовов событий при ручном выполнении посещений Inertia.
 
 ```js
 Inertia.visit(url, {

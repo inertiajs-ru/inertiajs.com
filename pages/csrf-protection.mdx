@@ -5,20 +5,20 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'CSRF protection',
+  title: 'CSRF защита',
   links: [
-    { url: '#making-requests', name: 'Making requests' },
-    { url: '#handling-mismatches', name: 'Handling mismatches' },
+    { url: '#создание-запросов', name: 'Создание запросов' },
+    { url: '#обработка-несоответствий', name: 'Обработка несоответствий' },
   ],
 }
 
-# CSRF protection
+# CSRF защита
 
-## Making requests
+## Создание запросов
 
-If your web framework includes cross-site request forgery (CSRF) protection, you'll need to ensure that each Inertia requests includes the necessary token for `POST`, `PUT`, `PATCH` and `DELETE` requests.
+Если Ваша веб-платформа включает защиту от подделки межсайтовых запросов (CSRF), Вам необходимо убедиться, что каждый запрос Inertia включает необходимый токен для запросов `POST`, `PUT`, `PATCH` и `DELETE`.
 
-One solution is to include the CSRF token as a prop on every response. You can then use the token when making Inertia requests.
+Одно из решений - включать токен CSRF в качестве свойства в каждый ответ. Затем Вы можете использовать токен при выполнении запросов Inertia.
 
 ```js
 this.$inertia.post('/users', {
@@ -28,30 +28,29 @@ this.$inertia.post('/users', {
 })
 ```
 
-You can even use the <a href="/shared-data">shared data</a> functionality to automatically include the `csrf_token` with each response.
+Вы даже можете использовать функцию <a href="/shared-data">общих данных</a> , чтобы автоматически включать `csrf_token` в каждый ответ.
 
-However, a better approach is to use the CSRF functionality already built into [axios](https://github.com/axios/axios) for this. Axios is the HTTP library that Inertia uses under the hood.
+Однако лучше использовать для этого функцию CSRF, уже встроенную в [axios](https://github.com/axios/axios). Axios - это HTTP-библиотека, которую Inertia использует под капотом.
 
-Axios automatically checks for the existence of an `XSRF-TOKEN` cookie. If it's present, it will then include the token in an `X-XSRF-TOKEN` header for any requests it makes.
+Axios автоматически проверяет наличие cookie-файла `XSRF-TOKEN`. Если он присутствует, он будет включать токен в заголовок `X-XSRF-TOKEN` для любых запросов, которые он делает.
 
-The easiest way to implement this is using server-side middleware. Simply include the `XSRF-TOKEN` cookie on each response, and then verify the token using the `X-XSRF-TOKEN` header sent in the requests from axios.
+Самый простой способ реализовать это - использовать промежуточное ПО на стороне сервера. Просто включите файл куки `XSRF-TOKEN` в каждый ответ, а затем проверьте токен, используя заголовок `X-XSRF-TOKEN`, отправленный в запросах от axios.
 
-Some frameworks, such as [Laravel](https://github.com/laravel/framework/blob/5.8/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php#L176-L188), do this automatically, meaning there is no configuration required.
+Некоторые фреймворки, такие как [Laravel](https://github.com/laravel/framework/blob/5.8/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php#L176-L188), делают это автоматически, то есть там конфигурация не требуется.
 
 <Notice>
-  If you're using Laravel, be sure to omit the <inlineCode class="bg-gray-600">csrf-token</inlineCode> meta tag from
-  your project, as this will prevent the CSRF token from refreshing properly.
+  Если Вы используете Laravel, не забудьте опустить метатег <inlineCode class="bg-gray-600">csrf-token</inlineCode> из Вашего проекта, так как это помешает правильному обновлению токена CSRF.
 </Notice>
 
-## Handling mismatches
+## Обработка несоответствий
 
-When a CSRF token mismatch occurs, your web framework will likely throw an exception that results in an error response. For example, in Laravel a `TokenMismatchException` is thrown, which results in a `419` error page. Since that isn't a valid Inertia response, the error is shown in a modal.
+Когда происходит несоответствие токена CSRF, Ваша веб-платформа, скорее всего, выдаст исключение, которое приведет к ответу с ошибкой. Например, в Laravel генерируется исключение `TokenMismatchException`, что приводит к странице с ошибкой `419`. Поскольку это недействительный ответ Inertia, ошибка отображается в модальном окне.
 
 <video controls>
   <source src="/mp4/csrf-mismatch-modal.mp4" type="video/mp4" />
 </video>
 
-But, this isn't a great user experience. A better way to handle these errors is to return a redirect back to the previous page, along with a flash message that the page expired. This will result in a valid Inertia response, with the flash message available as a prop, which you can then display to the user. Note, you'll need to share your [flash messages](/shared-data#flash-messages) with Inertia.js for this to work.
+Но это не лучший пользовательский опыт. Лучший способ справиться с этими ошибками - вернуть перенаправление обратно на предыдущую страницу вместе с флэш-сообщением о том, что срок действия страницы истек. Это приведет к действительному ответу Inertia с флэш-сообщением, доступным как свойство, которое Вы затем можете отобразить пользователю. Обратите внимание: Вам нужно будет поделиться своими [быстрые сообщениями](/shared-data#быстрые-сообщения) с Inertia.js, чтобы это работало.
 
 <TabbedCodeExamples
   examples={[
@@ -90,7 +89,7 @@ But, this isn't a great user experience. A better way to handle these errors is 
   ]}
 />
 
-The end result is a much better experience for your users. Instead of seeing the error modal, they are instead presented with a message that the "page expired", and are asked to try again.
+Конечный результат - гораздо лучший опыт для Ваших пользователей. Вместо того, чтобы видеть модальное окно ошибки, они получают сообщение о том, что срок действия страницы истек, и их просят повторить попытку.
 
 <video controls>
   <source src="/mp4/csrf-mismatch-warning.mp4" type="video/mp4" />

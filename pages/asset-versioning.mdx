@@ -4,21 +4,21 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Asset versioning',
+  title: 'Управление версиями активов',
   links: [
-    { url: '#introduction', name: 'Introduction' },
-    { url: '#configuring', name: 'Configuring' },
-    { url: '#cache-busting', name: 'Cache busting' },
+    { url: '#top', name: 'Вступление' },
+    { url: '#настройка', name: 'Настройка' },
+    { url: '#очистка-кеша', name: 'Очистка кеша' },
   ],
 }
 
-# Asset versioning
+# Управление версиями активов
 
-One common challenge with single-page apps is refreshing site assets when they've been changed. Inertia makes this easy by optionally tracking the current version of your site assets. In the event that an asset changes, Inertia will automatically make a hard page visit instead of a normal ajax visit on the next request.
+Одна из распространенных проблем с одностраничными приложениями - обновление ресурсов сайта, когда они были изменены. Inertia упрощает это, при необходимости отслеживая текущую версию ресурсов Вашего сайта. В случае изменения актива Inertia автоматически выполнит жесткое посещение страницы вместо обычного посещения ajax при следующем запросе.
 
-## Configuring
+## Настройка
 
-To enable automatic asset refreshing, you simply need to tell Inertia what the current version of your assets is. This can be any `string` (letters, numbers, or a file hash), as long as it changes when your assets have been updated.
+Чтобы включить автоматическое обновление ресурсов, Вам просто нужно сообщить Inertia, какая у Вас текущая версия. Это может быть любая `string` (буквы, числа или хеш файла), если она изменяется при обновлении Ваших ресурсов.
 
 <TabbedCodeExamples
   examples={[
@@ -48,7 +48,7 @@ To enable automatic asset refreshing, you simply need to tell Inertia what the c
         Inertia::version(fn () => $version); // Lazily
       `,
       description:
-        'The HandleInertiaRequests middleware provides a sensible default for Laravel applications, which uses either a hash of the "app.asset_url" config value or the mix-manifest.json file.',
+        'Посредник HandleInertiaRequests обеспечивает разумное значение по умолчанию для приложений Laravel, которое использует либо хеш значения конфигурации "app.asset_url", либо файл mix-manifest.json.',
     },
     {
       name: 'Rails',
@@ -66,8 +66,8 @@ To enable automatic asset refreshing, you simply need to tell Inertia what the c
   ]}
 />
 
-## Cache busting
+## Очистка кеша
 
-Asset refreshing in Inertia works on the assumption that a hard page visit will trigger your assets to reload. However, Inertia doesn't actually do anything to force this. Typically this is done with some form of cache busting. For example, appending a version query parameter to the end of your asset URLs.
+Обновление активов в Inertia работает в предположении, что посещение жесткой страницы приведет к перезагрузке Ваших активов. Однако Inertia на самом деле ничего не делает для этого. Обычно это делается с помощью той или иной формы очистки кеша. Например, добавление параметра запроса версии в конец URL-адресов Ваших ресурсов.
 
-If you're using Laravel Mix, you can do this automatically by enabling [versioning](https://laravel.com/docs/mix#versioning-and-cache-busting) in your `webpack.mix.js` file.
+Если Вы используете Laravel Mix, Вы можете сделать это автоматически, включив [версионирование](https://laravel.com/docs/mix#versioning-and-cache-busting) в Вашем файле `webpack.mix.js`.

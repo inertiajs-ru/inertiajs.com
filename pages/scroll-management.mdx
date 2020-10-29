@@ -4,29 +4,29 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Scroll management',
+  title: 'Управление прокруткой',
   links: [
-    { url: '#scroll-resetting', name: 'Scroll resetting' },
-    { url: '#scroll-preservation', name: 'Scroll preservation' },
-    { url: '#scroll-regions', name: 'Scroll regions' },
+    { url: '#сброс-прокрутки', name: 'Сброс прокрутки' },
+    { url: '#сохранение-прокрутки', name: 'Сохранение прокрутки' },
+    { url: '#области-прокрутки', name: 'Области прокрутки' },
   ],
 }
 
-# Scroll management
+# Управление прокруткой
 
-## Scroll resetting
+## Сброс прокрутки
 
-When navigating between pages, Inertia mimics default browser behaviour by automatically resetting the scroll position of the document body (as well as any [scroll regions](#scroll-regions) you've defined), back to the top. Further, Inertia keeps track of the scroll position of each page and automatically restores that scroll position as you navigate forward and back in history.
+При перемещении между страницами Inertia имитирует поведение браузера по умолчанию, автоматически сбрасывая положение прокрутки тела документа (а также любых [областей прокрутки](#области-прокрутки), которые Вы определили), обратно наверх. Кроме того, Inertia отслеживает положение прокрутки каждой страницы и автоматически восстанавливает это положение прокрутки при перемещении вперед и назад в истории.
 
-## Scroll preservation
+## Сохранение прокрутки
 
-Sometimes it's desirable to prevent the default scroll resetting when making visits. You can disable this behaviour using the `preserveScroll` option when manually [making visits](/requests).
+Иногда желательно предотвратить сброс прокрутки по умолчанию при посещении. Вы можете отключить это поведение, используя опцию `preserveScroll` при [ручном посещении](/requests).
 
 ```js
 Inertia.visit(url, { preserveScroll: true })
 ```
 
-This is also possible with [Inertia links](/links) using the `preserve-scroll` attribute.
+Это также возможно с помощью [Ссылок Inertia](/links) с использованием атрибута `preserve-scroll`.
 
 <TabbedCodeExamples
   examples={[
@@ -36,7 +36,7 @@ This is also possible with [Inertia links](/links) using the `preserve-scroll` a
       code: dedent`
         <inertia-link href="/" preserve-scroll>Home</inertia-link>
       `,
-      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+      description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
     {
       name: 'React',
@@ -58,12 +58,12 @@ This is also possible with [Inertia links](/links) using the `preserve-scroll` a
   ]}
 />
 
-## Scroll regions
+## Области прокрутки
 
-If your app doesn't use document body scrolling, but instead has scrollable elements (using the `overflow` CSS property), scroll resetting will not work. In these situations you must tell Inertia which scrollable elements to manage by adding a `scroll-region` attribute.
+Если Ваше приложение не использует прокрутку документа, но вместо этого имеет прокручиваемые элементы (используя свойство CSS `overflow`), сброс прокрутки не будет работать. В этих ситуациях Вы должны указать Inertia, какими прокручиваемыми элементами нужно управлять, добавив атрибут `scroll-region`.
 
 ```html
 <div class="overflow-y-auto" scroll-region>
-  <!-- Your page content -->
+  <!-- Содержание Вашей страницы -->
 </div>
 ```

@@ -89,7 +89,7 @@ const Nav = ({ className }) => {
           </Link>
         </li>
       </ul>
-      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Основы</div>
+      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Основные</div>
       <ul>
         <li className="md:pr-3">
           <Link href="/routing">
@@ -132,61 +132,61 @@ const Nav = ({ className }) => {
           </Link>
         </li>
       </ul>
-      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Advanced</div>
+      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Продвинутые</div>
       <ul>
         <li className="md:pr-3">
           <Link href="/events">
-            <a className={linkClass('/events')}>Events</a>
+            <a className={linkClass('/events')}>События</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/partial-reloads">
-            <a className={linkClass('/partial-reloads')}>Partial reloads</a>
+            <a className={linkClass('/partial-reloads')}>Частичные перезагрузки</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/scroll-management">
-            <a className={linkClass('/scroll-management')}>Scroll management</a>
+            <a className={linkClass('/scroll-management')}>Управление прокруткой</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/authentication">
-            <a className={linkClass('/authentication')}>Authentication</a>
+            <a className={linkClass('/authentication')}>Аутентификация</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/authorization">
-            <a className={linkClass('/authorization')}>Authorization</a>
+            <a className={linkClass('/authorization')}>Авторизация</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/csrf-protection">
-            <a className={linkClass('/csrf-protection')}>CSRF protection</a>
+            <a className={linkClass('/csrf-protection')}>CSRF защита</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/error-handling">
-            <a className={linkClass('/error-handling')}>Error handling</a>
+            <a className={linkClass('/error-handling')}>Обработка ошибок</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/asset-versioning">
-            <a className={linkClass('/asset-versioning')}>Asset versioning</a>
+            <a className={linkClass('/asset-versioning')}>Управление версиями активов</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/local-state-caching">
-            <a className={linkClass('/local-state-caching')}>Local state caching</a>
+            <a className={linkClass('/local-state-caching')}>Кэширование локального состояния</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/transforming-props">
-            <a className={linkClass('/transforming-props')}>Transforming props</a>
+            <a className={linkClass('/transforming-props')}>Преобразование свойств</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/server-side-rendering">
-            <a className={linkClass('/server-side-rendering')}>Server-side rendering</a>
+            <a className={linkClass('/server-side-rendering')}>Серверный рендеринг</a>
           </Link>
         </li>
       </ul>

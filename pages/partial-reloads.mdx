@@ -5,25 +5,25 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Partial reloads',
+  title: 'Частичные перезагрузки',
   links: [
-    { url: '#top', name: 'Introduction' },
-    { url: '#making-partial-reloads', name: 'Making partial visits' },
-    { url: '#lazy-data-evaluation', name: 'Lazy data evaluation' },
+    { url: '#top', name: 'Вступление' },
+    { url: '#частичные-посещения', name: 'Частичные посещения' },
+    { url: '#отложенная-оценка-данных', name: 'Отложенная оценка данных' },
   ],
 }
 
-# Partial reloads
+# Частичные перезагрузки
 
-When making visits to the same page, it's not always necessary to fetch all of the data required for that page from the server again. In fact, selecting only a subset of the data can be a helpful performance optimization if it's acceptable that some page data becomes stale. This is possible to do in Inertia with the "partial reloads" feature.
+При посещении одной и той же страницы не всегда необходимо повторно получать все данные, необходимые для этой страницы, с сервера. Фактически, выбор только части данных может быть полезной оптимизацией производительности, если допустимо, чтобы некоторые данные страницы стали устаревшими. Это можно сделать в режиме Inertia с функцией «частичных перезагрузок».
 
-As an example, consider a user index page that includes a list of users, as well as an option to filter the users by their company. On the first request to the user index page both the `users` and `companies` data is passed to the page component. However, on subsequent visits to the same page (maybe to filter the users), you can request only the `users` data from the server, and not the `companies` data. Inertia will then automatically merge the partial data returned from the server with the data it already has in memory client-side.
+В качестве примера рассмотрим страницу пользователей, которая включает список пользователей, а также возможность фильтрации пользователей по их компании. При первом запросе к странице пользователя данные `users` и `companies` передаются компоненту страницы. Однако при последующих посещениях той же страницы (возможно, для фильтрации пользователей) Вы можете запрашивать с сервера только данные `users`, а не данные `companies`. Затем Inertia автоматически объединит частичные данные, возвращаемые сервером, с данными, которые уже есть в памяти на стороне клиента.
 
-<Notice>Partial reloads only work for visits made to the same page component.</Notice>
+<Notice>Частичная перезагрузка работает только для посещений того же компонента страницы.</Notice>
 
-## Making partial visits
+## Частичные посещения
 
-To perform a partial reload, use the `only` property to set which data you want returned from the server. This takes an array of keys, which corresponds to the keys of the props.
+Чтобы выполнить частичную перезагрузку, используйте свойство `only`, чтобы указать, какие данные Вы хотите вернуть с сервера. Это принимает массив ключей, который соответствует ключам свойств.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -33,7 +33,7 @@ Inertia.visit(url, {
 })
 ```
 
-Since partial reloads can only be made to the same page component, it almost always makes sense to just use the `Inertia.reload()` method, which automatically uses the current URL.
+Поскольку частичная перезагрузка может выполняться только для одного и того же компонента страницы, почти всегда имеет смысл просто использовать метод `Inertia.reload()`, который автоматически использует текущий URL.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -41,7 +41,7 @@ import { Inertia } from '@inertiajs/inertia'
 Inertia.reload({ only: ['users'] })
 ```
 
-It's also possible to perform partial reloads with Inertia links using the `only` property.
+Также возможно выполнить частичную перезагрузку с помощью ссылок Inertia, используя свойство `only`.
 
 <TabbedCodeExamples
   examples={[
@@ -51,7 +51,7 @@ It's also possible to perform partial reloads with Inertia links using the `only
       code: dedent`
         <inertia-link href="/users?active=true" :only="['users']">Show active</inertia-link>
       `,
-      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+      description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
     {
       name: 'React',
@@ -73,11 +73,11 @@ It's also possible to perform partial reloads with Inertia links using the `only
   ]}
 />
 
-## Lazy data evaluation
+## Отложенная оценка данных
 
-For partial reloads to be most effective, be sure to also use lazy data evaluation server-side. This is done by wrapping all optional page data in a closure.
+Чтобы частичная перезагрузка была наиболее эффективной, обязательно используйте серверную часть отложенной оценки данных. Это делается путем заключения всех необязательных данных страницы в замыкание.
 
-When Inertia performs a visit, it will determine which data is required, and only then will it evaluate the closure. This can significantly increase the performance of pages with a lot of optional data.
+Когда Inertia выполняет визит, она определяет, какие данные требуются, и только после этого оценивает замыкание. Это может значительно повысить производительность страниц с большим количеством дополнительных данных.
 
 <TabbedCodeExamples
   examples={[

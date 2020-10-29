@@ -3,11 +3,11 @@ import Layout from '../components/Layout'
 import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
-export const meta = { title: 'Transforming props' }
+export const meta = { title: 'Преобразование свойств' }
 
-# Transforming props
+# Преобразование свойств
 
-Sometimes it can be useful to transform the props client-side before they are passed to the page component. For example, you may have a collection of errors that you want to convert into a custom `Error` object. You can do this using the `transformProps` callback.
+Иногда может быть полезно преобразовать свойства на стороне клиента, прежде чем они будут переданы компоненту страницы. Например, у Вас может быть набор ошибок, который Вы хотите преобразовать в пользовательский объект `Error`. Вы можете сделать это с помощью обратного вызова `transformProps`.
 
 <TabbedCodeExamples
   examples={[
