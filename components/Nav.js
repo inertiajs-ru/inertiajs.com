@@ -190,6 +190,20 @@ const Nav = ({ className }) => {
           </Link>
         </li>
       </ul>
+      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Перевод</div>
+      <ul>
+        <li className="md:pr-3">
+          <Link href="https://github.com/inertiajs-ru/inertiajs.ru">
+            <a className="inline-flex " target="_blank">
+              <span className="pr-1">Репозиторий</span>
+              <svg width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#444444" d="M14 16v-11l-1 1v9h-12v-12h9l1-1h-11v14z"></path>
+                <path fill="#444444" d="M16 0h-5l1.8 1.8-6.8 6.8 1.4 1.4 6.8-6.8 1.8 1.8z"></path>
+              </svg>
+            </a>
+          </Link>
+        </li>
+      </ul>
     </nav>
   )
 }

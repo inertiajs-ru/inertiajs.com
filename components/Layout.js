@@ -55,13 +55,13 @@ export default function Layout({ meta, children }) {
 
     if (process.env.NODE_ENV === 'production') {
       // Carbon Ads
-      var s = document.createElement('script')
-      s.setAttribute('async', '')
-      s.src = '//cdn.carbonads.com/carbon.js?serve=CE7DCKJ7&placement=inertiajscom'
-      s.id = '_carbonads_js'
-      var adElement = document.getElementById('ad')
-      adElement.innerHTML = ''
-      adElement.appendChild(s)
+      // var s = document.createElement('script')
+      // s.setAttribute('async', '')
+      // s.src = '//cdn.carbonads.com/carbon.js?serve=CE7DCKJ7&placement=inertiajscom'
+      // s.id = '_carbonads_js'
+      // var adElement = document.getElementById('ad')
+      // adElement.innerHTML = ''
+      // adElement.appendChild(s)
 
       // Google Analytics
       // window.dataLayer = window.dataLayer || []
@@ -96,10 +96,16 @@ export default function Layout({ meta, children }) {
             <meta name="twitter:image" content={meta.twitterCardImage} />
           </React.Fragment>
         )}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
-        <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140425344-1"></script>
+        {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script> */}
+        <script dangerouslySetInnerHTML={{__html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-K4JFG6X');`}} />
+        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140425344-1"></script> */}
       </Head>
+      <noscript dangerouslySetInnerHTML={{__html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4JFG6X" height="0" width="0" style="display:none;visibility:hidden;"></iframe>`}} />
       {meta.sponsor && (
         <div
           className="px-6 md:px-12 xl:px-0 py-4 text-md font-medium flex items-center justify-center"
