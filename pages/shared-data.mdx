@@ -5,22 +5,22 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Shared data',
+  title: 'Общие данные',
   links: [
-    { url: '#top', name: 'Introduction' },
-    { url: '#sharing-data', name: 'Sharing data' },
-    { url: '#accessing-shared-data', name: 'Accessing shared data' },
-    { url: '#flash-messages', name: 'Flash messages' },
+    { url: '#top', name: 'Вступление' },
+    { url: '#обмен-данными', name: 'Обмен данными' },
+    { url: '#доступ-к-общим-данным', name: 'Доступ к общим данным' },
+    { url: '#быстрые-сообщения', name: 'Быстрые сообщения' },
   ],
 }
 
-# Shared data
+# Общие данные
 
-Sometimes you need to access certain data on numerous pages within your application. For example, a common use-case for this is showing the current user in the site header. Passing this data manually in each response isn't practical. In these situations shared data can be useful.
+Иногда Вам нужно получить доступ к определенным данным на многочисленных страницах Вашего приложения. Например, обычным вариантом использования для этого является отображение текущего пользователя в заголовке сайта. Передавать эти данные вручную в каждом ответе нецелесообразно. В этих ситуациях могут быть полезны общие данные.
 
-## Sharing data
+## Обмен данными
 
-The server-side adapters provide a way to preassign shared data for each request. This is typically done outside of your controllers. Shared data will be automatically merged with the page props provided in your controller.
+Адаптеры на стороне сервера позволяют заранее назначать общие данные для каждого запроса. Обычно это делается вне Ваших контроллеров. Общие данные будут автоматически объединены с реквизитами страницы, предоставленными в Вашем контроллере.
 
 <TabbedCodeExamples
   examples={[
@@ -62,7 +62,7 @@ The server-side adapters provide a way to preassign shared data for each request
         );
       `,
       description:
-        'The HandleInertiaRequests middleware provides a "share" method where you can define the data that is automatically shared with each Inertia response.',
+        'По промежуточного слоя HandleInertiaRequests предоставляет метод «совместного использования», в котором Вы можете определить данные, которые автоматически будут совместно использоваться с каждым ответом Inertia.',
     },
     {
       name: 'Rails',
@@ -85,13 +85,13 @@ The server-side adapters provide a way to preassign shared data for each request
   ]}
 />
 
-<Notice>Use this feature sparingly as shared data is included with every response.</Notice>
+<Notice>Используйте эту функцию с осторожностью, поскольку общие данные включаются в каждый ответ.</Notice>
 
-<Notice>Page props and shared data are merged together, so be sure to namespace your shared data appropriately.</Notice>
+<Notice>Реквизиты страницы и общие данные объединяются вместе, поэтому не забудьте правильно указать пространство имен для общих данных.</Notice>
 
-## Accessing shared data
+## Доступ к общим данным
 
-Once you've shared the data server-side, you'll then be able to access it within your page components as props. Shared data can even be accessed in non-page components, although not as props in those cases. Here's an example of how to do this in a layout component.
+После того, как Вы поделились данными на стороне сервера, Вы сможете получить к нему доступ в компонентах своей страницы в качестве свойств. Доступ к общим данным можно получить даже в компонентах, не относящихся к странице, но не в качестве реквизита в этих случаях. Вот пример того, как это сделать в компоненте макета.
 
 <TabbedCodeExamples
   examples={[
@@ -170,11 +170,11 @@ Once you've shared the data server-side, you'll then be able to access it within
   ]}
 />
 
-## Flash messages
+## Быстрые сообщения
 
-Another great use-case for shared data is flash messages. These are messages stored in the session only for the next request. You'll often set a flash message after completing a task and before redirecting to a different page.
+Еще один отличный вариант использования общих данных - это флэш-сообщения. Это сообщения, хранящиеся в сеансе только для следующего запроса. Вы часто устанавливаете флэш-сообщение после завершения задачи и перед перенаправлением на другую страницу.
 
-Here's a simple way to implement flash messages in your Inertia applications. First, share the flash message on each request.
+Вот простой способ реализовать флэш-сообщения в Ваших приложениях Inertia. Сначала поделитесь флэш-сообщением по каждому запросу.
 
 <TabbedCodeExamples
   examples={[
@@ -211,7 +211,7 @@ Here's a simple way to implement flash messages in your Inertia applications. Fi
   ]}
 />
 
-Next, display the flash message in a front-end component, such as the site layout.
+Затем отобразите флэш-сообщение во внешнем компоненте, таком как макет сайта.
 
 <TabbedCodeExamples
   examples={[

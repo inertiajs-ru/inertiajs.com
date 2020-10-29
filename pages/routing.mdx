@@ -4,21 +4,24 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Routing',
-  links: [{ url: '#top', name: 'Defining routes' }, { url: '#generating-routes', name: 'Generating URLs' }],
+  title: 'Маршрутизация',
+  links: [
+    { url: '#top', name: 'Определение маршрутов' },
+    { url: '#создание-url-адресов', name: 'Создание URL-адресов' },
+  ],
 }
 
-# Routing
+# Маршрутизация
 
-## Defining routes
+## Определение маршрутов
 
-With Inertia all routing is defined server-side. Meaning you don't need Vue Router or React Router. Simply create routes using your server-side framework of choice.
+С помощью Inertia вся маршрутизация определяется на стороне сервера. Это означает, что Вам не нужен Vue Router или React Router. Просто создайте маршруты, используя выбранную Вами серверную структуру.
 
-## Generating URLs
+## Создание URL-адресов
 
-Some server-side frameworks allow you to generate URLs from named routes. However, you will not have access to those helpers client-side. Here are a couple ways to still use named routes with Inertia.
+Некоторые серверные платформы позволяют создавать URL-адреса из именованных маршрутов. Однако у Вас не будет доступа к этим помощникам на стороне клиента. Вот несколько способов по-прежнему использовать именованные маршруты с Inertia.
 
-The first option is to generate URLs server-side and include them as props. Notice in this example how we're passing the `edit_url` and `create_url` to the `Users/Index` component.
+Первый вариант - создать URL-адреса на стороне сервера и включить их в качестве свойств. Обратите внимание на то, как в этом примере мы передаем `edit_url` и `create_url` компоненту `Users/Index`.
 
 <TabbedCodeExamples
   examples={[
@@ -68,7 +71,7 @@ The first option is to generate URLs server-side and include them as props. Noti
   ]}
 />
 
-Another option is to make your route definitions available client-side as JSON, and then use this to generate URLs from your named routes.
+Другой вариант - сделать определения маршрутов доступными на стороне клиента как JSON, а затем использовать это для генерации URL-адресов из именованных маршрутов.
 
 ```php
 <script>
@@ -76,14 +79,14 @@ Another option is to make your route definitions available client-side as JSON, 
 </script>
 ```
 
-If you're using Laravel, the <a href="https://github.com/tightenco/ziggy">Ziggy</a> library does this for you automatically via a global `route()` function. If you're using Ziggy with Vue.js, it's helpful to make this function available as a custom `$route` property so you can use it directly in your templates.
+Если Вы используете Laravel, библиотека <a href="https://github.com/tightenco/ziggy">Ziggy</a> сделает это за Вас автоматически через глобальную функцию `route()` function. Если вы используете Ziggy с Vue.js,  полезно сделать эту функцию доступной как настраиваемое свойство `$route`, чтобы Вы могли использовать его непосредственно в своих шаблонах.
 
 ```js
 Vue.prototype.$route = (...args) => route(...args).url()
 ```
 
 ```html
-<inertia-link :href="$route('users.create')">Create User</inertia-link>
+<inertia-link :href="$route('users.create')">Создать Пользователя</inertia-link>
 ```
 
-For Ruby on Rails there is a similar library called <a href="https://github.com/railsware/js-routes">JsRoutes</a>.
+Для Ruby on Rails существует аналогичная библиотека под названием <a href="https://github.com/railsware/js-routes">JsRoutes</a>.

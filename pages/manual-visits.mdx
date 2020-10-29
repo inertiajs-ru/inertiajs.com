@@ -5,24 +5,24 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Manual visits',
+  title: 'Посещения вручную',
   links: [
-    { url: '#method', name: 'Method' },
-    { url: '#data', name: 'Data' },
-    { url: '#browser-history', name: 'Browser history' },
-    { url: '#component-state', name: 'Component state' },
-    { url: '#scroll-preservation', name: 'Scroll preservation' },
-    { url: '#partial-reloads', name: 'Partial reloads' },
-    { url: '#custom-headers', name: 'Custom headers' },
-    { url: '#visit-cancellation', name: 'Visit cancellation' },
-    { url: '#event-callbacks', name: 'Event callbacks' },
-    { url: '#promise-deprecation', name: 'Promise deprecation' },
+    { url: '#метод', name: 'Метод' },
+    { url: '#данные', name: 'Данные' },
+    { url: '#история-браузера', name: 'История браузера' },
+    { url: '#состояние-компонента', name: 'Состояние компонента' },
+    { url: '#сохранение-прокрутки', name: 'Сохранение прокрутки' },
+    { url: '#частичные-перезагрузки', name: 'Частичные перезагрузки' },
+    { url: '#пользовательские-заголовки', name: 'Пользовательские заголовки' },
+    { url: '#отмена-посещения', name: 'Отмена посещения' },
+    { url: '#обратные-вызовы-событий', name: 'Обратные вызовы событий' },
+    { url: '#устаревание-промиса', name: 'Устаревание промиса' },
   ],
 }
 
-# Manual visits
+# Посещения вручную
 
-In addition to [creating links](/links), it's also possible to manually make Inertia visits. This is done using the `Inertia.visit()` method.
+Помимо [создания ссылок](/links), также можно вручную делать инерционные посещения. Это делается с помощью метода `Inertia.visit()`.
 
 <TabbedCodeExamples
   examples={[
@@ -95,7 +95,7 @@ In addition to [creating links](/links), it's also possible to manually make Ine
   ]}
 />
 
-However, generally it's preferred to use one of the shortcut methods instead. These methods share all the same options as `Inertia.visit()`.
+Однако обычно вместо этого рекомендуется использовать один из методов быстрого доступа. Эти методы имеют те же параметры, что и `Inertia.visit()`.
 
 <TabbedCodeExamples
   examples={[
@@ -144,17 +144,17 @@ However, generally it's preferred to use one of the shortcut methods instead. Th
   ]}
 />
 
-## Method
+## Метод
 
-Use the `method` option to set the request method to `get`, `post`, `put`, `patch` or `delete`. The default is `get`.
+Используйте опцию `method`, чтобы установить метод запроса на `get`, `post`, `put`, `patch` или `delete`. По умолчанию это `get`.
 
 ```js
 Inertia.visit(url, { method: 'post' })
 ```
 
-## Data
+## Данные
 
-Use the `data` option to add data to the request.
+Используйте опцию `data`, чтобы добавить данные в запрос.
 
 ```js
 Inertia.visit('/users', {
@@ -166,7 +166,7 @@ Inertia.visit('/users', {
 })
 ```
 
-As a convenience, the `get()`, `post()`, `put()` and `patch()` methods all include `data` as the second argument.
+Для удобства все методы `get()`, `post()`, `put()` и `patch()` включают в качестве второго аргумента значение `data`.
 
 ```js
 Inertia.post('/users', {
@@ -175,62 +175,61 @@ Inertia.post('/users', {
 })
 ```
 
-## Browser history
+## История браузера
 
-When making visits, Inertia automatically adds a new entry into the browser history. However, it's also possible to replace the current history entry using by setting the `replace` option to `true`.
+При посещении Inertia автоматически добавляет новую запись в историю браузера. Однако также можно заменить текущую запись в истории, установив для параметра `replace` значение `true`.
 
 ```js
 Inertia.get('/users', { search: 'John' }, { replace: true })
 ```
 
-As a shortcut, you can use `replace()` method to automatically do this.
+В качестве ярлыка вы можете использовать метод `replace()`, чтобы сделать это автоматически.
 
 ```js
 Inertia.replace('/users', { search: 'John' })
 ```
 
 <Notice>
-  Note that visits made to the same URL (including query strings) automatically set <inlineCode>replace</inlineCode> to{' '}
-  <inlineCode>true</inlineCode>.
+  Обратите внимание, что посещения одного и того же URL (включая строки запроса) автоматически устанавливают для <inlineCode>replace</inlineCode> значение{' '} <inlineCode>true</inlineCode>.
 </Notice>
 
-## Component state
+## Состояние компонента
 
-By default page visits to the same page force a fresh page component instance, which clears out any local state, such as form inputs, scroll positions and focus states.
+По умолчанию при посещении той же страницы принудительно создается новый экземпляр компонента страницы, который очищает любое локальное состояние, такое как входные данные формы, положения прокрутки и состояния фокуса.
 
-In certain situations it's necessary to preserve the page component state. For example, when submitting a form, you need to preserve your form data in the event that validation errors come back.
+В определенных ситуациях необходимо сохранить состояние компонента страницы. Например, при отправке формы Вам необходимо сохранить данные формы на тот случай, если ошибки проверки вернутся.
 
-This can be done by setting the `preserveState` option to `true`.
+Это можно сделать, установив для параметра `preserveState` значение `true`.
 
 ```js
 Inertia.get('/users', { search: 'John' }, { preserveState: true })
 ```
 
-For convenience, the `post()`, `put()`, `patch()` and `replace()` methods autmatically set `preserveState` to `true`.
+Для удобства методы `post()`, `put()`, `patch()` и `replace()` автоматически устанавливают для параметра `preserveState` знаечние `true`.
 
-## Scroll preservation
+## Сохранение прокрутки
 
-When navigating between pages, Inertia mimics default browser behaviour by automatically resetting the scroll position of the document body (as well as any [scroll regions](/scroll-management#scroll-regions) you've defined), back to the top. Use the `preserveScroll` option to disable this behaviour.
+При переходе между страницами Inertia имитирует поведение браузера по умолчанию, автоматически сбрасывая положение прокрутки тела документа (а также любые определенные Вами [области прокрутки](/scroll-management#области-прокрутки)) обратно наверх. Используйте опцию `preserveScroll`, чтобы отключить это поведение.
 
 ```js
 Inertia.visit(url, { preserveScroll: true })
 ```
 
-For more information, see the [scroll management](/scroll-management) page.
+Для получения дополнительной информации смотрите страницу [управление прокруткой](/scroll-management).
 
-## Partial reloads
+## Частичные перезагрузки
 
-The `only` option allows you to request a subset of the props (data) from the server on subsequent visits to the same page.
+Опция `only` позволяет Вам запрашивать подмножество свойств (данных) с сервера при последующих посещениях той же страницы.
 
 ```js
 Inertia.visit('/users', { search: 'John' }, { only: ['users'] })
 ```
 
-For more information, see the [partial reloads](/partial-reloads) page.
+Для получения дополнительной информации смотрите страницу [частичные перезагрузки](/partial-reloads).
 
-## Custom headers
+## Пользовательские заголовки
 
-The `headers` option allows you to add custom headers to a request.
+Опция `headers` позволяет Вам добавлять в запрос собственные заголовки.
 
 ```js
 Inertia.post('/users', data, {
@@ -240,11 +239,11 @@ Inertia.post('/users', data, {
 })
 ```
 
-<Notice>The Inertia headers take priority and therefore cannot be overwritten.</Notice>
+<Notice>Заголовки Inertia имеют приоритет и поэтому не могут быть перезаписаны.</Notice>
 
-## Visit cancellation
+## Отмена посещения
 
-You can cancel a visit using a cancel token, which Inertia automatically generates and provides via the `onCancelToken()` callback prior to making the visit.
+Вы можете отменить посещение, используя токен отмены, который Inertia автоматически генерирует и предоставляет с помощью обратного вызова `onCancelToken()` до совершения посещения.
 
 ```js
 Inertia.post('/users', data, {
@@ -255,11 +254,11 @@ Inertia.post('/users', data, {
 this.cancelToken.cancel()
 ```
 
-When a visit is cancelled, both the `onCancel()` and `onFinish()` event callbacks will be called.
+Когда визит отменяется, будут вызваны как обратные вызовы событий `onCancel()`, так и `onFinish()`.
 
-## Event callbacks
+## Обратные вызовы событий
 
-In addition to the [global events](/events), Inertia also provides a number of per-visit event callbacks.
+В дополнение к [глобальным событиям](/events), Inertia также предоставляет ряд обратных вызовов событий для каждого посещения.
 
 ```js
 Inertia.post('/users', data, {
@@ -271,7 +270,7 @@ Inertia.post('/users', data, {
 })
 ```
 
-Returning `false` from the `onStart()` callback will cause the visit to be cancelled.
+Возврат `false` из обратного вызова `onStart()` приведет к отмене посещения.
 
 ```js
 Inertia.delete(`/users/${user.id}`, {
@@ -279,7 +278,7 @@ Inertia.delete(`/users/${user.id}`, {
 })
 ```
 
-It's also possible to return a promise from the `onSuccess()` callback. This will delay the "finish" event until the promise has resolved.
+Также возможно вернуть обещание из обратного вызова `onSuccess()`. Это задержит событие «finish» до тех пор, пока обещание не будет выполнено.
 
 ```js
 Inertia.post(url, {
@@ -296,19 +295,18 @@ Inertia.post(url, {
 })
 ```
 
-## Promise deprecation
+## Устаревание промиса
 
-As of `v0.3.0`, Inertia deprecated the promise that is returned from `Inertia.visit()`. If you call `then()`, `catch()` or `finally()` on an Inertia visit, you will now get the following console warning:
+Начиная с `v0.3.0`, Inertia исключила промис, возвращаемый из `Inertia.visit()`. Если Вы вызовете `then()`, `catch()` или `finally()` во время посещения Inertia, Вы получите следующее предупреждение консоли:
 
 <div class="py-4 px-6 border-l-4 border-orange-300 bg-orange-100 text-orange-900 text-sm font-mono">
   <div>
-    Inertia.js visit promises have been deprecated and will be removed in a future release. Please use the new visit
-    event callbacks instead.
+    Обещания посещения Inertia.js устарели и будут удалены в следующем выпуске. Вместо этого используйте новые обратные вызовы событий посещения.
   </div>
-  <div class="mt-4">Learn more at https://inertiajs.ru/manual-visits#promise-deprecation</div>
+  <div class="mt-4">Узнайте больше на https://inertiajs.com/manual-visits#promise-deprecation</div>
 </div>
 
-The preferred approach is to use the new [event callbacks](#event-callbacks) instead. For example, instead of using `then()`, use the `onSuccess()` callback.
+Предпочтительный подход - использовать вместо этого новые [обратные вызовы событий](#обратные-вызовы-событий). Например, вместо использования `then()` используйте обратный вызов `onSuccess()`.
 
 ```js
 Inertia.post('/profile', data, {
@@ -318,7 +316,7 @@ Inertia.post('/profile', data, {
 })
 ```
 
-Instead of using `finally()`, use the `onFinish()` callback.
+Вместо использования `finally()` используйте обратный вызов `onFinish()`.
 
 ```js
 Inertia.post('/profile', data, {
@@ -328,7 +326,7 @@ Inertia.post('/profile', data, {
 })
 ```
 
-And instead of using `catch()`, it's better to handle these unexpected errors using a global error event handler.
+И вместо использования `catch()` эти неожиданные ошибки лучше обрабатывать с помощью глобального обработчика событий ошибок.
 
 ```js
 Inertia.on('error', event => {

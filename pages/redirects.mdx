@@ -4,21 +4,21 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Redirects',
+  title: 'Перенаправления',
   links: [
-    { url: '#top', name: 'Making redirects' },
-    { url: '#303-response-code', name: '303 response code' },
-    { url: '#external-redirects', name: 'External redirects' },
+    { url: '#top', name: 'Создаем редиректы' },
+    { url: '#303-код-ответа', name: '303 код ответа' },
+    { url: '#внешние-перенаправления', name: 'Внешние перенаправления' },
   ],
 }
 
-# Redirects
+# Перенаправления
 
-When making a non-GET Inertia request, via `<inertia-link>` or manually, be sure to always respond with a proper Inertia response.
+При выполнении запроса Inertia, отличного от `GET`, через `<inertia-link>` или вручную, обязательно всегда отвечайте правильным ответом Inertia.
 
-For example, if you're creating a new user, have your "store" endpoint return a redirect back to a standard GET endpoint, such as your user index page.
+Например, если Вы создаете нового пользователя, пусть Ваша конечная точка "store" вернет перенаправление обратно на стандартную конечную точку `GET`, такую как страница индекса пользователя.
 
-Inertia will automatically follow this redirect and update the page accordingly. Here's a simplified example.
+Inertia автоматически последует за этим перенаправлением и соответствующим образом обновит страницу. Вот упрощенный пример.
 
 <TabbedCodeExamples
   examples={[
@@ -65,15 +65,15 @@ Inertia will automatically follow this redirect and update the page accordingly.
   ]}
 />
 
-## 303 response code
+## 303 код ответа
 
-Note, when redirecting after a `PUT`, `PATCH` or `DELETE` request you must use a `303` response code, otherwise the subsequent request will not be treated as a `GET` request. A `303` redirect is the same as a `302` except that the follow-up request is explicitly changed to a `GET` request.
+Обратите внимание: при перенаправлении после запроса `PUT`, `PATCH` или `DELETE` Вы должны использовать код ответа `303`, иначе последующий запрос не будет рассматриваться как `GET` запрос. Редирект `303` аналогичен перенаправлению `302`, за исключением того, что последующий запрос явно заменяется `GET` запросом.
 
-If you're using one of our official server-side adapters, redirects will automatically be converted.
+Если Вы используете один из наших официальных серверных адаптеров, перенаправления будут автоматически преобразованы.
 
-## External redirects
+## Внешние перенаправления
 
-Sometimes it's necessary to redirect to an external website, or even another non-Inertia endpoint in your app, within an Inertia request. This is possible using a server-side initiated `window.location` visit.
+Иногда в рамках запроса Inertia необходимо перенаправить на внешний веб-сайт или даже на другую конечную точку, не являющуюся Inertia. Это возможно с помощью инициированного сервером посещения `window.location`.
 
 <TabbedCodeExamples
   examples={[
@@ -94,4 +94,4 @@ Sometimes it's necessary to redirect to an external website, or even another non
   ]}
 />
 
-This will generate a `409 Conflict` response, which includes the destination URL in the `X-Inertia-Location` header. Client-side, Inertia will detect this response and automatically do a `window.location = url` visit.
+Это сгенерирует ответ `409 Conflict`, который включает целевой URL-адрес в заголовке `X-Inertia-Location`. На стороне клиента Inertia обнаружит этот ответ и автоматически выполнит посещение `window.location = url`.

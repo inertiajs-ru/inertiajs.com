@@ -4,20 +4,20 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Forms',
+  title: 'Формы',
   links: [
-    { url: '#submitting-forms', name: 'Submitting forms' },
-    { url: '#server-side-validation', name: 'Server-side validation' },
-    { url: '#file-uploads', name: 'File uploads' },
-    { url: '#classic-xhr-submits', name: 'Classic XHR submits' },
+    { url: '#отправка-форм', name: 'Отправка форм' },
+    { url: '#проверка-на-стороне-сервера', name: 'Проверка на стороне сервера' },
+    { url: '#загрузка-файлов', name: 'Загрузка файлов' },
+    { url: '#классическая-отправка-xhr', name: 'Классическая отправка XHR' },
   ],
 }
 
-# Forms
+# Формы
 
-## Submitting forms
+## Отправка форм
 
-While it's possible to make classic form submissions with Inertia, it's not recommended, as they cause full page reloads. Instead, it's better to intercept form submissions and then make the [request](/requests) using Inertia.
+Хотя с помощью Inertia можно отправлять классические формы, это не рекомендуется, так как они вызывают полную перезагрузку страницы. Вместо этого лучше перехватить отправленные формы, а затем сделать [запрос](/requests) с помощью Inertia.
 
 <TabbedCodeExamples
   examples={[
@@ -123,7 +123,7 @@ While it's possible to make classic form submissions with Inertia, it's not reco
   ]}
 />
 
-Unlike a classic ajax submitted form, with Inertia you don't handle the post submission behaviour client-side. Rather, you do this server-side using a [redirect](/redirects). And, of course, there is nothing stopping you from redirecting right back to the page that you're on.
+В отличие от классической формы отправки ajax, с помощью Inertia Вы не обрабатываете поведение отправки сообщения на стороне клиента. Скорее, Вы делаете это на стороне сервера, используя [перенаправление](/redirects). И, конечно же, ничто не мешает Вам перенаправить обратно на страницу, на которой Вы находитесь.
 
 <TabbedCodeExamples
   examples={[
@@ -171,15 +171,15 @@ Unlike a classic ajax submitted form, with Inertia you don't handle the post sub
   ]}
 />
 
-## Server-side validation
+## Проверка на стороне сервера
 
-Handling server-side validation errors (`422` responses) in Inertia works a little different than a classic ajax-driven form, where you catch the validation errors in the response and then update the form state. The trick is to handle the validation errors more like a server-side framework.
+Обработка ошибок проверки на стороне сервера (ответы `422`) в Inertia работает немного иначе, чем классическая форма, управляемая ajax, где Вы обнаруживаете ошибки проверки в ответе, а затем обновляете состояние формы. Хитрость заключается в том, чтобы обрабатывать ошибки валидации, как в серверной структуре.
 
-First, you submit your form using Inertia. If there are validation errors, you redirect server-side back to your form page, including the errors in the session. Your server-side framework likely already does this automatically.
+Сначала Вы отправляете форму с помощью Inertia. Если есть ошибки проверки, Вы перенаправляете серверную часть обратно на страницу формы, включая ошибки в сеансе. Ваша серверная инфраструктура, вероятно, уже делает это автоматически.
 
-From there you need to send those error messages to your form page component. You can do this in your controller, but it's better to simply do this automatically for all your page components. You can use the Inertia [share](/shared-data) functionality to accomplish this.
+Оттуда Вам нужно отправить эти сообщения об ошибках в компонент страницы формы. Вы можете сделать это в своем контроллере, но лучше просто сделать это автоматически для всех компонентов Вашей страницы. Для этого Вы можете использовать функцию Inertia [общие](/shared-data).
 
-Some adapters, such as the Laravel adapter (as of [v0.2.9](https://github.com/inertiajs/inertia-laravel/releases/tag/v0.2.9)), do this automatically, making the validation errors available via the `errors` prop. However, if you'd like to share them manually (maybe you'd like the errors in a different format), you can still do this:
+Некоторые адаптеры, такие как адаптер Laravel (начиная с [v0.2.9](https://github.com/inertiajs/inertia-laravel/releases/tag/v0.2.9)), делают это автоматически, делая доступными ошибки проверки через свойство `errors`. Однако, если Вы хотите поделиться ими вручную (возможно, Вам нужны ошибки в другом формате), Вы все равно можете сделать это:
 
 <TabbedCodeExamples
   examples={[
@@ -211,7 +211,7 @@ Some adapters, such as the Laravel adapter (as of [v0.2.9](https://github.com/in
   ]}
 />
 
-Now the validation errors will be available as part of your page props, and since they are reactive your template will automatically display them. Here's an updated version of the form example above that displays server-side validation errors.
+Теперь ошибки проверки будут доступны как часть свойств Вашей страницы, и, поскольку они являются реактивными, Ваш шаблон автоматически отобразит их. Вот обновленная версия приведенного выше примера формы, в которой отображаются ошибки проверки на стороне сервера.
 
 <TabbedCodeExamples
   examples={[
@@ -330,11 +330,11 @@ Now the validation errors will be available as part of your page props, and sinc
   ]}
 />
 
-While this is very similar to how you would normally do classic server-side form submissions, this approach is much nicer, since you're not reloading the whole page and rehydrating form input data.
+Хотя это очень похоже на то, как Вы обычно выполняете классическую отправку форм на стороне сервера, этот подход намного лучше, поскольку Вы не перезагружаете всю страницу и не обновляете входные данные формы.
 
-## File uploads
+## Загрузка файлов
 
-The trick to uploading files with Inertia (via XHR) is using the `FormData` object. Here is a simple example of using `FormData` with Inertia.
+Уловка для загрузки файлов с помощью Inertia (через XHR) заключается в использовании объекта `FormData`. Вот простой пример использования `FormData` с Inertia.
 
 ```js
 var data = new FormData()
@@ -347,8 +347,8 @@ data.append('photo', photo || '')
 Inertia.post('/users', data)
 ```
 
-You can learn more about `FormData` interface [here](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+Вы можете узнать больше об интерфейсе `FormData` [здесь](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
-## Classic XHR submits
+## Классическая отправка XHR
 
-Using Inertia to submit forms works well for the vast majority of situations. However, in the event that you'd like more fine-grain control over the form submission, there's nothing stopping you from making a classic XHR request. An excellent library to use here is [axios](https://github.com/axios/axios), which is what Inertia uses under the hood.
+Использование Inertia для отправки форм хорошо работает в подавляющем большинстве ситуаций. Однако, если Вам нужен более точный контроль над отправкой формы, ничто не мешает Вам сделать классический запрос XHR. Отличная библиотека для использования здесь [axios](https://github.com/axios/axios), которую Inertia использует под капотом.

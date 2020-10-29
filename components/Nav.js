@@ -89,46 +89,46 @@ const Nav = ({ className }) => {
           </Link>
         </li>
       </ul>
-      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">The basics</div>
+      <div className="mt-8 md:mt-12 mb-3 text-xs font-bold uppercase text-gray-500 tracking-widest">Основы</div>
       <ul>
         <li className="md:pr-3">
           <Link href="/routing">
-            <a className={linkClass('/routing')}>Routing</a>
+            <a className={linkClass('/routing')}>Маршрутизация</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/responses">
-            <a className={linkClass('/responses')}>Responses</a>
+            <a className={linkClass('/responses')}>Ответы</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/pages">
-            <a className={linkClass('/pages')}>Pages</a>
+            <a className={linkClass('/pages')}>Страницы</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/links">
-            <a className={linkClass('/links')}>Links</a>
+            <a className={linkClass('/links')}>Ссылки</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/manual-visits">
-            <a className={linkClass('/manual-visits')}>Manual visits</a>
+            <a className={linkClass('/manual-visits')}>Ручные посещения</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/redirects">
-            <a className={linkClass('/redirects')}>Redirects</a>
+            <a className={linkClass('/redirects')}>Редиректы</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/forms">
-            <a className={linkClass('/forms')}>Forms</a>
+            <a className={linkClass('/forms')}>Формы</a>
           </Link>
         </li>
         <li className="md:pr-3">
           <Link href="/shared-data">
-            <a className={linkClass('/shared-data')}>Shared data</a>
+            <a className={linkClass('/shared-data')}>Общие данные</a>
           </Link>
         </li>
       </ul>

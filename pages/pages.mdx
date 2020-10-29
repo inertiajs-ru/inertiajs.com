@@ -4,24 +4,24 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Pages',
+  title: 'Страницы',
   links: [
-    { url: '#top', name: 'Introduction' },
-    { url: '#creating-pages', name: 'Creating pages' },
-    { url: '#creating-layouts', name: 'Creating layouts' },
-    { url: '#persistent-layouts', name: 'Persistent layouts' },
-    { url: '#default-layouts', name: 'Default layouts' },
-    { url: '#title-and-meta-tags', name: 'Title and meta tags' },
+    { url: '#top', name: 'Вступление' },
+    { url: '#создание-страниц', name: 'Создание страниц' },
+    { url: '#создание-макетов', name: 'Создание макетов' },
+    { url: '#постоянные-макеты', name: 'Постоянные макеты' },
+    { url: '#макеты-по-умолчанию', name: 'Макеты по умолчанию' },
+    { url: '#заголовок-и-метатеги', name: 'Заголовок и метатеги' },
   ],
 }
 
-# Pages
+# Страницы
 
-With Inertia, each page in your application has its own controller and corresponding JavaScript component. This allows you to retrieve just the data necessary for that page, no API required.
+С Inertia каждая страница Вашего приложения имеет собственный контроллер и соответствующий компонент JavaScript. Это позволяет получать только те данные, которые необходимы для этой страницы, без использования API.
 
-## Creating pages
+## Создание страниц
 
-Pages are simply JavaScript components. There is nothing particularly special about them. Pages receive data from the controllers as props. Here's an example of a simple page component.
+Страницы - это просто компоненты JavaScript. В них нет ничего особенного. Страницы получают данные от контроллеров как реквизиты. Вот пример простого компонента страницы.
 
 <TabbedCodeExamples
   examples={[
@@ -81,9 +81,9 @@ Pages are simply JavaScript components. There is nothing particularly special ab
   ]}
 />
 
-## Creating layouts
+## Создание макетов
 
-While not required, for most projects it makes sense to create a site layout that your pages can extend. Notice in our page example above that we're wrapping the page content within a `<layout>` component. Here's an example of such a component. There is nothing Inertia specific here. This is just a standard JavaScript component.
+Хотя это и не обязательно, для большинства проектов имеет смысл создать макет сайта, который можно расширять. Обратите внимание, что в нашем примере страницы выше мы помещаем содержимое страницы в компонент `<layout>`. Вот пример такого компонента. Здесь нет ничего специфичного для Inertia. Это просто стандартный компонент JavaScript.
 
 <TabbedCodeExamples
   examples={[
@@ -119,7 +119,7 @@ While not required, for most projects it makes sense to create a site layout tha
           }
         </script>
       `,
-      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+      description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
     {
       name: 'React',
@@ -170,11 +170,11 @@ While not required, for most projects it makes sense to create a site layout tha
   ]}
 />
 
-## Persistent layouts
+## Постоянные макеты
 
-While it's simple to implement layouts as children of the page components, it does force the layout instance to be destroyed and recreated between visits. This means you cannot have persistent layout state when navigating between pages.
+Хотя реализовать макеты как дочерние элементы компонентов страницы просто, это заставляет экземпляр макета уничтожаться и воссоздавать его между посещениями. Это означает, что у Вас не может быть постоянного состояния макета при переходе между страницами.
 
-For example, maybe you have an audio player on a podcast website that you want to continue playing as users navigate the site. Or, maybe you simply want to maintain the scroll position in your navigation between page visits. In these situations, using the persistent layouts feature in Inertia is a better choice.
+Например, возможно, у Вас есть аудиоплеер на веб-сайте подкастов, который Вы хотите продолжать воспроизводить, когда пользователи будут перемещаться по сайту. Или, может быть, Вы просто хотите сохранить позицию прокрутки в навигации между посещениями страницы. В таких ситуациях лучше использовать функцию постоянных макетов в Inertia.
 
 <TabbedCodeExamples
   examples={[
@@ -238,7 +238,7 @@ For example, maybe you have an audio player on a podcast website that you want t
   ]}
 />
 
-You can also create more complex layout arrangements using nested layouts.
+Вы также можете создавать более сложные компоновки макетов, используя вложенные макеты.
 
 <TabbedCodeExamples
   examples={[
@@ -313,9 +313,9 @@ You can also create more complex layout arrangements using nested layouts.
   ]}
 />
 
-## Default layouts
+## Макеты по умолчанию
 
-If you're using persistent layouts, it's possible to set a default page layout in the `resolveComponent()` callback.
+Если Вы используете постоянные макеты, можно установить макет страницы по умолчанию в обратном вызове `resolveComponent()`.
 
 ```js
 import Layout from './Layout'
@@ -327,9 +327,9 @@ resolveComponent: name => import(`./Pages/${name}`)
   }),
 ```
 
-This will automatically set the page layout to `Layout` if a layout has not already been set for that page. If needed, you can disable the default layout on specific pages by setting the `layout` to `null`.
+Это автоматически установит макет страницы на `Layout`, если макет еще не был установлен для этой страницы. При необходимости Вы можете отключить макет по умолчанию на определенных страницах, установив для параметра `layout` значение `null`.
 
-You can even go a step further and conditionally set the default page layout based on the page `name`, which is available to the `resolveComponent()` method. For example, maybe you don't want the default layout applied to your public pages.
+Вы даже можете пойти дальше и условно установить макет страницы по умолчанию на основе имени страницы `name`, доступного для метода `resolveComponent()`. Например, Вы не хотите, чтобы макет по умолчанию применялся к Вашим общедоступным страницам.
 
 ```js
 import Layout from './Layout'
@@ -343,9 +343,9 @@ resolveComponent: name => import(`./Pages/${name}`)
   }),
 ```
 
-## Title and meta tags
+## Заголовок и метатеги
 
-While it's possible to pass title and meta tag props from pages to layouts (as illustrated above), it's often easier to manage this using a document head library like [Vue Meta](https://github.com/nuxt/vue-meta) or [React Helmet](https://github.com/nfl/react-helmet). Svelte has built-in support for manipulating the document head with the `<svelte:head>` element.
+Хотя можно передавать реквизиты заголовков и метатегов со страниц в макеты (как показано выше), часто проще управлять этим с помощью библиотеки заголовка документа, такой как [Vue Meta](https://github.com/nuxt/vue-meta) или [React Helmet](https://github.com/nfl/react-helmet). Svelte имеет встроенную поддержку для управления заголовком документа с помощью элемента `<svelte:head>`.
 
 <TabbedCodeExamples
   examples={[
@@ -376,7 +376,7 @@ While it's possible to pass title and meta tag props from pages to layouts (as i
           }
         </script>
       `,
-      description: "Don't forget to install and configure the Vue Meta package.",
+      description: "Не забудьте установить и настроить пакет Vue Meta.",
     },
     {
       name: 'React',
@@ -397,7 +397,7 @@ While it's possible to pass title and meta tag props from pages to layouts (as i
           )
         }
       `,
-      description: "Don't forget to install and configure the React Helmet package.",
+      description: "Не забудьте установить и настроить пакет React Helmet.",
     },
     {
       name: 'Svelte',
@@ -420,4 +420,4 @@ While it's possible to pass title and meta tag props from pages to layouts (as i
   ]}
 />
 
-Further, if it's critical for your application to set the page title and meta tags server-side, you can use [root template data](/responses#root-template-data) to accomplish this.
+Кроме того, если для Вашего приложения критически важно установить заголовок страницы и метатеги на стороне сервера, Вы можете использовать [данные корневого шаблона](/responses#данные-корневого-шаблона) для этого.
