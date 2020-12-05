@@ -9,6 +9,7 @@ export const meta = {
     { url: '#регистрация-слушателей', name: 'Регистрация слушателей' },
     { url: '#удаление-слушателей', name: 'Удаление слушателей' },
     { url: '#отмена-событий', name: 'Отмена событий' },
+    { url: '#before', name: 'Before' },
     { url: '#start', name: 'Start' },
     { url: '#progress', name: 'Progress' },
     { url: '#success', name: 'Success' },
@@ -31,7 +32,7 @@ Inertia предоставляет систему событий, которая
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('start', event => {
+Inertia.on('start', (event) => {
   console.log(`Starting a visit to ${event.detail.visit.url}`)
 })
 ```
@@ -39,7 +40,7 @@ Inertia.on('start', event => {
 Inertia использует собственные события браузера, так что Вы также можете работать с ними таким же образом. Просто не забудьте добавить `inertia:` к имени события.
 
 ```js
-document.addEventListener('inertia:start', event => {
+document.addEventListener('inertia:start', (event) => {
   console.log(`Starting a visit to ${event.detail.visit.url}`)
 })
 ```
@@ -49,7 +50,7 @@ document.addEventListener('inertia:start', event => {
 Когда Вы регистрируете прослушиватель событий, Inertia автоматически возвращает Вам обратный вызов для удаления прослушивателя событий.
 
 ```js
-let removeStartEventListener = Inertia.on('start', event => {
+let removeStartEventListener = Inertia.on('start', (event) => {
   console.log(`Starting a visit to ${event.detail.visit.url}`)
 })
 
@@ -64,7 +65,7 @@ export default {
   mounted() {
     this.$once(
       'hook:destroyed',
-      Inertia.on('start', event => {
+      Inertia.on('start', (event) => {
         console.log(`Starting a visit to ${event.detail.visit.url}`)
       })
     )
@@ -75,7 +76,7 @@ export default {
 В качестве альтернативы, если Вы используете собственные события браузера, Вы можете удалить прослушиватель событий, используя `removeEventListener()`.
 
 ```js
-let startEventListener = event => {
+let startEventListener = (event) => {
   console.log(`Starting a visit to ${event.detail.visit.url}`)
 }
 
@@ -92,7 +93,7 @@ document.removeEventListener('inertia:start', startEventListener)
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('start', event => {
+Inertia.on('start', (event) => {
   if (!confirm('Are you sure you want to navigate away?')) {
     event.preventDefault()
   }
@@ -104,32 +105,46 @@ Inertia.on('start', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('start', event => {
+Inertia.on('start', (event) => {
+  return confirm('Are you sure you want to navigate away?')
+})
+```
+
+## Before
+
+Событие `before` срабатывает, когда собирается запрос к серверу. Это полезно для перехвата посещений.
+
+```js
+import { Inertia } from '@inertiajs/inertia'
+
+Inertia.on('before', (event) => {
+  console.log(`About to make a visit to ${event.detail.visit.url}`)
+})
+```
+
+Основная цель этого мероприятия - позволить Вам предотвратить посещение.
+
+```js
+import { Inertia } from '@inertiajs/inertia'
+
+Inertia.on('before', (event) => {
   return confirm('Are you sure you want to navigate away?')
 })
 ```
 
 ## Start
 
-Событие `start` срабатывает перед отправкой запроса на сервер. Это полезно для отображения индикаторов загрузки и отслеживания посещений.
+Событие `start` срабатывает при запуске запроса к серверу. Это полезно для отображения индикаторов загрузки.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('start', event => {
+Inertia.on('start', (event) => {
   console.log(`Starting a visit to ${event.detail.visit.url}`)
 })
 ```
 
-Отмените событие `start`, чтобы посещение не произошло.
-
-```js
-import { Inertia } from '@inertiajs/inertia'
-
-Inertia.on('start', event => {
-  return confirm('Are you sure you want to navigate away?')
-})
-```
+Событие `start` не отменяется.
 
 ## Progress
 
@@ -138,7 +153,7 @@ Inertia.on('start', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('progress', event => {
+Inertia.on('progress', (event) => {
   this.form.progress = event.detail.progress.percentage
 })
 ```
@@ -152,7 +167,7 @@ Inertia.on('progress', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('success', event => {
+Inertia.on('success', (event) => {
   console.log(`Successfully made a visit to ${event.detail.page.url}`)
 })
 ```
@@ -168,7 +183,7 @@ Inertia.on('success', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('invalid', event => {
+Inertia.on('invalid', (event) => {
   console.log(`An invalid Inertia response was received.`)
   console.log(event.detail.response)
 })
@@ -179,7 +194,7 @@ Inertia.on('invalid', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('invalid', event => {
+Inertia.on('invalid', (event) => {
   event.preventDefault()
   // Handle the invalid response yourself
 })
@@ -192,7 +207,7 @@ Inertia.on('invalid', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('error', event => {
+Inertia.on('error', (event) => {
   console.log(`An unexpected error occurred during an Inertia visit.`)
   console.log(event.detail.error)
 })
@@ -203,7 +218,7 @@ Inertia.on('error', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('error', event => {
+Inertia.on('error', (event) => {
   event.preventDefault()
   // Handle the error yourself
 })
@@ -218,7 +233,7 @@ Inertia.on('error', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('finish', event => {
+Inertia.on('finish', (event) => {
   NProgress.done()
 })
 ```
@@ -232,24 +247,13 @@ Inertia.on('finish', event => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('navigate', event => {
+Inertia.on('navigate', (event) => {
   console.log(`Navigated to ${event.detail.page.url}`)
 })
 ```
 
 Событие `navigate` не может быть отменено.
 
-## Event callbacks
+## Обратные вызовы событий
 
-В дополнение к глобальным событиям Inertia также предоставляет ряд обратных вызовов событий при ручном выполнении посещений Inertia.
-
-```js
-Inertia.visit(url, {
-  onCancelToken: cancelToken => {},
-  onCancel: () => {},
-  onStart: visit => {},
-  onProgress: progress => {},
-  onSuccess: page => {},
-  onFinish: () => {},
-})
-```
+В дополнение к глобальным событиям, Inertia также предоставляет ряд [обратных вызовов событий](/manual-visits#event-callbacks) при ручном выполнении посещений Inertia.

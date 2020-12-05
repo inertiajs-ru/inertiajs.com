@@ -41,6 +41,7 @@ export const meta = {
           headers: {},
           onCancelToken: cancelToken => {},
           onCancel: () => {},
+          onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
@@ -63,6 +64,7 @@ export const meta = {
           headers: {},
           onCancelToken: cancelToken => {},
           onCancel: () => {},
+          onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
@@ -85,6 +87,7 @@ export const meta = {
           headers: {},
           onCancelToken: cancelToken => {},
           onCancel: () => {},
+          onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
@@ -144,6 +147,8 @@ export const meta = {
   ]}
 />
 
+Метод `reload()` - это просто сокращение, которое автоматически посещает текущую страницу, причем для `preserveState` и `preserveScroll` установлено значение `true`.
+
 ## Метод
 
 Используйте опцию `method`, чтобы установить метод запроса на `get`, `post`, `put`, `patch` или `delete`. По умолчанию это `get`.
@@ -183,14 +188,8 @@ Inertia.post('/users', {
 Inertia.get('/users', { search: 'John' }, { replace: true })
 ```
 
-В качестве ярлыка Вы можете использовать метод `replace()`, чтобы сделать это автоматически.
-
-```js
-Inertia.replace('/users', { search: 'John' })
-```
-
 <Notice>
-  Обратите внимание, что посещения одного и того же URL (включая строки запроса) автоматически устанавливают для <inlineCode>replace</inlineCode> значение{' '} <inlineCode>true</inlineCode>.
+  При посещениях одного и того же URL-адреса для <inlineCode>replace</inlineCode> автоматически устанавливается значение <inlineCode>true</inlineCode>.
 </Notice>
 
 ## Состояние компонента
@@ -205,7 +204,7 @@ Inertia.replace('/users', { search: 'John' })
 Inertia.get('/users', { search: 'John' }, { preserveState: true })
 ```
 
-Для удобства методы `post()`, `put()`, `patch()` и `replace()` автоматически устанавливают для параметра `preserveState` знаечние `true`.
+Для удобства методы `post`, `put`, `patch`, `delete` и `reload` по умолчанию для `preserveState` имеют значение `true`.
 
 ## Сохранение прокрутки
 
@@ -247,7 +246,7 @@ Inertia.post('/users', data, {
 
 ```js
 Inertia.post('/users', data, {
-  onCancelToken: cancelToken => (this.cancelToken = cancelToken),
+  onCancelToken: (cancelToken) => (this.cancelToken = cancelToken),
 })
 
 // Cancel the visit
@@ -262,19 +261,20 @@ this.cancelToken.cancel()
 
 ```js
 Inertia.post('/users', data, {
-  onStart: visit => {},
-  onProgress: progress => {},
-  onSuccess: page => {},
+  onBefore: (visit) => {},
+  onStart: (visit) => {},
+  onProgress: (progress) => {},
+  onSuccess: (page) => {},
   onCancel: () => {},
   onFinish: () => {},
 })
 ```
 
-Возврат `false` из обратного вызова `onStart()` приведет к отмене посещения.
+Возврат `false` из обратного вызова `onBefore()` приведет к отмене посещения.
 
 ```js
 Inertia.delete(`/users/${user.id}`, {
-  onStart: () => confirm('Are you sure you want to delete this user?'),
+  onBefore: () => confirm('Are you sure you want to delete this user?'),
 })
 ```
 
@@ -289,8 +289,8 @@ Inertia.post(url, {
     ])
   }
   onFinish: () => {
-    // This won't be called until doThing()
-    // and doAnotherThing() have finished.
+    // Это не будет вызываться, пока не завершатся
+    // doThing() и doAnotherThing().
   },
 })
 ```
@@ -311,7 +311,7 @@ Inertia.post(url, {
 ```js
 Inertia.post('/profile', data, {
   onSuccess: () => {
-    // Handle success event
+    // Обработка успешного события
   },
 })
 ```
@@ -321,7 +321,7 @@ Inertia.post('/profile', data, {
 ```js
 Inertia.post('/profile', data, {
   onFinish: () => {
-    // Handle finish event
+    // Обработка события завершения
   },
 })
 ```
@@ -329,8 +329,8 @@ Inertia.post('/profile', data, {
 И вместо использования `catch()` эти неожиданные ошибки лучше обрабатывать с помощью глобального обработчика событий ошибок.
 
 ```js
-Inertia.on('error', event => {
+Inertia.on('error', (event) => {
   event.preventDefault()
-  // Handle the error yourself
+  // Устраните ошибку самостоятельно
 })
 ```
