@@ -176,7 +176,7 @@ const Nav = ({ className }) => {
         </li>
         <li className="md:pr-3">
           <Link href="/progress-indicators">
-            <a className={linkClass('/progress-indicators')}>Progress indicators</a>
+            <a className={linkClass('/progress-indicators')}>Индикаторы выполнения</a>
           </Link>
         </li>
         <li className="md:pr-3">

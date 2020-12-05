@@ -2,29 +2,29 @@ import Layout from '../components/Layout'
 
 export default Layout
 export const meta = {
-  title: 'Progress indicators',
+  title: 'Индикаторы выполнения',
   links: [
-    { url: '#default', name: 'Default' },
-    { url: '#custom', name: 'Custom' },
+    { url: '#по-умолчанию', name: 'По умолчанию' },
+    { url: '#пользовательский', name: 'Пользовательский' },
   ],
 }
 
-# Progress indicators
+# Индикаторы выполнения
 
-Since Inertia requests are made via XHR, there's no default browser loading indicator when navigating from one page to another. To solve this, Inertia provides an optional [progress](https://github.com/inertiajs/progress) library, which shows a loading bar whenever you make an Inertia visit. It's also possible to setup your own custom page loading indicators. This page explains both approaches.
+Поскольку запросы инерции выполняются через XHR, индикатор загрузки браузера по умолчанию при переходе с одной страницы на другую отсутствует. Чтобы решить эту проблему, Inertia предоставляет необязательную библиотеку [progress](https://github.com/inertiajs/progress), которая показывает полосу загрузки всякий раз, когда Вы совершаете посещение Inertia. Также можно установить свои собственные индикаторы загрузки страниц. На этой странице объясняются оба подхода.
 
-## Default
+## По умолчанию
 
-Inertia's default progress library (`@inertiajs/progress`) is a light wrapper around [NProgress](https://ricostacruz.com/nprogress/). This library shows, updates, and hides the NProgress loading bar by listening to Inertia page visit [events](/events).
+Библиотека прогресса Inertia по умолчанию (`@inertiajs/progress`) представляет собой легкую оболочку вокруг [NProgress](https://ricostacruz.com/nprogress/). Эта библиотека показывает, обновляет и скрывает полосу загрузки NProgress, слушая посещение страницы Inertia [события](/events).
 
-To use it, start by installing it:
+Чтобы использовать его, начните с его установки:
 
 ```bash
 npm install @inertiajs/progress
 yarn add @inertiajs/progress
 ```
 
-Once it's been installed, initialize it in your app.
+После установки инициализируйте его в своем приложении.
 
 ```js
 import { InertiaProgress } from '@inertiajs/progress'
@@ -32,68 +32,68 @@ import { InertiaProgress } from '@inertiajs/progress'
 InertiaProgress.init()
 ```
 
-It also provides a number of customization options, which you pass to the `init()` method.
+Он также предоставляет ряд параметров настройки, которые Вы передаете методу `init()`.
 
 ```js
 InertiaProgress.init({
-  // The delay after which the progress bar will
-  // appear during navigation, in milliseconds.
+  // Задержка в миллисекундах, после которой
+  // во время навигации появится индикатор выполнения.
   delay: 250,
 
-  // The color of the progress bar.
+  // Цвет индикатора выполнения.
   color: '#29d',
 
-  // Whether to include the default NProgress styles.
+  // Следует ли включать стили NProgress по умолчанию.
   includeCSS: true,
 
-  // Whether the NProgress spinner will be shown.
+  // Будет ли отображаться счетчик NProgress.
   showSpinner: false,
 })
 ```
 
-## Custom
+## Пользовательский
 
-It's also possible to setup your own custom page loading indicators, using Inertia [events](/events). Here's how to do this, using the [NProgress](https://ricostacruz.com/nprogress/) library as an example.
+Также можно настроить свои собственные индикаторы загрузки страниц, используя [события Inertia](/events). Вот как это сделать на примере библиотеки [NProgress](https://ricostacruz.com/nprogress/).
 
-First, install the NProgress library.
+Сначала установите библиотеку NProgress.
 
 ```bash
 npm install nprogress
 yarn add nprogress
 ```
 
-You'll need to add the NProgress [styles](https://github.com/rstacruz/nprogress/blob/master/nprogress.css) to your project. You can do this using the CDN version.
+Вам нужно будет добавить NProgress [стили](https://github.com/rstacruz/nprogress/blob/master/nprogress.css) в свой проект. Вы можете сделать это, используя версию CDN.
 
 ```html
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
 ```
 
-Next, import both `NProgress` and `Inertia` into your application.
+Затем импортируйте в свое приложение как `NProgress`, так и `Inertia`.
 
 ```js
 import NProgress from 'nprogress'
 import { Inertia } from '@inertiajs/inertia'
 ```
 
-Next, let's add a `start` event listener. We'll use this listener to show the progress bar when a new Inertia visit begins.
+Затем давайте добавим слушателя событий `start`. Мы будем использовать этот слушатель, чтобы показывать индикатор выполнения, когда начинается новое посещение Inertia.
 
 ```js
 Inertia.on('start', () => NProgress.start())
 ```
 
-Next, let's add a `finish` event listener to hide the progress bar when the page visit finishes.
+Затем давайте добавим прослушиватель событий `finish`, чтобы скрыть индикатор выполнения по завершении посещения страницы.
 
 ```js
 Inertia.on('finish', () => NProgress.done())
 ```
 
-That's it, you now have a working page loading indicator! As you navigate from one page to another, the progress bar will be added and removed from the page.
+Вот и все, теперь у Dас есть рабочий индикатор загрузки страницы! Когда Dы переходите с одной страницы на другую, индикатор выполнения будет добавляться и удаляться со страницы.
 
-### Handling cancelled visits
+### Обработка отмененных посещений
 
-While this implementation works great for visits that finish properly, it would be nice to handle cancelled visits a little better. First, for interrupted visits (those that get cancelled as a result of a new visit) the progress bar should simply be reset back to the start position. Second, for manually cancelled visits, the progress bar should be immediately removed from the page.
+Хотя эта реализация отлично подходит для посещений, которые завершаются должным образом, было бы неплохо обрабатывать отмененные посещения немного лучше. Во-первых, для прерванных посещений (тех, которые были отменены в результате нового посещения) индикатор выполнения нужно просто вернуть в исходное положение. Во-вторых, для вручную отмененных посещений индикатор выполнения должен быть немедленно удален со страницы.
 
-We can do this by inspecting the `event.detail.visit` object that's provided to the finish event.
+Мы можем сделать это, проверив объект `event.detail.visit`, предоставленный событию `finish`.
 
 ```js
 Inertia.on('finish', (event) => {
@@ -108,11 +108,11 @@ Inertia.on('finish', (event) => {
 })
 ```
 
-Much better!
+Намного лучше!
 
-### File upload progress
+### Ход загрузки файла
 
-Let's take this a step further yet. When files are being uploaded, it would be great to update the loading indicator to reflect the upload progress. This can be done using the `progress` event.
+Давайте сделаем еще один шаг вперед. Когда файлы загружаются, было бы неплохо обновить индикатор загрузки, чтобы отражать прогресс загрузки. Это можно сделать с помощью события `progress`.
 
 ```js
 Inertia.on('progress', (event) => {
@@ -122,19 +122,19 @@ Inertia.on('progress', (event) => {
 })
 ```
 
-Now, instead of the progress bar "trickling" while the files are being uploaded, it will actually update it's position based on the progress of the request. We limit the progress here to 90%, since we still need to wait for a response from the server.
+Теперь вместо того, чтобы индикатор выполнения «просачивался» во время загрузки файлов, он фактически обновляет свое положение в зависимости от хода выполнения запроса. Мы ограничиваем прогресс здесь до 90%, так как нам еще нужно дождаться ответа от сервера.
 
-### Loading indicator delay
+### Задержка индикатора загрузки
 
-The last thing we're going to implement is a loading indicator delay. It's often preferable to delay showing the loading indicator until a request has taken longer than `250ms`-`500ms`. This prevents the loading indicator from appearing constantly on quick page visits, which can be visually distracting.
+Последнее, что мы собираемся реализовать, - это задержка индикатора загрузки. Часто предпочтительнее отложить отображение индикатора загрузки до тех пор, пока запрос не займет более `250ms`-`500ms`. Это предотвращает постоянное появление индикатора загрузки при быстром посещении страницы, что может визуально отвлекать.
 
-To implement the delay behaviour, we'll use the `setTimeout` and `clearTimeout` functions. Let's start by defining a variable to keep track of the timeout.
+Чтобы реализовать поведение задержки, мы будем использовать функции `setTimeout` и `clearTimeout`. Начнем с определения переменной для отслеживания тайм-аута.
 
 ```js
 let timeout = null
 ```
 
-Next, let's update the `start` event listener to start a new timeout that will show the progress bar after `250ms`.
+Затем давайте обновим прослушиватель событий `start`, чтобы начать новый тайм-аут, который покажет индикатор выполнения после `250ms`.
 
 ```js
 Inertia.on('start', () => {
@@ -142,7 +142,7 @@ Inertia.on('start', () => {
 })
 ```
 
-Next, we'll update the `finish` event listener to clear any existing timeouts, in the event that the page visit finishes before the timeout does.
+Затем мы обновим прослушиватель событий `finish`, чтобы очистить все существующие тайм-ауты в случае, если посещение страницы завершается раньше, чем истечет время ожидания.
 
 ```js
 Inertia.on('finish', (event) => {
@@ -151,7 +151,7 @@ Inertia.on('finish', (event) => {
 })
 ```
 
-We also need to check in the `finish` event listener if the progress bar has actually started, otherwise we'll inadvertently cause it to show before the timeout has finished.
+Нам также необходимо проверить в прослушивателе событий `finish`, действительно ли запущен индикатор выполнения, иначе мы случайно заставим его отобразить его до истечения тайм-аута.
 
 ```js
 Inertia.on('finish', (event) => {
@@ -163,7 +163,7 @@ Inertia.on('finish', (event) => {
 })
 ```
 
-And finally, we need to do the same check in the `progress` event listener.
+И, наконец, нам нужно сделать такую же проверку в слушателе событий `progress`.
 
 ```js
 Inertia.on('progress', event => {
@@ -174,11 +174,11 @@ Inertia.on('progress', event => {
 }
 ```
 
-That's it, you now have a beautiful custom page loading indicator!
+Вот и все, теперь у вас есть красивый индикатор загрузки пользовательской страницы!
 
-### Complete example
+### Полный пример
 
-For your quick reference, here is the full source code of the final version.
+Для Вашей быстрой справки, вот полный исходный код финальной версии.
 
 ```js
 import NProgress from 'nprogress'
