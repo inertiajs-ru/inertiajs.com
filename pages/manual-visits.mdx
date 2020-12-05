@@ -41,6 +41,7 @@ In addition to [creating links](/links), it's also possible to manually make Ine
           headers: {},
           onCancelToken: cancelToken => {},
           onCancel: () => {},
+          onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
@@ -63,6 +64,7 @@ In addition to [creating links](/links), it's also possible to manually make Ine
           headers: {},
           onCancelToken: cancelToken => {},
           onCancel: () => {},
+          onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
@@ -85,6 +87,7 @@ In addition to [creating links](/links), it's also possible to manually make Ine
           headers: {},
           onCancelToken: cancelToken => {},
           onCancel: () => {},
+          onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
@@ -144,6 +147,8 @@ However, generally it's preferred to use one of the shortcut methods instead. Th
   ]}
 />
 
+The `reload()` method is simply a shorthand that automatically visits the current page, with `preserveState` and `preserveScroll` both set to true.
+
 ## Method
 
 Use the `method` option to set the request method to `get`, `post`, `put`, `patch` or `delete`. The default is `get`.
@@ -183,15 +188,8 @@ When making visits, Inertia automatically adds a new entry into the browser hist
 Inertia.get('/users', { search: 'John' }, { replace: true })
 ```
 
-As a shortcut, you can use `replace()` method to automatically do this.
-
-```js
-Inertia.replace('/users', { search: 'John' })
-```
-
 <Notice>
-  Note that visits made to the same URL (including query strings) automatically set <inlineCode>replace</inlineCode> to{' '}
-  <inlineCode>true</inlineCode>.
+  Visits made to the same URL automatically set <inlineCode>replace</inlineCode> to <inlineCode>true</inlineCode>.
 </Notice>
 
 ## Component state
@@ -206,7 +204,7 @@ This can be done by setting the `preserveState` option to `true`.
 Inertia.get('/users', { search: 'John' }, { preserveState: true })
 ```
 
-For convenience, the `post()`, `put()`, `patch()` and `replace()` methods autmatically set `preserveState` to `true`.
+For convenience, the `post`, `put`, `patch`, `delete` and `reload` methods all default `preserveState` to `true`.
 
 ## Scroll preservation
 
@@ -248,7 +246,7 @@ You can cancel a visit using a cancel token, which Inertia automatically generat
 
 ```js
 Inertia.post('/users', data, {
-  onCancelToken: cancelToken => (this.cancelToken = cancelToken),
+  onCancelToken: (cancelToken) => (this.cancelToken = cancelToken),
 })
 
 // Cancel the visit
@@ -263,19 +261,20 @@ In addition to the [global events](/events), Inertia also provides a number of p
 
 ```js
 Inertia.post('/users', data, {
-  onStart: visit => {},
-  onProgress: progress => {},
-  onSuccess: page => {},
+  onBefore: (visit) => {},
+  onStart: (visit) => {},
+  onProgress: (progress) => {},
+  onSuccess: (page) => {},
   onCancel: () => {},
   onFinish: () => {},
 })
 ```
 
-Returning `false` from the `onStart()` callback will cause the visit to be cancelled.
+Returning `false` from the `onBefore()` callback will cause the visit to be cancelled.
 
 ```js
 Inertia.delete(`/users/${user.id}`, {
-  onStart: () => confirm('Are you sure you want to delete this user?'),
+  onBefore: () => confirm('Are you sure you want to delete this user?'),
 })
 ```
 
@@ -331,7 +330,7 @@ Inertia.post('/profile', data, {
 And instead of using `catch()`, it's better to handle these unexpected errors using a global error event handler.
 
 ```js
-Inertia.on('error', event => {
+Inertia.on('error', (event) => {
   event.preventDefault()
   // Handle the error yourself
 })
