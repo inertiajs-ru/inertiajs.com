@@ -115,7 +115,11 @@ Inertia.reload({ only: ['users'] })
               # ALWAYS included on first visit
               # OPTIONALLY included on partial reloads
               # ONLY evaluated when needed
-              users: -> { User.as_json() },
+              users: -> { User.as_json() },\n
+              # NEVER included on first visit
+              # OPTIONALLY included on partial reloads
+              # ONLY evaluated when needed
+              users: InertiaRails.lazy(-> { User.as_json }),
             }
           end
         end
@@ -124,4 +128,3 @@ Inertia.reload({ only: ['users'] })
   ]}
 />
 
-Notice how in the Laravel adapter you can use `Inertia::lazy()` to even prevent the prop from being included on the initial page visit. We [hope to bring](https://github.com/inertiajs/inertia-rails/issues/51) this feature to the Rails adapter soon.

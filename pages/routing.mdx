@@ -7,7 +7,8 @@ export const meta = {
   title: 'Маршрутизация',
   links: [
     { url: '#top', name: 'Определение маршрутов' },
-    { url: '#создание-url-адресов', name: 'Создание URL-адресов' },
+    { url: '#route-helpers', name: 'Помощники роута' },
+    { url: '#generating-routes', name: 'Создание URL-адресов' },
   ],
 }
 
@@ -16,6 +17,29 @@ export const meta = {
 ## Определение маршрутов
 
 С помощью Inertia вся маршрутизация определяется на стороне сервера. Это означает, что Вам не нужен Vue Router или React Router. Просто создайте маршруты, используя выбранную Вами серверную структуру.
+
+## Помощники роута
+
+Если у Вас есть страница, для которой не нужен соответствующий метод контроллера, например, FAQ или страница с информацией, Вы можете напрямую перейти к компоненту.
+
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Laravel',
+      language: 'php',
+      code: dedent`
+        Route::inertia('/about', 'AboutComponent');
+      `,
+    },
+    {
+      name: 'Rails',
+      language: 'ruby',
+      code: dedent`
+        inertia 'about' => 'AboutComponent'
+      `,
+    },
+  ]}
+/>
 
 ## Создание URL-адресов
 
@@ -46,7 +70,7 @@ export const meta = {
                 ]);
             }
         }
-      `
+      `,
     },
     {
       name: 'Rails',
@@ -66,7 +90,7 @@ export const meta = {
             }
           end
         end
-      `
+      `,
     },
   ]}
 />
