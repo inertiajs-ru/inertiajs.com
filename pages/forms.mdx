@@ -7,8 +7,9 @@ export const meta = {
   title: 'Формы',
   links: [
     { url: '#отправка-форм', name: 'Отправка форм' },
-    { url: '#проверка-на-стороне-сервера', name: 'Проверка на стороне сервера' },
     { url: '#загрузка-файлов', name: 'Загрузка файлов' },
+    { url: '#помощник-формы', name: 'Помощник формы' },
+    { url: '#проверка-на-стороне-сервера', name: 'Проверка на стороне сервера' },
     { url: '#классическая-отправка-xhr', name: 'Классическая отправка XHR' },
   ],
 }
@@ -171,46 +172,28 @@ export const meta = {
   ]}
 />
 
-## Проверка на стороне сервера
+## Загрузка файлов
 
-Обработка ошибок проверки на стороне сервера (ответы `422`) в Inertia работает немного иначе, чем классическая форма, управляемая ajax, где Вы обнаруживаете ошибки проверки в ответе, а затем обновляете состояние формы. Хитрость заключается в том, чтобы обрабатывать ошибки валидации, как в серверной структуре.
+Уловка для загрузки файлов с помощью Inertia заключается в использовании объекта `FormData`, так как это то, что требуется для отправки запроса `multipart/form-data` через XHR. Вот простой пример использования `FormData` c Inertia.
 
-Сначала Вы отправляете форму с помощью Inertia. Если есть ошибки проверки, Вы перенаправляете серверную часть обратно на страницу формы, включая ошибки в сеансе. Ваша серверная инфраструктура, вероятно, уже делает это автоматически.
+```js
+var data = new FormData()
+data.append('name', name || '')
+data.append('email', email || '')
+data.append('password', password || '')
+data.append('is_admin', is_admin ? '1' : '0')
+data.append('photo', photo || '')
 
-Оттуда Вам нужно отправить эти сообщения об ошибках в компонент страницы формы. Вы можете сделать это в своем контроллере, но лучше просто сделать это автоматически для всех компонентов Вашей страницы. Для этого Вы можете использовать функцию Inertia [общие](/shared-data).
+Inertia.post('/users', data)
+```
 
-Некоторые адаптеры, такие как адаптер Laravel (начиная с [v0.2.9](https://github.com/inertiajs/inertia-laravel/releases/tag/v0.2.9)), делают это автоматически, делая доступными ошибки проверки через свойство `errors`. Однако, если Вы хотите поделиться ими вручную (возможно, Вам нужны ошибки в другом формате), Вы все равно можете сделать это:
+Однако, начиная с версии `0.8.0`, Inertia автоматически определяет, включает ли посещение какие-либо файлы (даже вложенные файлы), а затем при необходимости преобразует данные в объект `FormData`.
 
-<TabbedCodeExamples
-  examples={[
-    {
-      name: 'Laravel',
-      language: 'php',
-      code: dedent`
-        class HandleInertiaRequests extends Middleware
-        {
-            public function share(Request $request)
-            {
-                return array_merge(parent::share($request), [
-                    'errors' => fn () => $request->session()->get('errors')
-                        ? $request->session()->get('errors')->getBag('default')->getMessages()
-                        : (object) []
-                ]);
-            }
-        }
-      `,
-    },
-    {
-      name: 'Rails',
-      language: 'ruby',
-      code: dedent`
-        # todo
-      `,
-    },
-  ]}
-/>
+Вы можете узнать больше об интерфейсе `FormData` [здесь](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
-Теперь ошибки проверки будут доступны как часть свойств Вашей страницы, и, поскольку они являются реактивными, Ваш шаблон автоматически отобразит их. Вот обновленная версия приведенного выше примера формы, в которой отображаются ошибки проверки на стороне сервера.
+## Помощник формы
+
+Поскольку работа с формами настолько распространена, Inertia поставляется с помощником формы, который помогает сократить количество шаблонов, необходимых для типичных форм. Вот как им пользоваться:
 
 <TabbedCodeExamples
   examples={[
@@ -219,37 +202,50 @@ export const meta = {
       language: 'twig',
       code: dedent`
         <template>
-          <form @submit.prevent="submit">
-            <label for="first_name">First name:</label>
-            <input id="first_name" v-model="form.first_name" />
-            <div v-if="errors.first_name">{{ errors.first_name[0] }}</div>
-            <label for="last_name">Last name:</label>
-            <input id="last_name" v-model="form.last_name" />
-            <div v-if="errors.last_name">{{ errors.last_name[0] }}</div>
-            <label for="email">Email:</label>
-            <input id="email" v-model="form.email" />
-            <div v-if="errors.email">{{ errors.email[0] }}</div>
-            <button type="submit">Submit</button>
+          <form @submit.prevent="form.post('/login')">
+            <!-- email -->
+            <input type="text" v-model="form.email">
+            <div v-if="form.errors.email">{{ form.errors.email }}</div>
+            <!-- password -->
+            <input type="password" v-model="form.password">
+            <div v-if="form.errors.password">{{ form.errors.password }}</div>
+            <!-- remember me -->
+            <input type="checkbox" v-model="form.remember"> Remember Me
+            <!-- submit -->
+            <button type="submit" :disabled="form.processing">Login</button>
           </form>
         </template>\n
         <script>
+        /*
+        |----------------------------------------------------------------
+        | Vue 3
+        |----------------------------------------------------------------
+        */\n
+        import { useForm } from '@inertiajs/inertia-vue3'\n
         export default {
-          props: {
-            errors: Object,
+          setup () {
+            const form = useForm({
+              email: null,
+              password: null,
+              remember: false,
+            })\n
+            return { form }
           },
+        }\n
+        /*
+        |----------------------------------------------------------------
+        | Vue 2
+        |----------------------------------------------------------------
+        */\n
+        export default {
           data() {
             return {
-              form: {
-                first_name: null,
-                last_name: null,
+              form: this.$inertia.form({
                 email: null,
-              },
+                password: null,
+                remember: false,
+              }),
             }
-          },
-          methods: {
-            submit() {
-              this.$inertia.post('/users', this.form)
-            },
           },
         }
         </script>
@@ -259,94 +255,75 @@ export const meta = {
       name: 'React',
       language: 'jsx',
       code: dedent`
-        import { Inertia } from '@inertiajs/inertia'
-        import { usePage } from '@inertiajs/inertia-react'
-        import React, { useState } from 'react'\n
-        export default function Edit() {
-          const { errors } = usePage().props\n
-          const [values, setValues] = useState({
-            first_name: null,
-            last_name: null,
-            email: null,
-          })\n
-          function handleChange(e) {
-            setValues(values => ({
-              ...values,
-              [e.target.id]: e.target.value,
-            }))
-          }\n
-          function handleSubmit(e) {
-            e.preventDefault()
-            Inertia.post('/users', values)
-          }\n
-          return (
-            <form onSubmit={handleSubmit}>
-              <label for="first_name">First name:</label>
-              <input id="first_name" value={values.first_name} onChange={handleChange} />
-              {errors.first_name && <div>{errors.first_name[0]}</div>}
-              <label for="last_name">Last name:</label>
-              <input id="last_name" value={values.last_name} onChange={handleChange} />
-              {errors.last_name && <div>{errors.last_name[0]}</div>}
-              <label for="email">Email:</label>
-              <input id="email" value={values.email} onChange={handleChange} />
-              {errors.email && <div>{errors.email[0]}</div>}
-              <button type="submit">Submit</button>
-            </form>
-          )
-        }
+        # todo
       `,
     },
     {
       name: 'Svelte',
       language: 'html',
       code: dedent`
-        <script>
-          import { Inertia } from '@inertiajs/inertia'\n
-          export let errors = {}\n
-          let values = {
-            first_name: null,
-            last_name: null,
-            email: null,
-          }\n
-          function handleSubmit() {
-            Inertia.post('/users', values)
-          }
-        </script>\n
-        <form on:submit|preventDefault={handleSubmit}>
-          <label for="first_name">First name:</label>
-          <input id="first_name" bind:value={values.first_name}>
-          {#if errors.first_name}<div>{errors.first_name}</div>{/if}\n
-          <label for="last_name">Last name:</label>
-          <input id="last_name" bind:value={values.last_name}>
-          {#if errors.last_name}<div>{errors.last_name}</div>{/if}\n
-          <label for="email">Email:</label>
-          <input id="email" bind:value={values.email}>
-          {#if errors.email}<div>{errors.email}</div>{/if}\n
-          <button type="submit">Submit</button>
-        </form>
+        # todo
       `,
     },
   ]}
 />
 
-Хотя это очень похоже на то, как Вы обычно выполняете классическую отправку форм на стороне сервера, этот подход намного лучше, поскольку Вы не перезагружаете всю страницу и не обновляете входные данные формы.
-
-## Загрузка файлов
-
-Уловка для загрузки файлов с помощью Inertia (через XHR) заключается в использовании объекта `FormData`. Вот простой пример использования `FormData` с Inertia.
+Если Вам нужно изменить данные формы перед их отправкой на сервер, Вы можете сделать это с помощью метода `transform()`.
 
 ```js
-var data = new FormData()
-data.append('first_name', first_name || '')
-data.append('last_name', last_name || '')
-data.append('email', email || '')
-data.append('password', password || '')
-data.append('photo', photo || '')
-
-Inertia.post('/users', data)
+this.form
+  .transform((data) => ({
+    ...data,
+    remember: data.remember ? 'on' : '',
+  }))
+  .post('/login')
 ```
 
-Вы можете узнать больше об интерфейсе `FormData` [здесь](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+Вы можете использовать свойство `form.processing`, чтобы отслеживать, отправляется ли форма в данный момент. Это может быть полезно для предотвращения двойной отправки формы, отключив кнопку отправки.
+
+```jsx
+<button type="submit" :disabled="form.processing">Submit</button>
+```
+
+В случае, если Вы загружаете файлы, текущее событие выполнения доступно через свойство `form.progress`. Это полезно для отображения прогресса загрузки. Например:
+
+```jsx
+<progress v-if="form.progress" :value="form.progress.percentage" max="100">
+  {{ form.progress.percentage }}%
+</progress>
+```
+
+В случае ошибок формы они доступны через свойство `form.errors`.
+
+```jsx
+<div v-if="form.errors.email">{{ form.errors.email }}</div>
+```
+
+Чтобы проверить, нет ли в форме ошибок, используйте свойство `form.hasErrors`. Чтобы удалить ошибки формы, используйте метод `form.clearErrors()`.
+
+```js
+// Очистить все ошибки
+form.clearErrors()
+
+// Очистить ошибки для определенных полей
+form.clearErrors('field', 'anotherfield')
+```
+
+Когда форма была успешно отправлена, свойство `form.wasSuccessful` будет иметь значение `true`. В дополнение к этому, существует также свойство `form.recentlySuccessful`, которому будет присвоено значение `true` в течение двух секунд после успешной отправки формы. Это полезно для отображения временных сообщений об успехе.
+
+Чтобы восстановить исходные значения формы, используйте метод `form.reset()`. Обратите внимание, это сбросит значения обратно к начальным значениям, которые были предоставлены, когда Вы вызывали `Inertia.form()`.
+
+```js
+// Сбросить форму
+form.reset()
+
+// Сбросить определенные поля
+form.reset('field', 'anotherfield')
+```
+
+## Проверка на стороне сервера
+
+Обработка ошибок проверки на стороне сервера в Inertia работает немного иначе, чем в классической форме, управляемой ajax, где Вы отлавливаете ошибки проверки из ответов `422` и вручную обновляете состояние ошибки формы. Это потому, что Inertia никогда не получает ответов `422`. Скорее, Inertia работает больше как стандартная отправка полностраничной формы. Смотрите [страницу проверки](/validation) для получения дополнительной информации.
 
 ## Классическая отправка XHR
 

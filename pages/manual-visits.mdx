@@ -13,6 +13,7 @@ export const meta = {
     { url: '#состояние-компонента', name: 'Состояние компонента' },
     { url: '#сохранение-прокрутки', name: 'Сохранение прокрутки' },
     { url: '#частичные-перезагрузки', name: 'Частичные перезагрузки' },
+    { url: '#пакеты-ошибок', name: 'Пакеты ошибок' },
     { url: '#пользовательские-заголовки', name: 'Пользовательские заголовки' },
     { url: '#отмена-посещения', name: 'Отмена посещения' },
     { url: '#обратные-вызовы-событий', name: 'Обратные вызовы событий' },
@@ -39,12 +40,14 @@ export const meta = {
           preserveScroll: false,
           only: [],
           headers: {},
+          errorBag = null,
           onCancelToken: cancelToken => {},
           onCancel: () => {},
           onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
+          onError: errors => {},
           onFinish: () => {},
         })
       `,
@@ -62,12 +65,14 @@ export const meta = {
           preserveScroll: false,
           only: [],
           headers: {},
+          errorBag = null,
           onCancelToken: cancelToken => {},
           onCancel: () => {},
           onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
+          onError: errors => {},
           onFinish: () => {},
         })
       `,
@@ -85,12 +90,14 @@ export const meta = {
           preserveScroll: false,
           only: [],
           headers: {},
+          errorBag = null,
           onCancelToken: cancelToken => {},
           onCancel: () => {},
           onBefore: visit => {},
           onStart: visit => {},
           onProgress: progress => {},
           onSuccess: page => {},
+          onError: errors => {},
           onFinish: () => {},
         })
       `,
@@ -204,6 +211,14 @@ Inertia.get('/users', { search: 'John' }, { replace: true })
 Inertia.get('/users', { search: 'John' }, { preserveState: true })
 ```
 
+Вы также можете отложенно оценить параметр `preserveState` на основе ответа, предоставив обратный вызов.
+
+```js
+Inertia.post('/users', data, {
+  preserveState: (page) => Object.keys(page.props.errors).length,
+})
+```
+
 Для удобства методы `post`, `put`, `patch`, `delete` и `reload` по умолчанию для `preserveState` имеют значение `true`.
 
 ## Сохранение прокрутки
@@ -212,6 +227,14 @@ Inertia.get('/users', { search: 'John' }, { preserveState: true })
 
 ```js
 Inertia.visit(url, { preserveScroll: true })
+```
+
+Вы также можете отложенно оценить параметр `preserveScroll` на основе ответа, предоставив обратный вызов.
+
+```js
+Inertia.post('/users', data, {
+  preserveScroll: (page) => Object.keys(page.props.errors).length,
+})
 ```
 
 Для получения дополнительной информации смотрите страницу [управление прокруткой](/scroll-management).
@@ -225,6 +248,18 @@ Inertia.visit('/users', { search: 'John' }, { only: ['users'] })
 ```
 
 Для получения дополнительной информации смотрите страницу [частичные перезагрузки](/partial-reloads).
+
+## Пакеты ошибок
+
+Для страниц, содержащих более одной формы, могут возникнуть конфликты при отображении ошибок проверки, если две формы имеют одинаковые имена полей. Чтобы обойти это, Вы можете использовать пакеты ошибок. Пакеты ошибок охватывают ошибки проверки, возвращаемые сервером, в пределах уникального ключа, специфичного для этой формы.
+
+```js
+Inertia.post('/companies', data, {
+  errorBag: 'createCompany',
+})
+```
+
+Для получения дополнительной информации смотрите страницу [валидации](/validation#error-bags).
 
 ## Пользовательские заголовки
 
@@ -265,6 +300,7 @@ Inertia.post('/users', data, {
   onStart: (visit) => {},
   onProgress: (progress) => {},
   onSuccess: (page) => {},
+  onError: (errors) => {},
   onCancel: () => {},
   onFinish: () => {},
 })
@@ -278,7 +314,7 @@ Inertia.delete(`/users/${user.id}`, {
 })
 ```
 
-Также возможно вернуть обещание из обратного вызова `onSuccess()`. Это задержит событие «finish» до тех пор, пока обещание не будет выполнено.
+Также возможно вернуть обещание из обратных вызовов `onSuccess()` и `onError()`. Это задержит событие «finish» до тех пор, пока промис не будет выполнен.
 
 ```js
 Inertia.post(url, {
@@ -313,6 +349,9 @@ Inertia.post('/profile', data, {
   onSuccess: () => {
     // Обработка успешного события
   },
+  onError: (errors) => {
+    // Handle validation errors
+  },
 })
 ```
 
@@ -329,7 +368,7 @@ Inertia.post('/profile', data, {
 И вместо использования `catch()` эти неожиданные ошибки лучше обрабатывать с помощью глобального обработчика событий ошибок.
 
 ```js
-Inertia.on('error', (event) => {
+Inertia.on('exception', (event) => {
   event.preventDefault()
   // Устраните ошибку самостоятельно
 })

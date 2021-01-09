@@ -26,7 +26,15 @@ export const meta = {
 Inertia.visit(url, { preserveScroll: true })
 ```
 
-Это также возможно с помощью [Ссылок Inertia](/links) с использованием атрибута `preserve-scroll`.
+Вы также можете лениво оценить параметр `preserveScroll` на основе ответа, предоставив обратный вызов.
+
+```js
+Inertia.post('/users', data, {
+  preserveScroll: (page) => Object.keys(page.props.errors).length,
+})
+```
+
+Вы также можете сохранить позицию прокрутки с помощью [ссылок Inertia](/links) используя атрибут `preserve-scroll`.
 
 <TabbedCodeExamples
   examples={[

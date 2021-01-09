@@ -13,8 +13,9 @@ export const meta = {
     { url: '#start', name: 'Start' },
     { url: '#progress', name: 'Progress' },
     { url: '#success', name: 'Success' },
-    { url: '#invalid', name: 'Invalid' },
     { url: '#error', name: 'Error' },
+    { url: '#invalid', name: 'Invalid' },
+    { url: '#exception', name: 'Exception' },
     { url: '#finish', name: 'Finish' },
     { url: '#navigate', name: 'Navigate' },
     { url: '#обратные-вызовы-событий', name: 'Обратные вызовы событий' },
@@ -88,12 +89,12 @@ document.removeEventListener('inertia:start', startEventListener)
 
 ## Отмена событий
 
-Некоторые события (`start`, `invalid`, `error`) поддерживают отмену, что позволяет предотвратить поведение Inertia по умолчанию. Как и в случае с собственными событиями, если только один прослушиватель событий вызывает `event.preventDefault()`, событие будет отменено.
+Некоторые события (`before`, `invalid`, `error`) поддерживают отмену, что позволяет предотвратить поведение Inertia по умолчанию. Как и в случае с собственными событиями, если только один прослушиватель событий вызывает `event.preventDefault()`, событие будет отменено.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('start', (event) => {
+Inertia.on('before', (event) => {
   if (!confirm('Are you sure you want to navigate away?')) {
     event.preventDefault()
   }
@@ -105,7 +106,7 @@ Inertia.on('start', (event) => {
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('start', (event) => {
+Inertia.on('before', (event) => {
   return confirm('Are you sure you want to navigate away?')
 })
 ```
@@ -162,7 +163,7 @@ Inertia.on('progress', (event) => {
 
 ## Success
 
-Событие `success` запускается при успешном посещении страницы. Обратите внимание, что это _не_ включает посещение истории.
+Событие `success` запускается при успешном посещении страницы, если нет ошибок проверки. Обратите внимание, что это _не_ исторические посещения.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
@@ -173,6 +174,20 @@ Inertia.on('success', (event) => {
 ```
 
 Событие `success` не может быть отменено.
+
+## Error
+
+The `error` event fires when validation errors are present on "successful" page visits.
+
+```js
+import { Inertia } from '@inertiajs/inertia'
+
+Inertia.on('error', (errors) => {
+  console.log(errors)
+})
+```
+
+The `error` event is not cancelable.
 
 ## Invalid
 
@@ -200,25 +215,25 @@ Inertia.on('invalid', (event) => {
 })
 ```
 
-## Error
+## Exception
 
-Событие `error` запускается при непредвиденных ошибкам XHR, таких как перебои в работе сети, а также к ошибкам, генерируемым при обратном вызове `resolveComponent()`.
+Событие `exception` запускается при непредвиденных ошибках XHR, таких как прерывания сети, и при ошибках, сгенерированных в обратном вызове `resolveComponent()`.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('error', (event) => {
+Inertia.on('exception', (event) => {
   console.log(`An unexpected error occurred during an Inertia visit.`)
   console.log(event.detail.error)
 })
 ```
 
-Отмените событие `error`, чтобы предотвратить возникновение ошибки.
+Отмените событие `exception`, чтобы предотвратить возникновение ошибки.
 
 ```js
 import { Inertia } from '@inertiajs/inertia'
 
-Inertia.on('error', (event) => {
+Inertia.on('exception', (event) => {
   event.preventDefault()
   // Handle the error yourself
 })

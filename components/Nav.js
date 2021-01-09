@@ -127,6 +127,11 @@ const Nav = ({ className }) => {
           </Link>
         </li>
         <li className="md:pr-3">
+          <Link href="/validation">
+            <a className={linkClass('/validation')}>Validation</a>
+          </Link>
+        </li>
+        <li className="md:pr-3">
           <Link href="/shared-data">
             <a className={linkClass('/shared-data')}>Общие данные</a>
           </Link>
@@ -180,8 +185,8 @@ const Nav = ({ className }) => {
           </Link>
         </li>
         <li className="md:pr-3">
-          <Link href="/local-state-caching">
-            <a className={linkClass('/local-state-caching')}>Кэширование локального состояния</a>
+          <Link href="/remembering-state">
+            <a className={linkClass('/remembering-state')}>Состояние запоминания</a>
           </Link>
         </li>
         <li className="md:pr-3">
