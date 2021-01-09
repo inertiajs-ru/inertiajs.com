@@ -4,48 +4,48 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Validation',
+  title: 'Валидация',
   links: [
     {
-      url: '#how-it-works',
-      name: 'How it works',
+      url: '#как-это-устроено',
+      name: 'Как это устроено',
     },
     {
-      url: '#sharing-errors',
-      name: 'Sharing errors',
+      url: '#обмен-ошибками',
+      name: 'Обмен ошибками',
     },
     {
-      url: '#displaying-errors',
-      name: 'Displaying errors',
+      url: '#отображение-ошибок',
+      name: 'Отображение ошибок',
     },
     {
-      url: '#repopulating-input',
-      name: 'Repopulating input',
+      url: '#повторное-заполнение-ввода',
+      name: 'Повторное заполнение ввода',
     },
     {
-      url: '#resolving-errors',
-      name: 'Resolving errors',
+      url: '#устранение-ошибок',
+      name: 'Устранение ошибок',
     },
     {
-      url: '#error-bags',
-      name: 'Error bags',
+      url: '#пакеты-ошибок',
+      name: 'Пакеты ошибок',
     },
   ],
 }
 
-# Validation
+# Валидация
 
-## How it works
+## Как это устроено
 
-Handling server-side validation errors in Inertia works a little different than a classic ajax-driven form, where you catch the validation errors from `422` responses and manually update the form's error state. That's because Inertia never receives `422` responses. Rather, Inertia operates much more like a standard full page form submission. Here's how:
+Обработка ошибок проверки на стороне сервера в Inertia работает немного иначе, чем в классической форме, управляемой ajax, где Вы отлавливаете ошибки проверки из ответов `422` и вручную обновляете состояние ошибки формы. Это потому, что Inertia никогда не получает ответов `422`. Скорее, Inertia работает больше как стандартная отправка полностраничной формы. Вот как:
 
-First, you submit your form using Inertia. In the event that there are server-side validation errors, you don't immediately return those errors as a `422` JSON response. Instead, you redirect (server-side) back to the form page you are on, flashing the validation errors in the session. Frameworks like Laravel do this automatically.
+Сначала Вы отправляете форму с помощью Inertia. В случае ошибок проверки на стороне сервера Вы не сразу возвращаете эти ошибки в виде ответа JSON `422`. Вместо этого Вы перенаправляете (на стороне сервера) обратно на страницу формы, на которой Вы находитесь, показывая ошибки проверки в сеансе. Такие фреймворки, как Laravel, делают это автоматически.
 
-Next, any time these validation errors are present in the session, they automatically get shared with Inertia, making them available client-side as page props, which you can display in your form. Since props are reactive, they are automatically shown when the form submission completes.
+Затем, каждый раз, когда эти ошибки проверки присутствуют в сеансе, они автоматически передаются Inertia, делая их доступными на стороне клиента в качестве свойств страницы, которые Вы можете отобразить в своей форме. Поскольку свойства являются реактивными, они автоматически отображаются после завершения отправки формы.
 
-## Sharing errors
+## Обмен ошибками
 
-In order for your server-side validation errors to be available client-side, your server-side framework must share them via the `errors` prop. Some adapters, such as the Laravel adapter, do this automatically. For others, you may need to do this manually. Please refer to your specific server-side adapter documentation for more information.
+Для того, чтобы ошибки проверки на стороне сервера были доступны на стороне клиента, Ваша серверная инфраструктура должна делиться ими с помощью свойства `errors`. Некоторые адаптеры, такие как адаптер Laravel, делают это автоматически. Другим может потребоваться сделать это вручную. Пожалуйста, обратитесь к документации Вашего конкретного серверного адаптера для получения дополнительной информации.
 
 <TabbedCodeExamples
   examples={[
@@ -84,9 +84,9 @@ In order for your server-side validation errors to be available client-side, you
   ]}
 />
 
-## Displaying errors
+## Отображение ошибок
 
-Since validation errors are made available client-side as page component props, you can conditionally display them based on their existence. Here's an example how.
+Поскольку ошибки валидации становятся доступными на стороне клиента как свойства компонентов страницы, Вы можете отображать их в зависимости от их наличия. Вот как это сделать.
 
 <TabbedCodeExamples
   examples={[
@@ -205,21 +205,21 @@ Since validation errors are made available client-side as page component props, 
   ]}
 />
 
-Note, in the Vue adapters, you can also access the errors via the `$page.props.errors` object.
+Обратите внимание, что в адаптерах Vue Вы также можете получить доступ к ошибкам через объект `$page.props.errors`.
 
-## Repopulating input
+## Повторное заполнение ввода
 
-While handling errors in Inertia is similar to full page form submissions, this approach is actually much nicer, since you don't need to manually repopulate old form input data.
+Хотя обработка ошибок в Inertia аналогична отправке полностраничных форм, этот подход на самом деле намного лучше, поскольку Вам не нужно вручную повторно заполнять старые входные данные формы.
 
-When validation errors occur, the user is automatically redirected back to the form page they are already on. And, by default, Inertia automatically preserves the [component state](/manual-visits#component-state) for `post`, `put`, `patch`, and `delete` requests. Meaning, all the old form input data remains exactly as it is.
+При возникновении ошибок проверки пользователь автоматически перенаправляется обратно на страницу формы, на которой он уже находится. И по умолчанию Inertia автоматически сохраняет [состояние компонента](/manual-visits#component-state) для запросов `post`, `put`, `patch` и `delete`. Это означает, что все входные данные старой формы остаются в точности как есть.
 
-The only thing that changes is the `errors` prop, which now contains the validation errors.
+Единственное, что изменилось, - это свойство `errors`, которое теперь содержит ошибки валидации.
 
-## Resolving errors
+## Устранение ошибок
 
-Since Inertia apps never generate `422` responses, Inertia needs another way to determine if a response includes validation errors. To do this, Inertia checks the `page.props.errors` object for the existence of any errors. In the event that errors are present, the `onError()` callback will be called instead of the `onSuccess()` callback.
+Поскольку приложения Inertia никогда не генерируют ответы `422`, Inertia необходим другой способ определить, содержит ли ответ ошибки проверки. Для этого Inertia проверяет объект `page.props.errors` на наличие ошибок. В случае появления ошибок будет вызван обратный вызов `onError()` вместо обратного вызова `onSuccess()`.
 
-If you're applications shares errors using a different prop than `errors`, you must tell Inertia how to resolve these errors. This can be done using the `resolveErrors()` callback, applied at the adapter level.
+Если Ваше приложение сообщает об ошибках, используя свойство, отличное от `errors`, Вы должны сообщить Inertia, как исправить эти ошибки. Это можно сделать с помощью обратного вызова `resolveErrors()`, применяемого на уровне адаптера.
 
 <TabbedCodeExamples
   examples={[
@@ -299,13 +299,13 @@ If you're applications shares errors using a different prop than `errors`, you m
   ]}
 />
 
-Note, the `resolveErrors()` callback must always return an object, even if there are no errors.
+Обратите внимание, что обратный вызов `resolveErrors()` всегда должен возвращать объект, даже если ошибок нет.
 
-## Error bags
+## Пакеты ошибок
 
-For pages that have more than one form, it's possible to run into conflicts when displaying validation errors if two forms share the same field names. For example, imagine a "create company" form and a "create user" form that both have a `name` field. Since both forms will be displaying the `page.props.errors.name` validation error, generating a validation error for the `name` field in either form will cause the error to appear in both forms.
+Для страниц, содержащих более одной формы, могут возникнуть конфликты при отображении ошибок проверки, если две формы имеют одинаковые имена полей. Например, представьте себе форму «создать компанию» и форму «создать пользователя», у которых есть поле `name`. Поскольку обе формы будут отображать ошибку проверки `page.props.errors.name`, создание ошибки проверки для поля `name` в любой форме приведет к появлению ошибки в обеих формах.
 
-To get around this, you can use error bags. Error bags scope the validation errors returned from the server within a unique key specific to that form. Continuing with our example above, you might have a `createCompany` error bag for the first form, and a `createUser` error bag for the second form.
+Чтобы обойти это, Вы можете использовать пакеты ошибок. Пакеты ошибок охватывают ошибки проверки, возвращаемые сервером, в пределах уникального ключа, специфичного для этой формы. Продолжая наш пример выше, у Вас может быть пакет ошибок `createCompany` для первой формы и пакет ошибок `createUser` для второй формы.
 
 ```js
 Inertia.post('/companies', data, {
@@ -317,6 +317,6 @@ Inertia.post('/users', data, {
 })
 ```
 
-Doing this will cause the validation errors to come back from the server as `page.props.errors.createCompany` and `page.props.errors.createUser`.
+Это приведет к тому, что ошибки проверки вернутся с сервера как `page.props.errors.createCompany` и `page.props.errors.createUser`.
 
-Note, if you're using the [form helper](/forms#form-helper), it's not necessary to use error bags, since validation errors are automatically scoped to the form object.
+Обратите внимание: если Вы используете [помощник формы](/forms#помощник-формы), нет необходимости использовать пакеты ошибок, поскольку ошибки проверки автоматически переносятся в область объекта формы.

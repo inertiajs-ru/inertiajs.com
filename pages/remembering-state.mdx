@@ -4,17 +4,17 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Remembering state',
-  links: [{ url: '#top', name: 'Introduction' }, { url: '#multiple-components', name: 'Multiple components' }],
+  title: 'Состояние запоминания',
+  links: [{ url: '#top', name: 'Введение' }, { url: '#multiple-components', name: 'Несколько компонентов' }],
 }
 
-# Remembering state
+# Состояние запоминания
 
-When navigating browser history, Inertia restores pages using prop data cached in history state. Inertia does not, however, restore local page component state, since this is beyond its reach. This can lead to outdated pages in your browser history.
+При навигации по истории браузера Inertia восстанавливает страницы, используя данные, кэшированные в истории. Однако Inertia не восстанавливает состояние компонента локальной страницы, поскольку это недоступно. Это может привести к появлению устаревших страниц в истории Вашего браузера.
 
-For example, if a user partially completes a form, then navigates away, and then returns back, the form will be reset and their work will be lost.
+Например, если пользователь частично заполняет форму, затем уходит, а затем возвращается обратно, форма будет сброшена, и его работа будет потеряна.
 
-To mitigate this issue, you can tell Inertia which local component state to save in the browser history.
+Чтобы смягчить эту проблему, Вы можете указать Inertia, какое состояние локального компонента следует сохранить в истории браузера.
 
 <TabbedCodeExamples
   examples={[
@@ -77,11 +77,11 @@ To mitigate this issue, you can tell Inertia which local component state to save
   ]}
 />
 
-Now, whenever your local `form` state changes, Inertia will automatically save this data to the history state, and restore it on history navigation.
+Теперь, когда Ваша локальная форма `form` изменяется, Inertia автоматически сохраняет эти данные в состояние истории и восстанавливает их при навигации по истории.
 
-## Multiple components
+## Несколько компонентов
 
-If your page contains multiple components that use the remember functionality, you'll need to provide a unique identifier for each component, so that Inertia knows which data to restore to each component.
+Если Ваша страница содержит несколько компонентов, которые используют функцию запоминания, Вам необходимо предоставить уникальный идентификатор для каждого компонента, чтобы Inertia знала, какие данные нужно восстановить для каждого компонента.
 
 <TabbedCodeExamples
   examples={[
@@ -133,7 +133,7 @@ If your page contains multiple components that use the remember functionality, y
   ]}
 />
 
-If you have multiple instances of the same component on the page using the remember functionality, be sure to also include a unique identifier for each component instance.
+Если у Вас есть несколько экземпляров одного и того же компонента на странице, использующей функцию запоминания, не забудьте также включить уникальный идентификатор для каждого экземпляра компонента.
 
 <TabbedCodeExamples
   examples={[
