@@ -28,13 +28,13 @@ export const meta = {
       code: dedent`
         <template>
           <form @submit.prevent="submit">
-            <label for="first_name">First name:</label>
+            <label for="first_name">Имя:</label>
             <input id="first_name" v-model="form.first_name" />
-            <label for="last_name">Last name:</label>
+            <label for="last_name">Фамилия:</label>
             <input id="last_name" v-model="form.last_name" />
-            <label for="email">Email:</label>
+            <label for="email">Эл. почта:</label>
             <input id="email" v-model="form.email" />
-            <button type="submit">Submit</button>
+            <button type="submit">Отправить</button>
           </form>
         </template>\n
         <script>
@@ -83,13 +83,13 @@ export const meta = {
           }\n
           return (
             <form onSubmit={handleSubmit}>
-              <label htmlFor="first_name">First name:</label>
+              <label htmlFor="first_name">Имя:</label>
               <input id="first_name" value={values.first_name} onChange={handleChange} />
-              <label htmlFor="last_name">Last name:</label>
+              <label htmlFor="last_name">Фамилия:</label>
               <input id="last_name" value={values.last_name} onChange={handleChange} />
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">Эл. почта:</label>
               <input id="email" value={values.email} onChange={handleChange} />
-              <button type="submit">Submit</button>
+              <button type="submit">Отправить</button>
             </form>
           )
         }
@@ -111,13 +111,13 @@ export const meta = {
           }
         </script>\n
         <form on:submit|preventDefault={handleSubmit}>
-          <label for="first_name">First name:</label>
+          <label for="first_name">Имя:</label>
           <input id="first_name" bind:value={values.first_name}>\n
-          <label for="last_name">Last name:</label>
+          <label for="last_name">Фамилия:</label>
           <input id="last_name" bind:value={values.last_name}>\n
-          <label for="email">Email:</label>
+          <label for="email">Эл. почта:</label>
           <input id="email" bind:value={values.email}>\n
-          <button type="submit">Submit</button>
+          <button type="submit">Отправить</button>
         </form>
       `,
     },
@@ -209,10 +209,10 @@ Inertia.post('/users', data)
             <!-- password -->
             <input type="password" v-model="form.password">
             <div v-if="form.errors.password">{{ form.errors.password }}</div>
-            <!-- remember me -->
-            <input type="checkbox" v-model="form.remember"> Remember Me
+            <!-- Запомните меня -->
+            <input type="checkbox" v-model="form.remember"> Запомните меня
             <!-- submit -->
-            <button type="submit" :disabled="form.processing">Login</button>
+            <button type="submit" :disabled="form.processing">Войти</button>
           </form>
         </template>\n
         <script>
@@ -282,7 +282,7 @@ this.form
 Вы можете использовать свойство `form.processing`, чтобы отслеживать, отправляется ли форма в данный момент. Это может быть полезно для предотвращения двойной отправки формы, отключив кнопку отправки.
 
 ```jsx
-<button type="submit" :disabled="form.processing">Submit</button>
+<button type="submit" :disabled="form.processing">Отправить</button>
 ```
 
 В случае, если Вы загружаете файлы, текущее событие выполнения доступно через свойство `form.progress`. Это полезно для отображения прогресса загрузки. Например:

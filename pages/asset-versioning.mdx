@@ -28,7 +28,7 @@ export const meta = {
       code: dedent`
         /*
         |----------------------------------------------------------------
-        | Via the HandleInertiaRequests middleware (recommended)
+        | Через мидлвар HandleInertiaRequests (рекомендуется)
         |----------------------------------------------------------------
         */\n
         class HandleInertiaRequests extends Middleware
@@ -40,12 +40,12 @@ export const meta = {
         }\n
         /*
         |----------------------------------------------------------------
-        | Manually
+        | Вручную
         |----------------------------------------------------------------
         */\n
         use Inertia\\Inertia;\n
         Inertia::version($version);
-        Inertia::version(fn () => $version); // Lazily
+        Inertia::version(fn () => $version); // Отложенно
       `,
       description:
         'Посредник HandleInertiaRequests обеспечивает разумное значение по умолчанию для приложений Laravel, которое использует либо хеш значения конфигурации "app.asset_url", либо файл mix-manifest.json.',

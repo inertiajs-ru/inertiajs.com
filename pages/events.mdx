@@ -55,7 +55,7 @@ let removeStartEventListener = Inertia.on('start', (event) => {
   console.log(`Starting a visit to ${event.detail.visit.url}`)
 })
 
-// Remove the listener
+// Удалить слушателя
 removeStartEventListener()
 ```
 
@@ -83,7 +83,7 @@ let startEventListener = (event) => {
 
 document.addEventListener('inertia:start', startEventListener)
 
-// Remove the listener
+// Удалить слушателя
 document.removeEventListener('inertia:start', startEventListener)
 ```
 
@@ -199,7 +199,7 @@ The `error` event is not cancelable.
 import { Inertia } from '@inertiajs/inertia'
 
 Inertia.on('invalid', (event) => {
-  console.log(`An invalid Inertia response was received.`)
+  console.log(`Получен неверный ответ инерции.`)
   console.log(event.detail.response)
 })
 ```
@@ -211,7 +211,7 @@ import { Inertia } from '@inertiajs/inertia'
 
 Inertia.on('invalid', (event) => {
   event.preventDefault()
-  // Handle the invalid response yourself
+  // Самостоятельно обработайте неверный ответ
 })
 ```
 
@@ -223,7 +223,7 @@ Inertia.on('invalid', (event) => {
 import { Inertia } from '@inertiajs/inertia'
 
 Inertia.on('exception', (event) => {
-  console.log(`An unexpected error occurred during an Inertia visit.`)
+  console.log(`Непредвиденная ошибка во время посещения Inertia.`)
   console.log(event.detail.error)
 })
 ```
@@ -235,7 +235,7 @@ import { Inertia } from '@inertiajs/inertia'
 
 Inertia.on('exception', (event) => {
   event.preventDefault()
-  // Handle the error yourself
+  // Устраните ошибку самостоятельно
 })
 ```
 
@@ -263,7 +263,7 @@ Inertia.on('finish', (event) => {
 import { Inertia } from '@inertiajs/inertia'
 
 Inertia.on('navigate', (event) => {
-  console.log(`Navigated to ${event.detail.page.url}`)
+  console.log(`Переход к ${event.detail.page.url}`)
 })
 ```
 

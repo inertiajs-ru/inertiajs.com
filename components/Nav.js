@@ -62,7 +62,7 @@ const Nav = ({ className }) => {
       <ul>
         <li className="md:pr-3">
           <Link href="/who-is-it-for">
-            <a className={linkClass('/who-is-it-for')}>Кто это для</a>
+            <a className={linkClass('/who-is-it-for')}>Для кого это</a>
           </Link>
         </li>
         <li className="md:pr-3">

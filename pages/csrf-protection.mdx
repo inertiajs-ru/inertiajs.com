@@ -57,12 +57,12 @@ Axios автоматически проверяет наличие cookie-фай
     {
       name: 'Laravel',
       language: 'php',
-      description: 'Extend the render() method in your App\\Exceptions\\Handler.php.',
+      description: 'Расширьте метод render() в Вашем App\\Exceptions\\Handler.php.',
       code: dedent`
         use Throwable;
         use Inertia\\Inertia;\n
         /**
-         * Prepare exception for rendering.
+         * Подготовить исключение для рендеринга.
          *
          * @param  \\Throwable  $e
          * @return \\Throwable
@@ -72,7 +72,7 @@ Axios автоматически проверяет наличие cookie-фай
             $response = parent::render($request, $e);\n
             if ($response->status() === 419) {
                 return back()->with([
-                    'message' => 'The page expired, please try again.',
+                    'message' => 'Срок действия страницы истек, попробуйте еще раз.',
                 ]);
             }\n
             return $response;

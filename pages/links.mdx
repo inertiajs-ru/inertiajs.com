@@ -33,7 +33,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/">Home</inertia-link>
+        <inertia-link href="/">Главная</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -42,7 +42,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink href="/">Home</InertiaLink>
+        <InertiaLink href="/">Главная</InertiaLink>
       `,
     },
     {
@@ -50,8 +50,8 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <a href="/" use:inertia>Home</a>\n
-        <InertiaLink href="/">Home</InertiaLink>
+        <a href="/" use:inertia>Главная</a>\n
+        <InertiaLink href="/">Главная</InertiaLink>
       `,
       description: 'Директива use:inertia может применяться к любому элементу HTML.',
     },
@@ -66,9 +66,9 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/logout" method="post" as="button" type="button">Logout</inertia-link>\n
+        <inertia-link href="/logout" method="post" as="button" type="button">Выйти</inertia-link>\n
         // Renders as:
-        <button type="button">Logout</button>
+        <button type="button">Выйти</button>
       `,
     },
     {
@@ -76,9 +76,9 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink href="/logout" method="post" as="button" type="button">Logout</InertiaLink>\n
+        <InertiaLink href="/logout" method="post" as="button" type="button">Выйти</InertiaLink>\n
         // Renders as:
-        <button type="button">Logout</button>
+        <button type="button">Выйти</button>
       `,
     },
     {
@@ -86,9 +86,9 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia } from '@inertiajs/inertia-svelte'\n
-        <button href="/logout" use:inertia="{{ method: 'post' }}" type="button">Logout</button>\n
+        <button href="/logout" use:inertia="{{ method: 'post' }}" type="button">Выйти</button>\n
         // Renders as:
-        <button type="button">Logout</button>
+        <button type="button">Выйти</button>
       `,
       description:
         'Svelte пока не поддерживает динамические элементы, но Вы можете использовать директиву inertia для достижения тех же результатов.',
@@ -111,7 +111,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/logout" method="post">Logout</inertia-link>
+        <inertia-link href="/logout" method="post">Выйти</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -120,7 +120,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink href="/logout" method="post">Logout</InertiaLink>
+        <InertiaLink href="/logout" method="post">Выйти</InertiaLink>
       `,
     },
     {
@@ -128,8 +128,8 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <a href="/logout" use:inertia="{{ method: 'post' }}">Logout</a>\n
-        <InertiaLink href="/logout" method="post">Logout</InertiaLink>
+        <a href="/logout" use:inertia="{{ method: 'post' }}">Выйти</a>\n
+        <InertiaLink href="/logout" method="post">Выйти</InertiaLink>
       `,
     },
   ]}
@@ -145,7 +145,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/endpoint" method="post" :data="{ foo: bar }">Save</inertia-link>
+        <inertia-link href="/endpoint" method="post" :data="{ foo: bar }">Сохранить</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -154,7 +154,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink href="/endpoint" method="post" data={{ foo: bar }}>Save</InertiaLink>
+        <InertiaLink href="/endpoint" method="post" data={{ foo: bar }}>Сохранить</InertiaLink>
       `,
     },
     {
@@ -162,7 +162,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <InertiaLink href="/endpoint" method="post" data={{ foo: bar }}>Save</InertiaLink>
+        <InertiaLink href="/endpoint" method="post" data={{ foo: bar }}>Сохранить</InertiaLink>
       `,
     },
   ]}
@@ -178,7 +178,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/endpoint" :headers="{ foo: bar }">Save</inertia-link>
+        <inertia-link href="/endpoint" :headers="{ foo: bar }">Сохранить</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -187,7 +187,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink href="/endpoint" headers={{ foo: bar }}>Save</InertiaLink>
+        <InertiaLink href="/endpoint" headers={{ foo: bar }}>Сохранить</InertiaLink>
       `,
     },
     {
@@ -195,8 +195,8 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <button use:inertia="{{ href: '/endpoint', headers: { foo: bar } }}">Save</button>\n
-        <InertiaLink href="/endpoint" headers={{ foo: bar}}>Save</InertiaLink>
+        <button use:inertia="{{ href: '/endpoint', headers: { foo: bar } }}">Сохранить</button>\n
+        <InertiaLink href="/endpoint" headers={{ foo: bar}}>Сохранить</InertiaLink>
       `,
     },
   ]}
@@ -212,7 +212,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/" replace>Home</inertia-link>
+        <inertia-link href="/" replace>Главная</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -221,7 +221,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink replace href="/">Home</InertiaLink>
+        <InertiaLink replace href="/">Главная</InertiaLink>
       `,
     },
     {
@@ -229,8 +229,8 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <a href="/" use:inertia="{{ replace: true }}">Home</a>\n
-        <InertiaLink href="/" replace>Home</InertiaLink>
+        <a href="/" use:inertia="{{ replace: true }}">Главная</a>\n
+        <InertiaLink href="/" replace>Главная</InertiaLink>
       `,
     },
   ]}
@@ -247,7 +247,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         <input v-model="query" type="text" />\n
-        <inertia-link href="/search" :data="{ query }" preserve-state>Search</inertia-link>
+        <inertia-link href="/search" :data="{ query }" preserve-state>Искать</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -257,7 +257,7 @@ export const meta = {
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
         <input onChange={this.handleChange} value={query} />\n
-        <InertiaLink href="/search" data={query} preserveState>Search</InertiaLink>
+        <InertiaLink href="/search" data={query} preserveState>Искать</InertiaLink>
       `,
     },
     {
@@ -266,8 +266,8 @@ export const meta = {
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
         <input on:change={handleChange} value={query} />\n
-        <button use:inertia="{{ href: '/search', data: query, preserveState: true }}">Search</button>\n
-        <InertiaLink href="/search" data={query} preserveState>Search</InertiaLink>
+        <button use:inertia="{{ href: '/search', data: query, preserveState: true }}">Искать</button>\n
+        <InertiaLink href="/search" data={query} preserveState>Искать</InertiaLink>
       `,
     },
   ]}
@@ -283,7 +283,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/" preserve-scroll>Home</inertia-link>
+        <inertia-link href="/" preserve-scroll>Главная</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -292,7 +292,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink preserveScroll href="/">Home</InertiaLink>
+        <InertiaLink preserveScroll href="/">Главная</InertiaLink>
       `,
     },
     {
@@ -300,8 +300,8 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <a href="/" use:inertia="{{ preserveScroll: true }}">Home</a>\n
-        <InertiaLink href="/" preserveScroll>Home</InertiaLink>
+        <a href="/" use:inertia="{{ preserveScroll: true }}">Главная</a>\n
+        <InertiaLink href="/" preserveScroll>Главная</InertiaLink>
       `,
     },
   ]}
@@ -319,7 +319,7 @@ export const meta = {
       name: 'Vue.js',
       language: 'jsx',
       code: dedent`
-        <inertia-link href="/users?active=true" :only="['users']">Show active</inertia-link>
+        <inertia-link href="/users?active=true" :only="['users']">Показать активные</inertia-link>
       `,
       description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
@@ -328,7 +328,7 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { InertiaLink } from '@inertiajs/inertia-react'\n
-        <InertiaLink href="/users?active=true" only={['users']}>Show active</InertiaLink>
+        <InertiaLink href="/users?active=true" only={['users']}>Показать активные</InertiaLink>
       `,
     },
     {
@@ -336,8 +336,8 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         import { inertia, InertiaLink } from '@inertiajs/inertia-svelte'\n
-        <a href="/users?active=true" use:inertia="{{ only: ['users'] }}">Show active</a>\n
-        <InertiaLink href="/users?active=true" only={['users']}>Show active</InertiaLink>
+        <a href="/users?active=true" use:inertia="{{ only: ['users'] }}">Показать активные</a>\n
+        <InertiaLink href="/users?active=true" only={['users']}>Показать активные</InertiaLink>
       `,
     },
   ]}

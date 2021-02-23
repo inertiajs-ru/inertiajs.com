@@ -30,7 +30,7 @@ export const meta = {
       code: dedent`
         /*
         |----------------------------------------------------------------
-        | Via the HandleInertiaRequests middleware (recommended)
+        | Через мидлвар HandleInertiaRequests (рекомендуется)
         |----------------------------------------------------------------
         */\n
         class HandleInertiaRequests extends Middleware
@@ -38,9 +38,9 @@ export const meta = {
             public function share(Request $request)
             {
                 return array_merge(parent::share($request), [\n
-                    // Synchronously
+                    // Синхронно
                     'appName' => config('app.name'),\n
-                    // Lazily
+                    // Отложенно
                     'user' => fn () => $request->user()
                         ? $request->user()->only('id', 'name', 'email')
                         : null,
@@ -49,13 +49,13 @@ export const meta = {
         }\n
         /*
         |----------------------------------------------------------------
-        | Manually
+        | Вручную
         |----------------------------------------------------------------
         */\n
         use Inertia\\Inertia;\n
-        // Synchronously
+        // Синхронно
         Inertia::share('appName', config('app.name'));\n
-        // Lazily
+        // Отложенно
         Inertia::share('user', fn (Request $request) => $request->user()
             ? $request->user()->only('id', 'name', 'email')
             : null
@@ -68,9 +68,9 @@ export const meta = {
       name: 'Rails',
       language: 'ruby',
       code: dedent`
-        # Synchronously
+        # Синхронно
         inertia_share app_name: env['app.name']\n
-        # Lazily
+        # Отложенно
         inertia_share do
           if logged_in?
             {
@@ -78,7 +78,7 @@ export const meta = {
             }
           end
         end\n
-        # Lazily
+        # Отложенно
         inertia_share user_count: lambda { User.count }
       `,
     },
@@ -97,17 +97,17 @@ export const meta = {
   examples={[
     {
       name: 'Vue.js',
-      description: 'Access shared data using the $page property or the usePage() hook.',
+      description: 'Доступ к общим данным можно получить с помощью свойства $page или хука usePage().',
       language: 'twig',
       code: dedent`
         <template>
           <main>
             <header>
-              <div>You are logged in as: {{ user.name }}</div>
+              <div>Вы вошли как: {{ user.name }}</div>
               <nav>
-                <inertia-link href="/">Home</inertia-link>
-                <inertia-link href="/about">About</inertia-link>
-                <inertia-link href="/contact">Contact</inertia-link>
+                <inertia-link href="/">Главная</inertia-link>
+                <inertia-link href="/about">О нас</inertia-link>
+                <inertia-link href="/contact">Контакты</inertia-link>
               </nav>
             </header>
             <content>
@@ -156,11 +156,11 @@ export const meta = {
           return (
             <main>
               <header>
-                <div>You are logged in as: {auth.user.name}</div>
+                <div>Вы вошли как: {auth.user.name}</div>
                 <nav>
-                  <InertiaLink href="/">Home</InertiaLink>
-                  <InertiaLink href="/about">About</InertiaLink>
-                  <InertiaLink href="/contact">Contact</InertiaLink>
+                  <InertiaLink href="/">Главная</InertiaLink>
+                  <InertiaLink href="/about">О нас</InertiaLink>
+                  <InertiaLink href="/contact">Контакты</InertiaLink>
                 </nav>
               </header>
               <content>{children}</content>
@@ -180,11 +180,11 @@ export const meta = {
         </script>\n
         <main>
           <header>
-            <div>You are logged in as: {$page.props.auth.user.name}</div>
+            <div>Вы вошли как: {$page.props.auth.user.name}</div>
             <nav>
-              <a use:inertia href="/">Home</a>
-              <a use:inertia href="/about">About</a>
-              <a use:inertia href="/contact">Contact</a>
+              <a use:inertia href="/">Главная</a>
+              <a use:inertia href="/about">О нас</a>
+              <a use:inertia href="/contact">Контакты</a>
             </nav>
           </header>
           <content>
