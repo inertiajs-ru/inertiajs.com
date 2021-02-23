@@ -28,6 +28,10 @@ export const meta = {
       name: 'Vue.js',
       language: 'bash',
       code: dedent`
+        # Vue 3
+        npm install @inertiajs/inertia @inertiajs/inertia-vue3
+        yarn add @inertiajs/inertia @inertiajs/inertia-vue3\n
+        # Vue 2
         npm install @inertiajs/inertia @inertiajs/inertia-vue
         yarn add @inertiajs/inertia @inertiajs/inertia-vue
       `,
@@ -169,7 +173,8 @@ npm install @babel/plugin-syntax-dynamic-import
 ```
 
 <Notice>
-  Если Вы используете Laravel Mix v4, плагин динамического импорта Babel уже настроен. Однако существует известная проблема с Laravel Mix v4 при использовании динамического импорта, когда Вы не можете использовать стили в файлах Vue из-за {' '}<a href="https://github.com/JeffreyWay/laravel-mix/issues/1856#issuecomment-448082909">ограничения</a> Webpack. В качестве обходного пути Вам нужно полностью отказаться от Mix или перейти на Laravel Mix v3.
+  Если Вы используете Laravel Mix v4, плагин динамического импорта Babel уже настроен. Однако существует известная проблема с Laravel Mix v4 при использовании динамического импорта, когда Вы не можете использовать стили в файлах Vue из-за Webpack{' '}
+  <a href="https://github.com/JeffreyWay/laravel-mix/issues/1856#issuecomment-448082909">ограничение</a>. В качестве обходного пути Вам нужно полностью отказаться от Mix или перейти на Laravel Mix v6.
 </Notice>
 
 Наконец, обновите обратный вызов `resolveComponent` в инициализации вашего приложения, чтобы использовать `import` вместо `require`.

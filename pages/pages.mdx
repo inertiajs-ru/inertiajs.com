@@ -30,9 +30,9 @@ export const meta = {
       language: 'twig',
       code: dedent`
         <template>
-          <layout title="Welcome">
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+          <layout title="Добро пожаловать">
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
           </layout>
         </template>\n
         <script>
@@ -56,9 +56,9 @@ export const meta = {
         import Layout from './Layout'\n
         export default function Welcome({ user }) {
           return (
-            <Layout title="Welcome">
-              <h1>Welcome</h1>
-              <p>Hello {user.name}, welcome to your first Inertia app!</p>
+            <Layout title="Добро пожаловать">
+              <h1>Добро пожаловать</h1>
+              <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
             </Layout>
           )
         }
@@ -72,9 +72,9 @@ export const meta = {
           import Layout from './Layout.svelte'\n
           export let user
         </script>\n
-        <Layout title="Welcome">
-          <h1>Welcome</h1>
-          <p>Hello {user.name}, welcome to your first Inertia app!</p>
+        <Layout title="Добро пожаловать">
+          <h1>Добро пожаловать</h1>
+          <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
         </Layout>
       `,
     },
@@ -94,9 +94,9 @@ export const meta = {
         <template>
           <main>
             <header>
-              <inertia-link href="/">Home</inertia-link>
-              <inertia-link href="/about">About</inertia-link>
-              <inertia-link href="/contact">Contact</inertia-link>
+              <inertia-link href="/">Главная</inertia-link>
+              <inertia-link href="/about">О нас</inertia-link>
+              <inertia-link href="/contact">Контакты</inertia-link>
             </header>
             <article>
               <slot />
@@ -134,9 +134,9 @@ export const meta = {
           return (
             <main>
               <header>
-                <InertiaLink href="/">Home</InertiaLink>
-                <InertiaLink href="/about">About</InertiaLink>
-                <InertiaLink href="/contact">Contact</InertiaLink>
+                <InertiaLink href="/">Главная</InertiaLink>
+                <InertiaLink href="/about">О нас</InertiaLink>
+                <InertiaLink href="/contact">Контакты</InertiaLink>
               </header>\n
               <article>{children}</article>
             </main>
@@ -157,9 +157,9 @@ export const meta = {
         </svelte:head>\n
         <main>
           <header>
-            <a use:inertia href="/">Home</a>
-            <a use:inertia href="/about">About</a>
-            <a use:inertia href="/contact">Contact</a>
+            <a use:inertia href="/">Главная</a>
+            <a use:inertia href="/about">О нас</a>
+            <a use:inertia href="/contact">Контакты</a>
           </header>\n
           <article>
             <slot />
@@ -184,16 +184,16 @@ export const meta = {
       code: dedent`
         <template>
           <div>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
           </div>
         </template>\n
         <script>
           import Layout from './Layout'\n
           export default {
-            // Using a render function
+            // Использование функции рендеринга
             layout: (h, page) => h(Layout, [page]),\n
-            // Using the shorthand
+            // Сокращение
             layout: Layout,\n
             props: {
               user: Object,
@@ -211,12 +211,12 @@ export const meta = {
         const Home = ({ user }) => {
           return (
             <>
-              <h1>Welcome</h1>
-              <p>Hello {user.name}, welcome to your first Inertia app!</p>
+              <h1>Добро пожаловать</h1>
+              <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
             </>
           )
         }\n
-        Home.layout = page => <Layout children={page} title="Welcome" />\n
+        Home.layout = page => <Layout children={page} title="Добро пожаловать" />\n
         export default Home
       `,
     },
@@ -231,8 +231,8 @@ export const meta = {
         <script>
           export let user
         </script>\n
-        <h1>Welcome</h1>
-        <p>Hello {user.name}, welcome to your first Inertia app!</p>
+        <h1>Добро пожаловать</h1>
+        <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
       `,
     },
   ]}
@@ -248,21 +248,21 @@ export const meta = {
       code: dedent`
         <template>
           <div>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
           </div>
         </template>\n
         <script>
           import SiteLayout from './SiteLayout'
           import NestedLayout from './NestedLayout'\n
           export default {
-            // Using a render function
+            // Использование функции рендеринга
             layout: (h, page) => {
               return h(SiteLayout, [
                 h(NestedLayout, [page]),
               ])
             },\n
-            // Using the shorthand
+            // Сокращение
             layout: [SiteLayout, NestedLayout],\n
             props: {
               user: Object,
@@ -281,13 +281,13 @@ export const meta = {
         const Home = ({ user }) => {
           return (
             <>
-              <h1>Welcome</h1>
-              <p>Hello {user.name}, welcome to your first Inertia app!</p>
+              <h1>Добро пожаловать</h1>
+              <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
             </>
           )
         }\n
         Home.layout = page => (
-          <SiteLayout title="Welcome">
+          <SiteLayout title="Добро пожаловать">
             <NestedLayout children={page} />
           </SiteLayout>
         )\n
@@ -306,8 +306,8 @@ export const meta = {
         <script>
           export let user
         </script>\n
-        <h1>Welcome</h1>
-        <p>Hello {user.name}, welcome to your first Inertia app!</p>
+        <h1>Добро пожаловать</h1>
+        <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
       `,
     },
   ]}
@@ -355,8 +355,8 @@ resolveComponent: name => import(`./Pages/${name}`)
       code: dedent`
         <template>
           <layout>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
           </layout>
         </template>\n
         <script>
@@ -364,7 +364,7 @@ resolveComponent: name => import(`./Pages/${name}`)
           export default {
             metaInfo() {
               return {
-                title: \`Welcome \${this.user.name}\`,
+                title: \`Добро пожаловать \${this.user.name}\`,
               }
             },
             components: {
@@ -389,10 +389,10 @@ resolveComponent: name => import(`./Pages/${name}`)
           return (
             <Layout>
               <Helmet>
-                <title>Welcome {user.name}</title>
+                <title>Добро пожаловать {user.name}</title>
               </Helmet>
-              <h1>Welcome</h1>
-              <p>Hello {user.name}, welcome to your first Inertia app!</p>
+              <h1>Добро пожаловать</h1>
+              <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
             </Layout>
           )
         }
@@ -411,13 +411,23 @@ resolveComponent: name => import(`./Pages/${name}`)
           export let user
         </script>\n
         <svelte:head>
-            <title>Welcome {user.name}</title>
+            <title>Добро пожаловать {user.name}</title>
         </svelte:head>\n
-        <h1>Welcome</h1>
-        <p>Hello {user.name}, welcome to your first Inertia app!</p>
+        <h1>Добро пожаловать</h1>
+        <p>Здравствуйте, {{ user.name }}, добро пожаловать в Ваше первое приложение Inertia!</p>
       `,
     },
   ]}
 />
 
-Кроме того, если для Вашего приложения критически важно установить заголовок страницы и метатеги на стороне сервера, Вы можете использовать [данные корневого шаблона](/responses#данные-корневого-шаблона) для этого.
+Если Вы используете Vue 3, Вы также можете использовать для этого функцию [телепорт](https://v3.vuejs.org/guide/teleport.html):
+
+```twig
+<template>
+  <teleport to="head">
+    <title>Добро пожаловать {{ user.name }}</title>
+  </teleport>
+</template>
+```
+
+Кроме того, если для Вашего приложения критически важно установить заголовок страницы и метатеги на стороне сервера, Вы можете использовать [данные корневого шаблона](/responses#root-template-data) для этого.
