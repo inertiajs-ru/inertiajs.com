@@ -317,31 +317,103 @@ export const meta = {
 
 Если Вы используете постоянные макеты, можно установить макет страницы по умолчанию в обратном вызове `resolveComponent()`.
 
-```js
-import Layout from './Layout'
-
-resolveComponent: name => import(`./Pages/${name}`)
-  .then(({ default: page }) => {
-    page.layout = page.layout === undefined ? Layout : page.layout
-    return page
-  }),
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        import Layout from './Layout'\n
+        resolveComponent: name => import(\`./Pages/\${name}\`)
+          .then(({ default: page }) => {
+            if (page.layout === undefined) {
+              page.layout = Layout
+            }
+            return page
+          }),
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        import Layout from './Layout'\n
+        resolveComponent: name => import(\`./Pages/\${name}\`)
+          .then(({ default: page }) => {
+            if (page.layout === undefined) {
+              page.layout = Layout
+            }
+            return page
+          }),
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        import Layout from './Layout'\n
+        resolveComponent: name => import(\`./Pages/\${name}\`)
+          .then(page => {
+            if (page.layout === undefined) {
+              page.layout = Layout
+            }
+            return page
+          }),
+      `,
+    },
+  ]}
+/>
 
 Это автоматически установит макет страницы на `Layout`, если макет еще не был установлен для этой страницы. При необходимости Вы можете отключить макет по умолчанию на определенных страницах, установив для параметра `layout` значение `null`.
 
 Вы даже можете пойти дальше и условно установить макет страницы по умолчанию на основе имени страницы `name`, доступного для метода `resolveComponent()`. Например, Вы не хотите, чтобы макет по умолчанию применялся к Вашим общедоступным страницам.
 
-```js
-import Layout from './Layout'
-
-resolveComponent: name => import(`./Pages/${name}`)
-  .then(({ default: page }) => {
-    if (page.layout === undefined && !name.startsWith('Public/')) {
-      page.layout = Layout
-    }
-    return page
-  }),
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        import Layout from './Layout'\n
+        resolveComponent: name => import(\`./Pages/\${name}\`)
+          .then(({ default: page }) => {
+            if (page.layout === undefined && !name.startsWith('Public/')) {
+              page.layout = Layout
+            }
+            return page
+          }),
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        import Layout from './Layout'\n
+        resolveComponent: name => import(\`./Pages/\${name}\`)
+          .then(({ default: page }) => {
+            if (page.layout === undefined && !name.startsWith('Public/')) {
+              page.layout = Layout
+            }
+            return page
+          }),
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        import Layout from './Layout'\n
+        resolveComponent: name => import(\`./Pages/\${name}\`)
+          .then(page => {
+            if (page.layout === undefined && !name.startsWith('Public/')) {
+              page.layout = Layout
+            }
+            return page
+          }),
+      `,
+    },
+  ]}
+/>
 
 ## Заголовок и метатеги
 

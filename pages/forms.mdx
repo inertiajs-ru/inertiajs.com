@@ -1,5 +1,6 @@
 import dedent from 'dedent-js'
 import Layout from '../components/Layout'
+import Notice from '../components/Notice'
 import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
@@ -187,7 +188,9 @@ data.append('photo', photo || '')
 Inertia.post('/users', data)
 ```
 
-Однако, начиная с версии `0.8.0`, Inertia автоматически определяет, включает ли посещение какие-либо файлы (даже вложенные файлы), а затем при необходимости преобразует данные в объект `FormData`.
+<Notice>
+  Однако, начиная с версии <inlineCode>0.8.0</inlineCode>, Inertia автоматически определяет, включает ли посещение какие-либо файлы (даже вложенные файлы), а затем при необходимости преобразует данные в объект <inlineCode>FormData</inlineCode>.
+</Notice>
 
 Вы можете узнать больше об интерфейсе `FormData` [здесь](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
@@ -255,7 +258,27 @@ Inertia.post('/users', data)
       name: 'React',
       language: 'jsx',
       code: dedent`
-        # todo
+        import React from 'react'
+        import { useForm } from '@inertiajs/inertia-react'\n
+        const { data, setData, post, processing, errors } = useForm({
+          name: '',
+          email: '',
+          remember: '',
+        })\n
+        function submit(e) {
+          e.preventDefault()
+          post('/login')
+        }\n
+        return (
+          <form onSubmit={submit}>
+            <input type="text" value={data.email} onChange={e => setData('email', e.target.value)} />
+            {errors.email && <div>{errors.email}</div>}
+            <input type="password" value={data.password} onChange={e => setData('password', e.target.value)} />
+            {errors.password && <div>{errors.password}</div>}
+            <input type="checkbox" value={data.remember} onChange={e => setData('remember', e.target.value)} /> Remember Me
+            <button type="submit" disabled={processing}>Login</button>
+          </form>
+        )
       `,
     },
     {
@@ -268,58 +291,279 @@ Inertia.post('/users', data)
   ]}
 />
 
+Чтобы отправить форму, используйте методы `get`, `post`, `put`, `patch` и `delete`.
+
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        form.get(url, options)
+        form.post(url, options)
+        form.put(url, options)
+        form.patch(url, options)
+        form.delete(url, options)
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        const { get, post, put, patch, delete: destroy } = useForm({ ... })\n
+        get(url, options)
+        post(url, options)
+        put(url, options)
+        patch(url, options)
+        destroy(url, options)
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
+
+Методы отправки поддерживают все обычные [параметры посещения](/manual-visits), такие как `preserveState`, `preserveScroll` и обратные вызовы событий. Это может быть полезно для выполнения задач при успешной отправке формы, таких как сброс входных данных.
+
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        form.post('/profile', {
+          preserveScroll: true,
+          onSuccess: () => form.reset('password'),
+        })
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+      const { post, reset } = useForm({ ... })\n
+      post('/profile', {
+        preserveScroll: true,
+        onSuccess: () => reset('password'),
+      })
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
+
 Если Вам нужно изменить данные формы перед их отправкой на сервер, Вы можете сделать это с помощью метода `transform()`.
 
-```js
-this.form
-  .transform((data) => ({
-    ...data,
-    remember: data.remember ? 'on' : '',
-  }))
-  .post('/login')
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        form
+          .transform((data) => ({
+            ...data,
+            remember: data.remember ? 'on' : '',
+          }))
+          .post('/login')
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        const { transform } = useForm({ ... })\n
+        transform((data) => ({
+          ...data,
+          remember: data.remember ? 'on' : '',
+        }))
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
 
-Вы можете использовать свойство `form.processing`, чтобы отслеживать, отправляется ли форма в данный момент. Это может быть полезно для предотвращения двойной отправки формы, отключив кнопку отправки.
+Вы можете использовать свойство `processing`, чтобы отслеживать, отправляется ли форма в данный момент. Это может быть полезно для предотвращения двойной отправки формы, отключив кнопку отправки.
 
-```jsx
-<button type="submit" :disabled="form.processing">Отправить</button>
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'jsx',
+      code: dedent`
+        <button type="submit" :disabled="form.processing">Submit</button>
+      `,
+    },
+    {
+      name: 'React',
+      language: 'jsx',
+      code: dedent`
+        const { processing } = useForm({ ... })\n
+        <button type="submit" disabled={processing}>Submit</button>
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'jsx',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
 
-В случае, если Вы загружаете файлы, текущее событие выполнения доступно через свойство `form.progress`. Это полезно для отображения прогресса загрузки. Например:
+Если Вы загружаете файлы, текущее событие progress доступно через свойство `progress`. Это полезно для отображения прогресса загрузки. Например:
 
-```jsx
-<progress v-if="form.progress" :value="form.progress.percentage" max="100">
-  {{ form.progress.percentage }}%
-</progress>
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'jsx',
+      code: dedent`
+        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+          {{ form.progress.percentage }}%
+        </progress>
+      `,
+    },
+    {
+      name: 'React',
+      language: 'jsx',
+      code: dedent`
+        const { progress } = useForm({ ... })\n
+        {progress && (
+          <progress value={progress.percentage} max="100">
+            {progress.percentage}%
+          </progress>
+        )}
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'jsx',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
 
-В случае ошибок формы они доступны через свойство `form.errors`.
+В случае ошибок формы они доступны через свойство `errors`.
 
-```jsx
-<div v-if="form.errors.email">{{ form.errors.email }}</div>
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'jsx',
+      code: dedent`
+        <div v-if="form.errors.email">{{ form.errors.email }}</div>
+      `,
+    },
+    {
+      name: 'React',
+      language: 'jsx',
+      code: dedent`
+        const { errors } = useForm({ ... })\n
+        {errors.email && <div>{errors.email}</div>}
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'jsx',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
 
-Чтобы проверить, нет ли в форме ошибок, используйте свойство `form.hasErrors`. Чтобы удалить ошибки формы, используйте метод `form.clearErrors()`.
+Чтобы проверить, есть ли в форме какие-либо ошибки, используйте свойство `hasErrors`. Чтобы удалить ошибки формы, используйте метод `clearErrors()`.
 
-```js
-// Очистить все ошибки
-form.clearErrors()
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        // Clear all errors
+        form.clearErrors()\n
+        // Clear errors for specific fields
+        form.clearErrors('field', 'anotherfield')
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        const { clearErrors } = useForm({ ... })\n
+        // Clear all errors
+        clearErrors()\n
+        // Clear errors for specific fields
+        clearErrors('field', 'anotherfield')
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
 
-// Очистить ошибки для определенных полей
-form.clearErrors('field', 'anotherfield')
-```
+Когда форма была успешно отправлена, свойство `wasSuccessful` будет иметь значение `true`. В дополнение к этому, есть также свойство `recentlySuccessful`, которому будет присвоено значение `true` в течение двух секунд после успешной отправки формы. Это полезно для отображения временных сообщений об успехе.
 
-Когда форма была успешно отправлена, свойство `form.wasSuccessful` будет иметь значение `true`. В дополнение к этому, существует также свойство `form.recentlySuccessful`, которому будет присвоено значение `true` в течение двух секунд после успешной отправки формы. Это полезно для отображения временных сообщений об успехе.
+Чтобы восстановить исходные значения формы, используйте метод `reset()`. Обратите внимание: это вернет значения к исходным значениям, которые были предоставлены при первом создании экземпляра помощника формы.
 
-Чтобы восстановить исходные значения формы, используйте метод `form.reset()`. Обратите внимание, это сбросит значения обратно к начальным значениям, которые были предоставлены, когда Вы вызывали `Inertia.form()`.
-
-```js
-// Сбросить форму
-form.reset()
-
-// Сбросить определенные поля
-form.reset('field', 'anotherfield')
-```
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue.js',
+      language: 'js',
+      code: dedent`
+        // Reset the form
+        form.reset()\n
+        // Reset specific fields
+        form.reset('field', 'anotherfield')
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        const { reset } = useForm({ ... })\n
+        // Reset the form
+        reset()\n
+        // Reset specific fields
+        reset('field', 'anotherfield')
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        # todo
+      `,
+    },
+  ]}
+/>
 
 ## Проверка на стороне сервера
 
