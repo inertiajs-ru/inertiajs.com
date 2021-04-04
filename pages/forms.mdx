@@ -8,9 +8,9 @@ export const meta = {
   title: 'Формы',
   links: [
     { url: '#отправка-форм', name: 'Отправка форм' },
-    { url: '#загрузка-файлов', name: 'Загрузка файлов' },
-    { url: '#помощник-формы', name: 'Помощник формы' },
     { url: '#проверка-на-стороне-сервера', name: 'Проверка на стороне сервера' },
+    { url: '#помощник-формы', name: 'Помощник формы' },
+    { url: '#загрузка-файлов', name: 'Загрузка файлов' },
     { url: '#классическая-отправка-xhr', name: 'Классическая отправка XHR' },
   ],
 }
@@ -24,7 +24,7 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       language: 'twig',
       code: dedent`
         <template>
@@ -53,6 +53,40 @@ export const meta = {
             submit() {
               this.$inertia.post('/users', this.form)
             },
+          },
+        }
+        </script>
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'twig',
+      code: dedent`
+        <template>
+          <form @submit.prevent="submit">
+            <label for="first_name">First name:</label>
+            <input id="first_name" v-model="form.first_name" />
+            <label for="last_name">Last name:</label>
+            <input id="last_name" v-model="form.last_name" />
+            <label for="email">Email:</label>
+            <input id="email" v-model="form.email" />
+            <button type="submit">Submit</button>
+          </form>
+        </template>\n
+        <script>
+        import { reactive } from 'vue'
+        import { Inertia } from '@inertiajs/inertia'\n
+        export default {
+          setup () {
+            const form = reactive({
+              first_name: null,
+              last_name: null,
+              email: null,
+            })\n
+            function submit() {
+              Inertia.post('/users', form)
+            }\n
+            return { form, submit }
           },
         }
         </script>
@@ -150,7 +184,7 @@ export const meta = {
                         'email' => ['required', 'max:50', 'email'],
                     ])
                 );\n
-                return Redirect::route('users');
+                return Redirect::route('users.index');
             }
         }
       `,
@@ -173,26 +207,11 @@ export const meta = {
   ]}
 />
 
-## Загрузка файлов
+## Проверка на стороне сервера
 
-Уловка для загрузки файлов с помощью Inertia заключается в использовании объекта `FormData`, так как это то, что требуется для отправки запроса `multipart/form-data` через XHR. Вот простой пример использования `FormData` c Inertia.
+Обработка ошибок валидации на стороне сервера в Inertia работает немного иначе, чем классическая форма, управляемая ajax, где вы отлавливаете ошибки валидации из ответов `422` и вручную обновляете состояние ошибки формы. Это потому, что Inertia никогда не получает ответов `422`. Скорее, Inertia работает больше как стандартная отправка полностраничной формы.
 
-```js
-var data = new FormData()
-data.append('name', name || '')
-data.append('email', email || '')
-data.append('password', password || '')
-data.append('is_admin', is_admin ? '1' : '0')
-data.append('photo', photo || '')
-
-Inertia.post('/users', data)
-```
-
-<Notice>
-  Однако, начиная с версии <inlineCode>0.8.0</inlineCode>, Inertia автоматически определяет, включает ли посещение какие-либо файлы (даже вложенные файлы), а затем при необходимости преобразует данные в объект <inlineCode>FormData</inlineCode>.
-</Notice>
-
-Вы можете узнать больше об интерфейсе `FormData` [здесь](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+Смотрите страницу [проверки](/validation) для получения дополнительной информации.
 
 ## Помощник формы
 
@@ -201,7 +220,7 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       language: 'twig',
       code: dedent`
         <template>
@@ -219,27 +238,6 @@ Inertia.post('/users', data)
           </form>
         </template>\n
         <script>
-        /*
-        |----------------------------------------------------------------
-        | Vue 3
-        |----------------------------------------------------------------
-        */\n
-        import { useForm } from '@inertiajs/inertia-vue3'\n
-        export default {
-          setup () {
-            const form = useForm({
-              email: null,
-              password: null,
-              remember: false,
-            })\n
-            return { form }
-          },
-        }\n
-        /*
-        |----------------------------------------------------------------
-        | Vue 2
-        |----------------------------------------------------------------
-        */\n
         export default {
           data() {
             return {
@@ -255,14 +253,47 @@ Inertia.post('/users', data)
       `,
     },
     {
+      name: 'Vue 3',
+      language: 'twig',
+      code: dedent`
+        <template>
+          <form @submit.prevent="form.post('/login')">
+            <!-- email -->
+            <input type="text" v-model="form.email">
+            <div v-if="form.errors.email">{{ form.errors.email }}</div>
+            <!-- password -->
+            <input type="password" v-model="form.password">
+            <div v-if="form.errors.password">{{ form.errors.password }}</div>
+            <!-- remember me -->
+            <input type="checkbox" v-model="form.remember"> Remember Me
+            <!-- submit -->
+            <button type="submit" :disabled="form.processing">Login</button>
+          </form>
+        </template>\n
+        <script>
+        import { useForm } from '@inertiajs/inertia-vue3'\n
+        export default {
+          setup () {
+            const form = useForm({
+              email: null,
+              password: null,
+              remember: false,
+            })\n
+            return { form }
+          },
+        }
+        </script>
+      `,
+    },
+    {
       name: 'React',
       language: 'jsx',
       code: dedent`
         import React from 'react'
         import { useForm } from '@inertiajs/inertia-react'\n
         const { data, setData, post, processing, errors } = useForm({
-          name: '',
           email: '',
+          password: '',
           remember: '',
         })\n
         function submit(e) {
@@ -285,7 +316,29 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'html',
       code: dedent`
-        # todo
+        <script>
+        import { useForm } from '@inertiajs/inertia-svelte'\n
+        let form = useForm({
+          email: null,
+          password: null,
+          remember: false,
+        })\n
+        function submit() {
+          $form.post('/login')
+        }
+        </script>\n
+        <form on:submit|preventDefault={submit}>
+          <input type="text" bind:value={$form.email} error="$form.errors.email" />
+          {#if $form.errors.email}
+            <div class="form-error">{$form.errors.email}</div>
+          {/if}
+          <input type="text" bind:value={$form.email} error="$form.errors.email" />
+          {#if $form.errors.email}
+            <div class="form-error">{$form.errors.email}</div>
+          {/if}
+          <input type="checkbox" bind:checked={$form.remember} /> Remember Me
+          <button type="submit" disabled={$form.processing}>Submit</button>
+        </form>
       `,
     },
   ]}
@@ -296,9 +349,22 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       language: 'js',
       code: dedent`
+        form.submit(method, url, options)
+        form.get(url, options)
+        form.post(url, options)
+        form.put(url, options)
+        form.patch(url, options)
+        form.delete(url, options)
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'js',
+      code: dedent`
+        form.submit(method, url, options)
         form.get(url, options)
         form.post(url, options)
         form.put(url, options)
@@ -310,7 +376,8 @@ Inertia.post('/users', data)
       name: 'React',
       language: 'js',
       code: dedent`
-        const { get, post, put, patch, delete: destroy } = useForm({ ... })\n
+        const { submit, get, post, put, patch, delete: destroy } = useForm({ ... })\n
+        submit(method, url, options)
         get(url, options)
         post(url, options)
         put(url, options)
@@ -322,7 +389,12 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        # todo
+        $form.submit(method, url, options)
+        $form.get(url, options)
+        $form.post(url, options)
+        $form.put(url, options)
+        $form.patch(url, options)
+        $form.delete(url, options)
       `,
     },
   ]}
@@ -333,7 +405,17 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        form.post('/profile', {
+          preserveScroll: true,
+          onSuccess: () => form.reset('password'),
+        })
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'js',
       code: dedent`
         form.post('/profile', {
@@ -357,7 +439,10 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        # todo
+        $form.post('/profile', {
+          preserveScroll: true,
+          onSuccess: () => $form.reset('password'),
+        })
       `,
     },
   ]}
@@ -368,7 +453,19 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        form
+          .transform((data) => ({
+            ...data,
+            remember: data.remember ? 'on' : '',
+          }))
+          .post('/login')
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'js',
       code: dedent`
         form
@@ -394,7 +491,12 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        # todo
+        $form
+          .transform((data) => ({
+            ...data,
+            remember: data.remember ? 'on' : '',
+          }))
+          .post('/login')
       `,
     },
   ]}
@@ -405,7 +507,14 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <button type="submit" :disabled="form.processing">Submit</button>
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <button type="submit" :disabled="form.processing">Submit</button>
@@ -423,7 +532,7 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'jsx',
       code: dedent`
-        # todo
+        <button type="submit" disabled={$form.processing}>Submit</button>
       `,
     },
   ]}
@@ -434,7 +543,16 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+          {{ form.progress.percentage }}%
+        </progress>
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <progress v-if="form.progress" :value="form.progress.percentage" max="100">
@@ -458,7 +576,11 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'jsx',
       code: dedent`
-        # todo
+        {#if $form.progress}
+          <progress value={$form.progress.percentage} max="100">
+            {$form.progress.percentage}%
+          </progress>
+        {/if}
       `,
     },
   ]}
@@ -469,7 +591,14 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <div v-if="form.errors.email">{{ form.errors.email }}</div>
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <div v-if="form.errors.email">{{ form.errors.email }}</div>
@@ -487,7 +616,9 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'jsx',
       code: dedent`
-        # todo
+        {#if $form.errors.email}
+          <div>{$form.errors.email}</div>
+        {/if}
       `,
     },
   ]}
@@ -498,7 +629,17 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        // Clear all errors
+        form.clearErrors()\n
+        // Clear errors for specific fields
+        form.clearErrors('field', 'anotherfield')
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'js',
       code: dedent`
         // Clear all errors
@@ -522,7 +663,10 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        # todo
+        // Clear all errors
+        $form.clearErrors()\n
+        // Clear errors for specific fields
+        $form.clearErrors('field', 'anotherfield')
       `,
     },
   ]}
@@ -535,7 +679,17 @@ Inertia.post('/users', data)
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        // Reset the form
+        form.reset()\n
+        // Reset specific fields
+        form.reset('field', 'anotherfield')
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'js',
       code: dedent`
         // Reset the form
@@ -559,16 +713,63 @@ Inertia.post('/users', data)
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        # todo
+        // Reset the form
+        $form.reset()\n
+        // Reset specific fields
+        $form.reset('field', 'anotherfield')
       `,
     },
   ]}
 />
 
-## Проверка на стороне сервера
+Чтобы вспомогательные данные формы и ошибки автоматически [запоминались](/remembering-state) в состоянии истории, Вы можете предоставить уникальный ключ формы в качестве первого аргумента при создании экземпляра Вашей формы.
 
-Обработка ошибок проверки на стороне сервера в Inertia работает немного иначе, чем в классической форме, управляемой ajax, где Вы отлавливаете ошибки проверки из ответов `422` и вручную обновляете состояние ошибки формы. Это потому, что Inertia никогда не получает ответов `422`. Скорее, Inertia работает больше как стандартная отправка полностраничной формы. Смотрите [страницу проверки](/validation) для получения дополнительной информации.
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        this.$inertia.form('CreateUser', data)
+        this.$inertia.form(\`EditUser:\${this.user.id}\`, data)
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'js',
+      code: dedent`
+        import { useForm } from '@inertiajs/inertia-vue3'\n
+        const form = useForm('CreateUser', data)
+        const form = useForm(\`EditUser:\${user.id}\`, data)
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        import { useForm } from '@inertiajs/inertia-react'\n
+        const form = useForm('CreateUser', data)
+        const form = useForm(\`EditUser:\${user.id}\`, data)
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        import { useForm } from '@inertiajs/inertia-svelte'\n
+        const form = useForm('CreateUser', data)
+        const form = useForm(\`EditUser:\${user.id}\`, data)
+      `,
+    },
+  ]}
+/>
+
+## Загрузка файлов
+
+При посещении, включающем файлы, Inertia автоматически преобразует данные запроса в объект `FormData`.
+
+Смотрите страницу [загрузка файлов](/file-uploads) для получения дополнительной информации.
 
 ## Классическая отправка XHR
 
-Использование Inertia для отправки форм хорошо работает в подавляющем большинстве ситуаций. Однако, если Вам нужен более точный контроль над отправкой формы, ничто не мешает Вам сделать классический запрос XHR. Отличная библиотека для использования здесь [axios](https://github.com/axios/axios), которую Inertia использует под капотом.
+Использование Inertia для отправки форм отлично подходит для подавляющего большинства ситуаций. Однако, если Вам нужен более точный контроль над отправкой формы, ничто не мешает Вам вместо этого делать простые запросы `xhr`или `fetch`. Совершенно нормально использовать оба подхода в одном приложении!

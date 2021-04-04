@@ -16,7 +16,7 @@ export const meta = {
 
 # Установка клиентской части
 
-После того, как Вы настроили [конфигурацию платформы на стороне сервера](/server-side-setup), Вам необходимо настроить клиентскую среду. Inertia в настоящее время поддерживает React, Vue.js и Svelte.
+После того, как Вы настроили [серверную структуру](/server-side-setup), Вам необходимо настроить клиентскую структуру. В настоящее время Inertia поддерживает React, Vue и Svelte.
 
 ## Установка зависимостей
 
@@ -25,15 +25,19 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       language: 'bash',
       code: dedent`
-        # Vue 3
-        npm install @inertiajs/inertia @inertiajs/inertia-vue3
-        yarn add @inertiajs/inertia @inertiajs/inertia-vue3\n
-        # Vue 2
         npm install @inertiajs/inertia @inertiajs/inertia-vue
         yarn add @inertiajs/inertia @inertiajs/inertia-vue
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'bash',
+      code: dedent`
+        npm install @inertiajs/inertia @inertiajs/inertia-vue3
+        yarn add @inertiajs/inertia @inertiajs/inertia-vue3
       `,
     },
     {
@@ -62,28 +66,9 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       language: 'js',
       code: dedent`
-        /*
-        |----------------------------------------------------------------
-        | Vue 3
-        |----------------------------------------------------------------
-        */\n
-        import { createApp, h } from 'vue'
-        import { App, plugin } from '@inertiajs/inertia-vue3'\n
-        const el = document.getElementById('app')\n
-        createApp({
-          render: () => h(App, {
-            initialPage: JSON.parse(el.dataset.page),
-            resolveComponent: name => require(\`./Pages/\${name}\`).default,
-          })
-        }).use(plugin).mount(el)\n\n
-        /*
-        |----------------------------------------------------------------
-        | Vue 2
-        |----------------------------------------------------------------
-        */\n
         import { App, plugin } from '@inertiajs/inertia-vue'
         import Vue from 'vue'\n
         Vue.use(plugin)\n
@@ -96,6 +81,21 @@ export const meta = {
             },
           }),
         }).$mount(el)
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'js',
+      code: dedent`
+        import { createApp, h } from 'vue'
+        import { App, plugin } from '@inertiajs/inertia-vue3'\n
+        const el = document.getElementById('app')\n
+        createApp({
+          render: () => h(App, {
+            initialPage: JSON.parse(el.dataset.page),
+            resolveComponent: name => require(\`./Pages/\${name}\`).default,
+          })
+        }).use(plugin).mount(el)\n\n
       `,
     },
     {
@@ -182,7 +182,14 @@ npm install @babel/plugin-syntax-dynamic-import
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        resolveComponent: name => import(\`./Pages/\${name}\`).then(module => module.default),
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'js',
       code: dedent`
         resolveComponent: name => import(\`./Pages/\${name}\`).then(module => module.default),

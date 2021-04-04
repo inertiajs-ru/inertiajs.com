@@ -46,7 +46,15 @@ Inertia.reload({ only: ['users'] })
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'twig',
+      code: dedent`
+        <inertia-link href="/users?active=true" :only="['users']">Show active</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'twig',
       code: dedent`
         <inertia-link href="/users?active=true" :only="['users']">Показать активные</inertia-link>
@@ -127,4 +135,3 @@ Inertia.reload({ only: ['users'] })
     },
   ]}
 />
-

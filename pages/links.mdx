@@ -30,7 +30,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/">Home</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/">Главная</inertia-link>
@@ -63,7 +71,16 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/logout" method="post" as="button" type="button">Logout</inertia-link>\n
+        // Renders as:
+        <button type="button">Logout</button>
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/logout" method="post" as="button" type="button">Выйти</inertia-link>\n
@@ -108,7 +125,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/logout" method="post">Logout</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/logout" method="post">Выйти</inertia-link>
@@ -142,7 +167,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/endpoint" method="post" :data="{ foo: bar }">Save</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/endpoint" method="post" :data="{ foo: bar }">Сохранить</inertia-link>
@@ -175,7 +208,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/endpoint" :headers="{ foo: bar }">Save</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/endpoint" :headers="{ foo: bar }">Сохранить</inertia-link>
@@ -209,7 +250,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/" replace>Home</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/" replace>Главная</inertia-link>
@@ -243,7 +292,16 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <input v-model="query" type="text" />\n
+        <inertia-link href="/search" :data="{ query }" preserve-state>Search</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <input v-model="query" type="text" />\n
@@ -280,7 +338,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/" preserve-scroll>Home</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/" preserve-scroll>Главная</inertia-link>
@@ -316,7 +382,15 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'jsx',
+      code: dedent`
+        <inertia-link href="/users?active=true" :only="['users']">Show active</inertia-link>
+      `,
+      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+    },
+    {
+      name: 'Vue 3',
       language: 'jsx',
       code: dedent`
         <inertia-link href="/users?active=true" :only="['users']">Показать активные</inertia-link>

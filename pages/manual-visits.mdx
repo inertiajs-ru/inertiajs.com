@@ -14,6 +14,7 @@ export const meta = {
     { url: '#сохранение-прокрутки', name: 'Сохранение прокрутки' },
     { url: '#частичные-перезагрузки', name: 'Частичные перезагрузки' },
     { url: '#пакеты-ошибок', name: 'Пакеты ошибок' },
+    { url: '#загрузка-файлов', name: 'Загрузка файлов' },
     { url: '#пользовательские-заголовки', name: 'Пользовательские заголовки' },
     { url: '#отмена-посещения', name: 'Отмена посещения' },
     { url: '#обратные-вызовы-событий', name: 'Обратные вызовы событий' },
@@ -28,7 +29,7 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       language: 'js',
       code: dedent`
         // import { Inertia } from '@inertiajs/inertia'\n
@@ -41,6 +42,7 @@ export const meta = {
           only: [],
           headers: {},
           errorBag: null,
+          forceFormData: false,
           onCancelToken: cancelToken => {},
           onCancel: () => {},
           onBefore: visit => {},
@@ -48,7 +50,33 @@ export const meta = {
           onProgress: progress => {},
           onSuccess: page => {},
           onError: errors => {},
-          onFinish: () => {},
+          onFinish: visit => {},
+        })
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'js',
+      code: dedent`
+        // import { Inertia } from '@inertiajs/inertia'\n
+        this.$inertia.visit(url, {
+          method: 'get',
+          data: {},
+          replace: false,
+          preserveState: false,
+          preserveScroll: false,
+          only: [],
+          headers: {},
+          errorBag: null,
+          forceFormData: false,
+          onCancelToken: cancelToken => {},
+          onCancel: () => {},
+          onBefore: visit => {},
+          onStart: visit => {},
+          onProgress: progress => {},
+          onSuccess: page => {},
+          onError: errors => {},
+          onFinish: visit => {},
         })
       `,
     },
@@ -66,6 +94,7 @@ export const meta = {
           only: [],
           headers: {},
           errorBag: null,
+          forceFormData: false,
           onCancelToken: cancelToken => {},
           onCancel: () => {},
           onBefore: visit => {},
@@ -73,7 +102,7 @@ export const meta = {
           onProgress: progress => {},
           onSuccess: page => {},
           onError: errors => {},
-          onFinish: () => {},
+          onFinish: visit => {},
         })
       `,
     },
@@ -91,6 +120,7 @@ export const meta = {
           only: [],
           headers: {},
           errorBag: null,
+          forceFormData: false,
           onCancelToken: cancelToken => {},
           onCancel: () => {},
           onBefore: visit => {},
@@ -98,7 +128,7 @@ export const meta = {
           onProgress: progress => {},
           onSuccess: page => {},
           onError: errors => {},
-          onFinish: () => {},
+          onFinish: visit => {},
         })
       `,
     },
@@ -110,7 +140,21 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        // import { Inertia } from '@inertiajs/inertia'\n
+        this.$inertia.get(url, data, options)
+        this.$inertia.post(url, data, options)
+        this.$inertia.put(url, data, options)
+        this.$inertia.patch(url, data, options)
+        this.$inertia.delete(url, options)
+        this.$inertia.replace(url, options)
+        this.$inertia.reload(options) // Uses the current URL
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'js',
       code: dedent`
         // import { Inertia } from '@inertiajs/inertia'\n
@@ -163,6 +207,13 @@ export const meta = {
 ```js
 Inertia.visit(url, { method: 'post' })
 ```
+
+<Notice>
+  Загрузка файлов с помощью <inlineCode>put</inlineCode> или <inlineCode>patch</inlineCode> не поддерживается в Laravel.
+  Вместо этого сделайте запрос через <inlineCode>post</inlineCode>, включив в поле <inlineCode>_method</inlineCode> значение{' '}
+  <inlineCode>put</inlineCode> или <inlineCode>patch</inlineCode>. Это вызовет{' '}
+  <a href="https://laravel.com/docs/8.x/routing#form-method-spoofing">спуфингом метода формы</a>.
+</Notice>
 
 ## Данные
 
@@ -261,6 +312,18 @@ Inertia.post('/companies', data, {
 
 Для получения дополнительной информации смотрите страницу [валидации](/validation#error-bags).
 
+## Загрузка файлов
+
+При посещении, включающем файлы, Inertia автоматически преобразует данные запроса в объект `FormData`. Если Вы хотите, чтобы при посещении всегда использовался объект `FormData`, Вы можете принудительно использовать его с помощью опции `forceFormData`.
+
+```js
+Inertia.post('/companies', data, {
+  forceFormData: true,
+})
+```
+
+Смотрите страницу [загрузка файлов](/file-uploads) для получения дополнительной информации.
+
 ## Пользовательские заголовки
 
 Опция `headers` позволяет Вам добавлять в запрос собственные заголовки.
@@ -302,7 +365,7 @@ Inertia.post('/users', data, {
   onSuccess: (page) => {},
   onError: (errors) => {},
   onCancel: () => {},
-  onFinish: () => {},
+  onFinish: visit => {},
 })
 ```
 
@@ -324,9 +387,9 @@ Inertia.post(url, {
       this.doAnotherThing()
     ])
   }
-  onFinish: () => {
-    // Это не будет вызываться, пока не завершатся
-    // doThing() и doAnotherThing().
+  onFinish: visit => {
+    // Это не будет вызываться, пока не будет doThing()
+    // и doAnotherThing() закончили.
   },
 })
 ```
@@ -359,7 +422,7 @@ Inertia.post('/profile', data, {
 
 ```js
 Inertia.post('/profile', data, {
-  onFinish: () => {
+  onFinish: visit => {
     // Обработка события завершения
   },
 })

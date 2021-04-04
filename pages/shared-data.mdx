@@ -41,7 +41,7 @@ export const meta = {
                     // Синхронно
                     'appName' => config('app.name'),\n
                     // Отложенно
-                    'user' => fn () => $request->user()
+                    'auth.user' => fn () => $request->user()
                         ? $request->user()->only('id', 'name', 'email')
                         : null,
                 ]);
@@ -96,8 +96,40 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
-      description: 'Доступ к общим данным можно получить с помощью свойства $page или хука usePage().',
+      name: 'Vue 2',
+      description: 'Доступ к общим данным с помощью свойства $page или хука usePage().',
+      language: 'twig',
+      code: dedent`
+        <template>
+          <main>
+            <header>
+              <div>You are logged in as: {{ user.name }}</div>
+              <nav>
+                <inertia-link href="/">Главная</inertia-link>
+                <inertia-link href="/about">О нас</inertia-link>
+                <inertia-link href="/contact">Контакты</inertia-link>
+              </nav>
+            </header>
+            <content>
+              <slot />
+            </content>
+            <footer></footer>
+          </main>
+        </template>\n
+        <script>
+          export default {
+            computed: {
+              user() {
+                return this.$page.props.auth.user
+              }
+            }
+          }
+        </script>
+      `,
+    },
+    {
+      name: 'Vue 3',
+      description: 'Доступ к общим данным с помощью свойства $page или хука usePage().',
       language: 'twig',
       code: dedent`
         <template>
@@ -117,11 +149,6 @@ export const meta = {
           </main>
         </template>\n
         <script>
-          /*
-          |----------------------------------------------------------------
-          | Vue 3
-          |----------------------------------------------------------------
-          */\n
           import { computed } from 'vue'
           import { usePage } from '@inertiajs/inertia-vue3'\n
           export default {
@@ -129,25 +156,13 @@ export const meta = {
               const user = computed(() => usePage().props.value.auth.user)
               return { user }
             },
-          }\n
-          /*
-          |----------------------------------------------------------------
-          | Vue 2
-          |----------------------------------------------------------------
-          */\n
-          export default {
-            computed: {
-              user() {
-                return this.$page.props.auth.user
-              }
-            }
           }
         </script>
       `,
     },
     {
       name: 'React',
-      description: 'Access shared data using the usePage() hook.',
+      description: 'Доступ к общим данным с помощью хука usePage().',
       language: 'jsx',
       code: dedent`
         import { InertiaLink, usePage } from '@inertiajs/inertia-react'\n
@@ -172,7 +187,7 @@ export const meta = {
     },
     {
       name: 'Svelte',
-      description: 'Access shared data using the $page store.',
+      description: 'Доступ к общим данным с помощью хранилища $page.',
       language: 'html',
       code: dedent`
         <script>
@@ -243,7 +258,25 @@ export const meta = {
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      language: 'twig',
+      code: dedent`
+        <template>
+          <main>
+            <header></header>
+            <content>
+              <div v-if="$page.props.flash.message" class="alert">
+                {{ $page.props.flash.message }}
+              </div>
+              <slot />
+            </content>
+            <footer></footer>
+          </main>
+        </template>
+      `,
+    },
+    {
+      name: 'Vue 3',
       language: 'twig',
       code: dedent`
         <template>

@@ -4,8 +4,14 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'Состояние запоминания',
-  links: [{ url: '#top', name: 'Введение' }, { url: '#multiple-components', name: 'Несколько компонентов' }],
+  title: 'Remembering state',
+  links: [
+    { url: '#top', name: 'Введение' },
+    { url: '#сохранение-локального-состояния', name: 'Сохранение локального состояния' },
+    { url: '#мульти-компоненты', name: 'Мульти компоненты' },
+    { url: '#помощник-формы', name: 'Помощник формы' },
+    { url: '#сохранение-состояния-вручную', name: 'Сохранение состояния вручную' },
+  ],
 }
 
 # Состояние запоминания
@@ -16,10 +22,14 @@ export const meta = {
 
 Чтобы смягчить эту проблему, Вы можете указать Inertia, какое состояние локального компонента следует сохранить в истории браузера.
 
+## Сохранение локального состояния
+
+To save local component state to the history state, use the `remember` feature to tell Inertia which data it should remember.
+
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
       description: 'Используйте свойство "remember".',
       language: 'js',
       code: dedent`
@@ -45,14 +55,31 @@ export const meta = {
       `,
     },
     {
+      name: 'Vue 3',
+      description: 'Use the "useRemember" hook.',
+      language: 'js',
+      code: dedent`
+        import { useRemember } from '@inertiajs/inertia-vue3'\n
+        export default {
+          setup() {
+            const form = useRemember({
+                first_name: null,
+                last_name: null,
+            })\n
+            return { form }
+          },
+        }
+      `,
+    },
+    {
       name: 'React',
-      description: 'Используйте хук "useRememberedState".',
+      description: 'Используйте хук "useRemember".',
       language: 'jsx',
       code: dedent`
-        import { useRememberedState } from '@inertiajs/inertia-react'
+        import { useRemember } from '@inertiajs/inertia-react'
         import React from 'react'\n
         export default function Profile() {
-          const [formState, setFormState] = useRememberedState({
+          const [formState, setFormState] = useRemember({
             first_name: null,
             last_name: null,
             // ...
@@ -79,14 +106,15 @@ export const meta = {
 
 Теперь, когда Ваша локальная форма `form` изменяется, Inertia автоматически сохраняет эти данные в состояние истории и восстанавливает их при навигации по истории.
 
-## Несколько компонентов
+## Мульти компоненты
 
-Если Ваша страница содержит несколько компонентов, которые используют функцию запоминания, Вам необходимо предоставить уникальный идентификатор для каждого компонента, чтобы Inertia знала, какие данные нужно восстановить для каждого компонента.
+Если Ваша страница содержит несколько компонентов, которые используют функцию запоминания, Вам необходимо предоставить уникальный ключ для каждого компонента, чтобы Inertia знала, какие данные нужно восстановить для каждого компонента.
 
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      description: 'Set a key using the "remember.key" property.',
       language: 'js',
       code: dedent`
         {
@@ -106,13 +134,31 @@ export const meta = {
       `,
     },
     {
+      name: 'Vue 3',
+      description: 'Set a key as the second argument of useRemember().',
+      language: 'js',
+      code: dedent`
+        import { useRemember } from '@inertiajs/inertia-vue3'\n
+        export default {
+          setup() {
+            const form = useRemember({
+                first_name: null,
+                last_name: null,
+            }, 'Users/Create')\n
+            return { form }
+          },
+        }
+      `,
+    },
+    {
       name: 'React',
+      description: 'Set a key as the second argument of useRemember().',
       language: 'jsx',
       code: dedent`
-        import { useRememberedState } from '@inertiajs/inertia-react'
+        import { useRemember } from '@inertiajs/inertia-react'
         import React from 'react'\n
         export default function Profile() {
-          const [formState, setFormState] = useRememberedState({
+          const [formState, setFormState] = useRemember({
             first_name: null,
             last_name: null,
           }, 'Users/Create')\n
@@ -121,6 +167,7 @@ export const meta = {
     },
     {
       name: 'Svelte',
+      description: 'Set a key as the second argument of useRemember().',
       language: 'js',
       code: dedent`
           import { page, remember } from '@inertiajs/inertia-svelte'\n
@@ -133,18 +180,21 @@ export const meta = {
   ]}
 />
 
-Если у Вас есть несколько экземпляров одного и того же компонента на странице, использующей функцию запоминания, не забудьте также включить уникальный идентификатор для каждого экземпляра компонента.
+Если у Вас есть несколько экземпляров одного и того же компонента на странице, использующей функцию запоминания, не забудьте также включить уникальный ключ для каждого экземпляра компонента.
 
 <TabbedCodeExamples
   examples={[
     {
-      name: 'Vue.js',
+      name: 'Vue 2',
+      description: 'Set a key callback using the "remember.key" property.',
       language: 'js',
       code: dedent`
         {
           remember: {
             data: ['form'],
-            key: () => \`Users/Edit:\${this.user.id}\`,
+            key() {
+              return \`Users/Edit:\${this.user.id}\`
+            }
           },
           data() {
             return {
@@ -158,13 +208,31 @@ export const meta = {
       `,
     },
     {
+      name: 'Vue 3',
+      description: 'Set a dynamic key as the second argument of useRemember().',
+      language: 'js',
+      code: dedent`
+        import { useRemember } from '@inertiajs/inertia-vue3'\n
+        export default {
+          setup({ user }) {
+            const form = useRemember({
+                first_name: null,
+                last_name: null,
+            }, \`Users/Edit:\${user.id}\`)\n
+            return { form }
+          },
+        }
+      `,
+    },
+    {
       name: 'React',
+      description: 'Set a dynamic key as the second argument of useRemember().',
       language: 'jsx',
       code: dedent`
-        import { useRememberedState } from '@inertiajs/inertia-react'
+        import { useRemember } from '@inertiajs/inertia-react'
         import React from 'react'\n
         export default function Profile() {
-          const [formState, setFormState] = useRememberedState({
+          const [formState, setFormState] = useRemember({
             first_name: props.user.first_name,
             last_name: props.user.last_name,
           }, \`Users/Edit:\${this.user.id}\`)
@@ -173,6 +241,7 @@ export const meta = {
     },
     {
       name: 'Svelte',
+      description: 'Set a dynamic key as the second argument of useRemember().',
       language: 'js',
       code: dedent`
           import { page, remember } from '@inertiajs/inertia-svelte'\n
@@ -184,3 +253,63 @@ export const meta = {
     },
   ]}
 />
+
+## Помощник формы
+
+Если вы используете <a href="/forms#form-helper">помощник формы</a>, Вы можете передать уникальный ключ формы в качестве первого аргумента при создании экземпляра формы, и это приведет к тому, что данные формы и ошибки автоматически запоминаются.
+
+<TabbedCodeExamples
+  examples={[
+    {
+      name: 'Vue 2',
+      language: 'js',
+      code: dedent`
+        this.$inertia.form('CreateUser', data)
+        this.$inertia.form(\`EditUser:\${this.user.id}\`, data)
+      `,
+    },
+    {
+      name: 'Vue 3',
+      language: 'js',
+      code: dedent`
+        import { useForm } from '@inertiajs/inertia-vue3'\n
+        const form = useForm('CreateUser', data)
+        const form = useForm(\`EditUser:\${user.id}\`, data)
+      `,
+    },
+    {
+      name: 'React',
+      language: 'js',
+      code: dedent`
+        import { useForm } from '@inertiajs/inertia-react'\n
+        const form = useForm('CreateUser', data)
+        const form = useForm(\`EditUser:\${user.id}\`, data)
+      `,
+    },
+    {
+      name: 'Svelte',
+      language: 'js',
+      code: dedent`
+        import { useForm } from '@inertiajs/inertia-svelte'\n
+        const form = useForm('CreateUser', data)
+        const form = useForm(\`EditUser:\${user.id}\`, data)
+      `,
+    },
+  ]}
+/>
+
+## Сохранение состояния вручную
+
+Свойство `remember` во Vue 2 и хук `useRemember` во Vue 3, React и Svelte следят за изменениями данных и автоматически сохраняют эти изменения в состоянии истории, а затем восстанавливают его при загрузке страницы.
+
+Однако можно также управлять этим вручную, используя базовые методы `remember()` и `restore()` в Inertia.
+
+```js
+import { Inertia } from '@inertiajs/inertia'
+
+// Сохранить состояние локального компонента в состояние истории
+Inertia.remember(data, 'my-key')
+
+// Восстановить состояние локального компонента из состояния истории
+let data = Inertia.restore('my-key')
+```
