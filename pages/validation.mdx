@@ -105,16 +105,16 @@ export const meta = {
       code: dedent`
         <template>
           <form @submit.prevent="submit">
-            <label for="first_name">First name:</label>
+            <label for="first_name">Имя:</label>
             <input id="first_name" v-model="form.first_name" />
             <div v-if="errors.first_name">{{ errors.first_name }}</div>
-            <label for="last_name">Last name:</label>
+            <label for="last_name">Фамилия:</label>
             <input id="last_name" v-model="form.last_name" />
             <div v-if="errors.last_name">{{ errors.last_name }}</div>
-            <label for="email">Email:</label>
+            <label for="email">Эл. почта:</label>
             <input id="email" v-model="form.email" />
             <div v-if="errors.email">{{ errors.email }}</div>
-            <button type="submit">Submit</button>
+            <button type="submit">Отправить</button>
           </form>
         </template>\n
         <script>

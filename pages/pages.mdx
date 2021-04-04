@@ -30,9 +30,9 @@ export const meta = {
       language: 'twig',
       code: dedent`
         <template>
-          <layout title="Welcome">
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+          <layout title="Добро пожаловать">
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в ваше первое приложение Inertia!</p>
           </layout>
         </template>\n
         <script>
@@ -117,9 +117,9 @@ export const meta = {
         <template>
           <main>
             <header>
-              <inertia-link href="/">Home</inertia-link>
-              <inertia-link href="/about">About</inertia-link>
-              <inertia-link href="/contact">Contact</inertia-link>
+              <inertia-link href="/">Главная</inertia-link>
+              <inertia-link href="/about">О нас</inertia-link>
+              <inertia-link href="/contact">Контакты</inertia-link>
             </header>
             <article>
               <slot />
@@ -142,7 +142,7 @@ export const meta = {
           }
         </script>
       `,
-      description: 'The <inertia-link> component is automatically registered by the Inertia plugin.',
+      description: 'Компонент <inertia-link> автоматически регистрируется плагином Inertia.',
     },
     {
       name: 'Vue 3',
@@ -241,16 +241,16 @@ export const meta = {
       code: dedent`
         <template>
           <div>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в ваше первое приложение Inertia!</p>
           </div>
         </template>\n
         <script>
           import Layout from './Layout'\n
           export default {
-            // Using a render function
+            // Использование функции рендеринга
             layout: (h, page) => h(Layout, [page]),\n
-            // Using the shorthand
+            // Использование сокращения
             layout: Layout,\n
             props: {
               user: Object,
@@ -358,19 +358,19 @@ export const meta = {
       code: dedent`
         <template>
           <div>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в ваше первое приложение Inertia!</p>
           </div>
         </template>\n
         <script>
           import SiteLayout from './SiteLayout'
           import NestedLayout from './NestedLayout'\n
           export default {
-            // Using a render function
+            // Использование функции рендеринга
             layout: (h, page) => {
               return h(Layout, () => h(GreenLayout, () => page))
             },\n
-            // Using the shorthand
+            // Использование сокращения
             layout: [SiteLayout, NestedLayout],\n
             props: {
               user: Object,
@@ -563,8 +563,8 @@ export const meta = {
       code: dedent`
         <template>
           <layout>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+            <h1>Добро пожаловать</h1>
+            <p>Здравствуйте, {{ user.name }}, добро пожаловать в ваше первое приложение Inertia!</p>
           </layout>
         </template>\n
         <script>
@@ -572,7 +572,7 @@ export const meta = {
           export default {
             metaInfo() {
               return {
-                title: \`Welcome \${this.user.name}\`,
+                title: \`Добро пожаловать \${this.user.name}\`,
               }
             },
             components: {

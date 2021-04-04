@@ -133,7 +133,7 @@ const Nav = ({ className }) => {
         </li>
         <li className="md:pr-3">
           <Link href="/file-uploads">
-            <a className={linkClass('/file-uploads')}>File uploads</a>
+            <a className={linkClass('/file-uploads')}>Загрузка файлов</a>
           </Link>
         </li>
         <li className="md:pr-3">

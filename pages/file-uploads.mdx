@@ -5,21 +5,21 @@ import TabbedCodeExamples from '../components/TabbedCodeExamples'
 
 export default Layout
 export const meta = {
-  title: 'File uploads',
+  title: 'Загрузка файлов',
   links: [
-    { url: '#form-data-conversion', name: 'FormData conversion' },
-    { url: '#file-upload-example', name: 'File upload example' },
-    { url: '#multipart-limitations', name: 'Multipart limitations' },
+    { url: '#преобразование-данных-формы', name: 'Преобразование данных формы' },
+    { url: '#пример-загрузки-файла', name: 'Пример загрузки файла' },
+    { url: '#ограничения-на-несколько-частей', name: 'Ограничения на несколько частей' },
   ],
 }
 
-# File uploads
+# Загрузка файлов
 
-## FormData conversion
+## Преобразование данных формы
 
-When making visits that include files (even nested files), Inertia will automatically convert the request data into a `FormData` object. This is necessary, since that's what's required to submit a `multipart/form-data` request via XHR.
+При посещении, включающем файлы (даже вложенные файлы), Inertia автоматически преобразует данные запроса в объект `FormData`. Это необходимо, поскольку это то, что требуется для отправки запроса `multipart/form-data` через XHR.
 
-If you'd like the visit to always use a `FormData` object, you can force this using the `forceFormData` option.
+Если Вы хотите, чтобы при посещении всегда использовался объект `FormData`, Вы можете принудительно использовать его с помощью опции `forceFormData`.
 
 ```js
 Inertia.post('/users', data, {
@@ -27,15 +27,15 @@ Inertia.post('/users', data, {
 })
 ```
 
-You can learn more about the `FormData` interface [here](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+Вы можете узнать больше об интерфейсе `FormData` [здесь](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
 <Notice>
-  Note, prior to <a href="/releases/inertia-0.8.0">version 0.8.0</a>, Inertia did not automatically convert requests to <inlineCode>FormData</inlineCode>, and you'll need to manually do this.
+  Обратите внимание, что до <a href="/releases/inertia-0.8.0">версии 0.8.0</a>, Inertia не преобразовывала запросы автоматически в <inlineCode>FormData</inlineCode>, и Вам необходимо сделать это вручную.
 </Notice>
 
-## File upload example
+## Пример загрузки файла
 
-Here is an example of uploading a file with Inertia using a form. This example includes both a `name` text input and an `avatar` file input.
+Вот пример загрузки файла с помощью Inertia с использованием формы. Этот пример включает как ввод текста `name`, так и ввод файла `avatar`.
 
 <TabbedCodeExamples
   examples={[
@@ -50,7 +50,7 @@ Here is an example of uploading a file with Inertia using a form. This example i
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
-            <button type="submit">Submit</button>
+            <button type="submit">Отправить</button>
           </form>
         </template>\n
         <script>
@@ -83,7 +83,7 @@ Here is an example of uploading a file with Inertia using a form. This example i
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
-            <button type="submit">Submit</button>
+            <button type="submit">Отправить</button>
           </form>
         </template>\n
         <script>
@@ -126,7 +126,7 @@ Here is an example of uploading a file with Inertia using a form. This example i
                 {progress.percentage}%
               </progress>
             )}
-            <button type="submit">Submit</button>
+            <button type="submit">Отправить</button>
           </form>
         )
       `,
@@ -153,20 +153,20 @@ Here is an example of uploading a file with Inertia using a form. This example i
               {$form.progress.percentage}%
             </progress>
           {/if}
-          <button type="submit">Submit</button>
+          <button type="submit">Отправить</button>
         </form>
       `,
     },
   ]}
 />
 
-This example uses the [form helper](/forms#form-helper), since it gives us easy access to the upload progress, but you can do this with a plain Inertia visit as well.
+В этом примере используется [помощник формы](/forms#form-helper), поскольку он дает нам легкий доступ к процессу загрузки, но Вы также можете сделать это с помощью простого посещения Inertia.
 
-## Multipart limitations
+## Ограничения на несколько частей
 
-Uploading files using a `multipart/form-data` request is not natively supported in some languages for the `put`, `patch` or `delete` methods. The workaround here is to simply upload files using `post` instead.
+Загрузка файлов с помощью запроса `multipart/form-data` не поддерживается на некоторых языках для методов `put`, `patch` или `delete`. Обходной путь здесь - просто загружать файлы, используя вместо этого `post`.
 
-Some frameworks, such as <a href="https://laravel.com/docs/8.x/routing#form-method-spoofing">Laravel</a> and <a href="https://guides.rubyonrails.org/form_helpers.html#how-do-forms-with-patch-put-or-delete-methods-work-questionmark">Rails</a>, support form method spoofing, which allows you to upload the files using `post`, but have the framework handle the request as a `put` or `patch` request. This is done by including a `_method` attribute in the data of your request.
+Некоторые фреймворки, такие как <a href="https://laravel.com/docs/8.x/routing#form-method-spoofing">Laravel</a> и <a href="https://guides.rubyonrails.org/form_helpers.html#how-do-forms-with-patch-put-or-delete-methods-work-questionmark">Rails</a>, поддержка спуфинга метода формы, что позволяет загружать файлы с помощью `post`, но пусть фреймворк обрабатывает запрос как запрос `put` или `patch`. Это делается путем включения атрибута `_method` в данные вашего запроса.
 
 ```js
 Inertia.post(`/users/${user.id}`, {

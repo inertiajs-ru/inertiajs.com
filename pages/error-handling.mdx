@@ -60,7 +60,7 @@ Inertia решает эту проблему, показывая все отве
                     ->setStatusCode($response->status());
             } else if ($response->status() === 419) {
                 return back()->with([
-                    'message' => 'The page expired, please try again.',
+                    'message' => 'Срок действия страницы истек, попробуйте еще раз.',
                 ]);
             }\n
             return $response;
@@ -99,18 +99,18 @@ Inertia решает эту проблему, показывая все отве
           computed: {
             title() {
               return {
-                503: '503: Service Unavailable',
-                500: '500: Server Error',
-                404: '404: Page Not Found',
-                403: '403: Forbidden',
+                503: '503: Сервис недоступен',
+                500: '500: Ошибка сервера',
+                404: '404: Страница не найдена',
+                403: '403: Запрещено',
               }[this.status]
             },
             description() {
               return {
-                503: 'Sorry, we are doing some maintenance. Please check back soon.',
-                500: 'Whoops, something went wrong on our servers.',
-                404: 'Sorry, the page you are looking for could not be found.',
-                403: 'Sorry, you are forbidden from accessing this page.',
+                503: 'Извините, мы проводим техническое обслуживание. Пожалуйста, попробуйте позже.',
+                500: 'Упс, что-то пошло не так на наших серверах.',
+                404: 'К сожалению, не удалось найти страницу, которую Вы ищете.',
+                403: 'К сожалению, доступ к этой странице запрещен.',
               }[this.status]
             },
           },

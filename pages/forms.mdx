@@ -64,13 +64,13 @@ export const meta = {
       code: dedent`
         <template>
           <form @submit.prevent="submit">
-            <label for="first_name">First name:</label>
+            <label for="first_name">Имя:</label>
             <input id="first_name" v-model="form.first_name" />
-            <label for="last_name">Last name:</label>
+            <label for="last_name">Фамилия:</label>
             <input id="last_name" v-model="form.last_name" />
-            <label for="email">Email:</label>
+            <label for="email">Эл. почта:</label>
             <input id="email" v-model="form.email" />
-            <button type="submit">Submit</button>
+            <button type="submit">Отправить</button>
           </form>
         </template>\n
         <script>
@@ -231,7 +231,7 @@ export const meta = {
             <!-- password -->
             <input type="password" v-model="form.password">
             <div v-if="form.errors.password">{{ form.errors.password }}</div>
-            <!-- Запомните меня -->
+            <!-- remember me -->
             <input type="checkbox" v-model="form.remember"> Запомните меня
             <!-- submit -->
             <button type="submit" :disabled="form.processing">Войти</button>
@@ -265,9 +265,9 @@ export const meta = {
             <input type="password" v-model="form.password">
             <div v-if="form.errors.password">{{ form.errors.password }}</div>
             <!-- remember me -->
-            <input type="checkbox" v-model="form.remember"> Remember Me
+            <input type="checkbox" v-model="form.remember"> Запомните меня
             <!-- submit -->
-            <button type="submit" :disabled="form.processing">Login</button>
+            <button type="submit" :disabled="form.processing">Войти</button>
           </form>
         </template>\n
         <script>
@@ -306,8 +306,8 @@ export const meta = {
             {errors.email && <div>{errors.email}</div>}
             <input type="password" value={data.password} onChange={e => setData('password', e.target.value)} />
             {errors.password && <div>{errors.password}</div>}
-            <input type="checkbox" value={data.remember} onChange={e => setData('remember', e.target.value)} /> Remember Me
-            <button type="submit" disabled={processing}>Login</button>
+            <input type="checkbox" value={data.remember} onChange={e => setData('remember', e.target.value)} /> Запомните меня
+            <button type="submit" disabled={processing}>Войти</button>
           </form>
         )
       `,
@@ -336,8 +336,8 @@ export const meta = {
           {#if $form.errors.email}
             <div class="form-error">{$form.errors.email}</div>
           {/if}
-          <input type="checkbox" bind:checked={$form.remember} /> Remember Me
-          <button type="submit" disabled={$form.processing}>Submit</button>
+          <input type="checkbox" bind:checked={$form.remember} /> Запомните меня
+          <button type="submit" disabled={$form.processing}>Отправить</button>
         </form>
       `,
     },
@@ -510,14 +510,14 @@ export const meta = {
       name: 'Vue 2',
       language: 'jsx',
       code: dedent`
-        <button type="submit" :disabled="form.processing">Submit</button>
+        <button type="submit" :disabled="form.processing">Отправить</button>
       `,
     },
     {
       name: 'Vue 3',
       language: 'jsx',
       code: dedent`
-        <button type="submit" :disabled="form.processing">Submit</button>
+        <button type="submit" :disabled="form.processing">Отправить</button>
       `,
     },
     {
@@ -525,14 +525,14 @@ export const meta = {
       language: 'jsx',
       code: dedent`
         const { processing } = useForm({ ... })\n
-        <button type="submit" disabled={processing}>Submit</button>
+        <button type="submit" disabled={processing}>Отправить</button>
       `,
     },
     {
       name: 'Svelte',
       language: 'jsx',
       code: dedent`
-        <button type="submit" disabled={$form.processing}>Submit</button>
+        <button type="submit" disabled={$form.processing}>Отправить</button>
       `,
     },
   ]}
@@ -632,9 +632,9 @@ export const meta = {
       name: 'Vue 2',
       language: 'js',
       code: dedent`
-        // Clear all errors
+        // Очистить все ошибки
         form.clearErrors()\n
-        // Clear errors for specific fields
+        // Удалить ошибки для определенных полей
         form.clearErrors('field', 'anotherfield')
       `,
     },
@@ -642,9 +642,9 @@ export const meta = {
       name: 'Vue 3',
       language: 'js',
       code: dedent`
-        // Clear all errors
+        // Очистить все ошибки
         form.clearErrors()\n
-        // Clear errors for specific fields
+        // Удалить ошибки для определенных полей
         form.clearErrors('field', 'anotherfield')
       `,
     },
@@ -653,9 +653,9 @@ export const meta = {
       language: 'js',
       code: dedent`
         const { clearErrors } = useForm({ ... })\n
-        // Clear all errors
+        // Очистить все ошибки
         clearErrors()\n
-        // Clear errors for specific fields
+        // Удалить ошибки для определенных полей
         clearErrors('field', 'anotherfield')
       `,
     },
@@ -663,9 +663,9 @@ export const meta = {
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        // Clear all errors
+        // Очистить все ошибки
         $form.clearErrors()\n
-        // Clear errors for specific fields
+        // Удалить ошибки для определенных полей
         $form.clearErrors('field', 'anotherfield')
       `,
     },
@@ -682,9 +682,9 @@ export const meta = {
       name: 'Vue 2',
       language: 'js',
       code: dedent`
-        // Reset the form
+        // Сбросить форму
         form.reset()\n
-        // Reset specific fields
+        // Сбросить определенные поля
         form.reset('field', 'anotherfield')
       `,
     },
@@ -692,9 +692,9 @@ export const meta = {
       name: 'Vue 3',
       language: 'js',
       code: dedent`
-        // Reset the form
+        // Сбросить форму
         form.reset()\n
-        // Reset specific fields
+        // Сбросить определенные поля
         form.reset('field', 'anotherfield')
       `,
     },
@@ -703,9 +703,9 @@ export const meta = {
       language: 'js',
       code: dedent`
         const { reset } = useForm({ ... })\n
-        // Reset the form
+        // Сбросить форму
         reset()\n
-        // Reset specific fields
+        // Сбросить определенные поля
         reset('field', 'anotherfield')
       `,
     },
@@ -713,9 +713,9 @@ export const meta = {
       name: 'Svelte',
       language: 'js',
       code: dedent`
-        // Reset the form
+        // Сбросить форму
         $form.reset()\n
-        // Reset specific fields
+        // Сбросить определенные поля
         $form.reset('field', 'anotherfield')
       `,
     },
