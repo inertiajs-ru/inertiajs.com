@@ -30,7 +30,8 @@ Inertia.post('/users', data, {
 You can learn more about the `FormData` interface [here](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
 <Notice>
-  Note, prior to <a href="/releases/inertia-0.8.0">version 0.8.0</a>, Inertia did not automatically convert requests to <inlineCode>FormData</inlineCode>, and you'll need to manually do this.
+  Note, prior to <a href="/releases/inertia-0.8.0">version 0.8.0</a>, Inertia did not automatically convert requests to{' '}
+  <inlineCode>FormData</inlineCode>, and you'll need to manually do this.
 </Notice>
 
 ## File upload example
@@ -46,7 +47,7 @@ Here is an example of uploading a file with Inertia using a form. This example i
         <template>
           <form @submit.prevent="submit">
             <input type="text" v-model="form.name" />
-            <input type="file" v-model="form.avatar" />
+            <input type="file" @input="form.avatar = $event.target.files[0]" />
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
@@ -79,7 +80,7 @@ Here is an example of uploading a file with Inertia using a form. This example i
         <template>
           <form @submit.prevent="submit">
             <input type="text" v-model="form.name" />
-            <input type="file" v-model="form.avatar" />
+            <input type="file" @input="form.avatar = $event.target.files[0]" />
             <progress v-if="form.progress" :value="form.progress.percentage" max="100">
               {{ form.progress.percentage }}%
             </progress>
